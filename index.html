@@ -10,102 +10,88 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
       :root {
-        --cursor-x: 0px;
-        --cursor-y: 0px;
+        --cursor-x: -100px;
+        --cursor-y: -100px;
         --glow-x: 50%;
         --glow-y: 50%;
       }
       body {
         font-family: 'Inter', sans-serif;
         scroll-behavior: smooth;
-        cursor: none; /* Hide default cursor */
+        -webkit-font-smoothing: antialiased;
       }
-      a, button {
-        cursor: none;
+      
+      /* Hide default cursor only on desktop/pointer devices */
+      @media (pointer: fine) {
+        body { cursor: none; }
+        a, button { cursor: none; }
       }
+
       .font-serif {
         font-family: 'Playfair Display', serif;
       }
       
-      /* Custom Cursor */
-      #custom-cursor {
+      /* Custom Cursor - Only visible on non-touch devices */
+      #custom-cursor, #custom-cursor-outline {
         position: fixed;
-        width: 10px;
-        height: 10px;
-        background: #10b981;
-        border-radius: 50%;
         pointer-events: none;
         z-index: 9999;
-        transition: transform 0.1s ease-out;
         transform: translate(-50%, -50%);
         left: var(--cursor-x);
         top: var(--cursor-y);
-        box-shadow: 0 0 15px rgba(16, 185, 129, 0.8);
+        display: none;
       }
-      #custom-cursor-outline {
-        position: fixed;
-        width: 44px;
-        height: 44px;
-        border: 1.5px solid rgba(16, 185, 129, 0.4);
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 9998;
-        transition: transform 0.2s ease-out, width 0.3s, height 0.3s, border-color 0.3s;
-        transform: translate(-50%, -50%);
-        left: var(--cursor-x);
-        top: var(--cursor-y);
-      }
-      .cursor-hover #custom-cursor-outline {
-        width: 66px;
-        height: 66px;
-        background: rgba(16, 185, 129, 0.15);
-        border-color: rgba(16, 185, 129, 1);
-        border-width: 2px;
+      @media (pointer: fine) {
+        #custom-cursor, #custom-cursor-outline { display: block; }
       }
 
-      /* Bioluminescent Glow - adjusted for higher contrast visibility */
+      #custom-cursor {
+        width: 8px;
+        height: 8px;
+        background: #10b981;
+        border-radius: 50%;
+        transition: transform 0.1s ease-out;
+        box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
+      }
+      #custom-cursor-outline {
+        width: 36px;
+        height: 36px;
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        border-radius: 50%;
+        transition: transform 0.2s ease-out, width 0.3s, height 0.3s, border-color 0.3s;
+      }
+      .cursor-hover #custom-cursor-outline {
+        width: 50px;
+        height: 50px;
+        background: rgba(16, 185, 129, 0.1);
+        border-color: rgba(16, 185, 129, 0.8);
+      }
+
+      /* Bioluminescent Glow - more subtle for less noise */
       .flashlight-bg {
-        background: radial-gradient(circle 450px at var(--glow-x) var(--glow-y), rgba(16, 185, 129, 0.12), transparent 85%);
+        background: radial-gradient(circle 350px at var(--glow-x) var(--glow-y), rgba(16, 185, 129, 0.05), transparent 80%);
       }
       .dark .flashlight-bg {
-        background: radial-gradient(circle 550px at var(--glow-x) var(--glow-y), rgba(16, 185, 129, 0.18), transparent 85%);
+        background: radial-gradient(circle 450px at var(--glow-x) var(--glow-y), rgba(16, 185, 129, 0.1), transparent 80%);
       }
 
       @keyframes drift {
         0% { transform: translate(0, 0) rotate(0deg); }
-        50% { transform: translate(30px, -30px) rotate(15deg); }
+        50% { transform: translate(15px, -15px) rotate(10deg); }
         100% { transform: translate(0, 0) rotate(0deg); }
       }
       .spore {
-        animation: drift 12s ease-in-out infinite;
+        animation: drift 15s ease-in-out infinite;
       }
 
+      /* Huni Kuin Pattern - significantly reduced opacity for clarity */
       .huni-kuin-pattern {
-        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l30 30-30 30L0 30z' fill='none' stroke='%233d7a3d' stroke-opacity='0.15' stroke-width='1.5'/%3E%3Cpath d='M30 15l15 15-15 15-15-15z' fill='none' stroke='%233d7a3d' stroke-opacity='0.1' stroke-width='1'/%3E%3C/svg%3E");
-        mask-image: radial-gradient(circle 400px at var(--glow-x) var(--glow-y), black, transparent);
-        -webkit-mask-image: radial-gradient(circle 400px at var(--glow-x) var(--glow-y), black, transparent);
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l30 30-30 30L0 30z' fill='none' stroke='%233d7a3d' stroke-opacity='0.1' stroke-width='1'/%3E%3C/svg%3E");
+        mask-image: radial-gradient(circle 500px at var(--glow-x) var(--glow-y), black 20%, transparent 80%);
+        -webkit-mask-image: radial-gradient(circle 500px at var(--glow-x) var(--glow-y), black 20%, transparent 80%);
       }
       .dark .huni-kuin-pattern {
-        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l30 30-30 30L0 30z' fill='none' stroke='%23e0e7e0' stroke-opacity='0.08' stroke-width='1.5'/%3E%3Cpath d='M30 15l15 15-15 15-15-15z' fill='none' stroke='%23e0e7e0' stroke-opacity='0.05' stroke-width='1'/%3E%3C/svg%3E");
-      }
-
-      .root-underline {
-        position: relative;
-      }
-      .root-underline::after {
-        content: '';
-        position: absolute;
-        bottom: -6px;
-        left: 50%;
-        width: 0;
-        height: 2px;
-        background: #10b981;
-        box-shadow: 0 0 12px #10b981;
-        transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1), left 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-      }
-      .root-underline:hover::after {
-        width: 100%;
-        left: 0;
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l30 30-30 30L0 30z' fill='none' stroke='%23e0e7e0' stroke-opacity='0.05' stroke-width='1'/%3E%3C/svg%3E");
       }
     </style>
   <script type="importmap">
@@ -124,12 +110,15 @@
     <div id="custom-cursor-outline"></div>
     <div id="root"></div>
     <script>
-      // Global cursor handling
+      // Global cursor handling with throttle-like behavior via requestAnimationFrame
+      let mouseX = -100, mouseY = -100;
       document.addEventListener('mousemove', (e) => {
-        document.documentElement.style.setProperty('--cursor-x', e.clientX + 'px');
-        document.documentElement.style.setProperty('--cursor-y', e.clientY + 'px');
-        document.documentElement.style.setProperty('--glow-x', e.clientX + 'px');
-        document.documentElement.style.setProperty('--glow-y', e.clientY + 'px');
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        document.documentElement.style.setProperty('--cursor-x', mouseX + 'px');
+        document.documentElement.style.setProperty('--cursor-y', mouseY + 'px');
+        document.documentElement.style.setProperty('--glow-x', mouseX + 'px');
+        document.documentElement.style.setProperty('--glow-y', mouseY + 'px');
       });
 
       document.addEventListener('mouseover', (e) => {
