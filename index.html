@@ -1,136 +1,824 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Luca Fischer | Sumitra Isa Dewè</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luca “Sumitra Isa Dewè” Fischer | Regenerative Systems</title>
+    <meta name="description" content="Luca Fischer helps purpose-led teams turn vision into clear offers and calm, scalable systems using AI and Web3. Grounded in forest intelligence and Swiss clarity.">
+    <!-- Social Preview Placeholder -->
+    <meta property="og:title" content="Luca “Sumitra Isa Dewè” Fischer">
+    <meta property="og:description" content="Turn meaning into regenerative growth. Solarpunk × Lunarpunk × Soilpunk.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://picsum.photos/1200/630?grayscale&blur=2">
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
     <style>
-      :root {
-        --cursor-x: -100px;
-        --cursor-y: -100px;
-        --glow-x: 50%;
-        --glow-y: 50%;
-      }
-      body {
-        font-family: 'Inter', sans-serif;
-        scroll-behavior: smooth;
-        -webkit-font-smoothing: antialiased;
-      }
-      
-      /* Hide default cursor only on desktop/pointer devices */
-      @media (pointer: fine) {
-        body { cursor: none; }
-        a, button { cursor: none; }
-      }
+        :root {
+            /* Theme: Fancy Forest Dark */
+            --bg: #060807; /* Deeper soil black */
+            --bg-secondary: #0a0d0b;
+            --fg: #e2e8e4;
+            --fg-muted: #8a948c;
+            --accent: #a3d9a5;
+            --accent-glow: rgba(163, 217, 165, 0.15);
+            --bio-teal: #4fd1c5;
+            --bio-purple: #b794f4;
+            --nav-bg: rgba(6, 8, 7, 0.75);
+            --border: rgba(255, 255, 255, 0.05);
+            --card-hover: rgba(163, 217, 165, 0.05);
+            --noise: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3%3Cfilter id='noiseFilter'%3%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3%3C/filter%3%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3%3C/svg%3%3E");
+            --fern-path: "data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3%3Cpath d='M50 100 C 50 80, 20 60, 20 40 C 20 20, 50 10, 50 0 C 50 10, 80 20, 80 40 C 80 60, 50 80, 50 100' fill='none' stroke='rgba(163, 217, 165, 0.03)' stroke-width='1'/%3%3C/svg%3%3E";
+        }
 
-      .font-serif {
-        font-family: 'Playfair Display', serif;
-      }
-      
-      /* Custom Cursor - Only visible on non-touch devices */
-      #custom-cursor, #custom-cursor-outline {
-        position: fixed;
-        pointer-events: none;
-        z-index: 9999;
-        transform: translate(-50%, -50%);
-        left: var(--cursor-x);
-        top: var(--cursor-y);
-        display: none;
-      }
-      @media (pointer: fine) {
-        #custom-cursor, #custom-cursor-outline { display: block; }
-      }
+        [data-theme="light"] {
+            --bg: #fdfdfc;
+            --bg-secondary: #f3f5f3;
+            --fg: #1a1c1a;
+            --fg-muted: #5a625c;
+            --accent: #3d6a38;
+            --accent-glow: rgba(61, 106, 56, 0.08);
+            --bio-teal: #007aff;
+            --bio-purple: #8e5ad5;
+            --nav-bg: rgba(253, 253, 252, 0.85);
+            --border: rgba(0, 0, 0, 0.06);
+            --card-hover: rgba(61, 106, 56, 0.03);
+        }
 
-      #custom-cursor {
-        width: 8px;
-        height: 8px;
-        background: #10b981;
-        border-radius: 50%;
-        transition: transform 0.1s ease-out;
-        box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
-      }
-      #custom-cursor-outline {
-        width: 36px;
-        height: 36px;
-        border: 1px solid rgba(16, 185, 129, 0.3);
-        border-radius: 50%;
-        transition: transform 0.2s ease-out, width 0.3s, height 0.3s, border-color 0.3s;
-      }
-      .cursor-hover #custom-cursor-outline {
-        width: 50px;
-        height: 50px;
-        background: rgba(16, 185, 129, 0.1);
-        border-color: rgba(16, 185, 129, 0.8);
-      }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
 
-      /* Bioluminescent Glow - more subtle for less noise */
-      .flashlight-bg {
-        background: radial-gradient(circle 350px at var(--glow-x) var(--glow-y), rgba(16, 185, 129, 0.05), transparent 80%);
-      }
-      .dark .flashlight-bg {
-        background: radial-gradient(circle 450px at var(--glow-x) var(--glow-y), rgba(16, 185, 129, 0.1), transparent 80%);
-      }
+        html {
+            scroll-behavior: smooth;
+        }
 
-      @keyframes drift {
-        0% { transform: translate(0, 0) rotate(0deg); }
-        50% { transform: translate(15px, -15px) rotate(10deg); }
-        100% { transform: translate(0, 0) rotate(0deg); }
-      }
-      .spore {
-        animation: drift 15s ease-in-out infinite;
-      }
+        body {
+            background-color: var(--bg);
+            color: var(--fg);
+            font-family: 'Inter', -apple-system, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color 0.8s cubic-bezier(0.4, 0, 0.2, 1), color 0.6s ease;
+        }
 
-      /* Huni Kuin Pattern - significantly reduced opacity for clarity */
-      .huni-kuin-pattern {
-        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l30 30-30 30L0 30z' fill='none' stroke='%233d7a3d' stroke-opacity='0.1' stroke-width='1'/%3E%3C/svg%3E");
-        mask-image: radial-gradient(circle 500px at var(--glow-x) var(--glow-y), black 20%, transparent 80%);
-        -webkit-mask-image: radial-gradient(circle 500px at var(--glow-x) var(--glow-y), black 20%, transparent 80%);
-      }
-      .dark .huni-kuin-pattern {
-        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l30 30-30 30L0 30z' fill='none' stroke='%23e0e7e0' stroke-opacity='0.05' stroke-width='1'/%3E%3C/svg%3E");
-      }
+        /* --- Layers --- */
+        .layer {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .noise-overlay {
+            opacity: 0.05;
+            background-image: var(--noise);
+            z-index: 1000;
+        }
+
+        .fern-pattern {
+            background-image: var(--fern-path);
+            background-size: 150px 150px;
+            opacity: 0.4;
+            z-index: -2;
+        }
+
+        .glow-field {
+            background: 
+                radial-gradient(circle at 10% 20%, var(--accent-glow) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(79, 209, 197, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(183, 148, 244, 0.03) 0%, transparent 60%);
+            filter: blur(100px);
+        }
+
+        #sporeCanvas {
+            z-index: 0;
+        }
+
+        /* --- Navigation --- */
+        nav {
+            position: fixed;
+            top: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 92%;
+            max-width: 900px;
+            height: 3.5rem;
+            background: var(--nav-bg);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1.5rem;
+            z-index: 100;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: var(--fg);
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: color 0.4s;
+            position: relative;
+        }
+
+        .nav-item:hover {
+            color: var(--accent);
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: -6px; left: 0; width: 0; height: 1.5px;
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+            transition: width 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .nav-item:hover::after { width: 100%; }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--fg);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: transform 0.3s ease, background 0.3s;
+        }
+
+        .theme-toggle:hover { 
+            background: var(--border); 
+            transform: rotate(15deg);
+        }
+
+        .lang-switch {
+            background: var(--border);
+            border-radius: 12px;
+            padding: 3px;
+            display: flex;
+        }
+
+        .lang-btn {
+            background: none;
+            border: none;
+            padding: 5px 12px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: var(--fg-muted);
+            cursor: pointer;
+            border-radius: 9px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .lang-btn.active {
+            background: var(--bg);
+            color: var(--fg);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        /* --- Typography --- */
+        h1, h2, .h2 {
+            font-family: 'Instrument Serif', serif;
+            font-weight: 400;
+            font-style: italic;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: clamp(3.2rem, 11vw, 6rem);
+            line-height: 0.9;
+            margin-bottom: 2.5rem;
+            color: var(--fg);
+        }
+
+        .section-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5em;
+            color: var(--accent);
+            margin-bottom: 2.5rem;
+            display: block;
+            font-weight: 600;
+        }
+
+        /* --- Layout --- */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2.5rem;
+        }
+
+        section {
+            padding: 10rem 0;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1.5s ease, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Hero --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-top: 12rem;
+        }
+
+        .signature-line {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.05em;
+            display: block;
+            opacity: 0.9;
+        }
+
+        .subheadline {
+            font-size: clamp(1.3rem, 3.5vw, 1.8rem);
+            color: var(--fg-muted);
+            max-width: 800px;
+            margin-bottom: 4rem;
+            font-weight: 300;
+            line-height: 1.5;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 5rem;
+        }
+
+        .btn {
+            padding: 1.1rem 3rem;
+            border-radius: 16px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px var(--accent-glow);
+        }
+
+        .btn-secondary {
+            border: 1px solid var(--border);
+            color: var(--fg);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            background: var(--card-hover);
+            transform: translateY(-2px);
+        }
+
+        /* --- Content Modules --- */
+        .story-content {
+            font-size: 1.6rem;
+            max-width: 900px;
+            color: var(--fg);
+            font-family: 'Instrument Serif', serif;
+            font-style: italic;
+            line-height: 1.4;
+        }
+
+        .story-content p { margin-bottom: 2.5rem; }
+
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+            margin-top: 5rem;
+        }
+
+        @media (max-width: 600px) {
+            .work-grid { grid-template-columns: 1fr; }
+        }
+
+        .card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 32px;
+            padding: 3.5rem;
+            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at top right, var(--accent-glow), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .card:hover {
+            border-color: var(--accent);
+            background: var(--card-hover);
+            transform: scale(1.03) translateY(-10px);
+        }
+
+        .card:hover::before { opacity: 1; }
+
+        .card h3 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 2.2rem;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card p {
+            color: var(--fg-muted);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        .work-list {
+            list-style: none;
+            margin: 4rem 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem 4rem;
+        }
+
+        .work-list li {
+            padding: 1.25rem 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .work-list li:hover {
+            transform: translateX(10px);
+            color: var(--accent);
+        }
+
+        .work-list li::before {
+            content: '';
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 12px var(--accent);
+        }
+
+        /* --- Connect --- */
+        .connect-links {
+            display: flex;
+            gap: 3rem;
+            margin-top: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--fg);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .social-link:hover {
+            color: var(--accent);
+            transform: translateX(8px);
+        }
+
+        .closing-line {
+            margin-top: 6rem;
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-style: italic;
+            opacity: 0.5;
+            color: var(--accent);
+            letter-spacing: -0.01em;
+        }
+
+        /* --- Footer --- */
+        footer {
+            padding: 8rem 2.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--fg-muted);
+            font-size: 0.9rem;
+            letter-spacing: 0.08em;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--fg);
+            cursor: pointer;
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100vh;
+            background: var(--bg);
+            z-index: 99;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .mobile-menu.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Bioluminescence Animation */
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+
+        .bio-orb {
+            position: absolute;
+            width: 400px; height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            animation: pulseGlow 10s infinite ease-in-out;
+            z-index: -1;
+            filter: blur(60px);
+        }
+
     </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react": "https://esm.sh/react@^19.2.3",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "lucide-react": "https://esm.sh/lucide-react@^0.562.0"
-  }
-}
-</script>
 </head>
-  <body class="bg-stone-50 text-stone-900 transition-colors duration-500 overflow-x-hidden">
-    <div id="custom-cursor"></div>
-    <div id="custom-cursor-outline"></div>
-    <div id="root"></div>
-    <script>
-      // Global cursor handling with throttle-like behavior via requestAnimationFrame
-      let mouseX = -100, mouseY = -100;
-      document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        document.documentElement.style.setProperty('--cursor-x', mouseX + 'px');
-        document.documentElement.style.setProperty('--cursor-y', mouseY + 'px');
-        document.documentElement.style.setProperty('--glow-x', mouseX + 'px');
-        document.documentElement.style.setProperty('--glow-y', mouseY + 'px');
-      });
+<body data-theme="dark">
+    <div class="layer noise-overlay"></div>
+    <div class="layer fern-pattern"></div>
+    <div class="layer glow-field"></div>
+    <canvas id="sporeCanvas" class="layer"></canvas>
 
-      document.addEventListener('mouseover', (e) => {
-        if (e.target.closest('a, button')) {
-          document.body.classList.add('cursor-hover');
+    <nav>
+        <div class="nav-links">
+            <a href="#work" class="nav-item" data-i18n="nav_work">Work</a>
+            <a href="#selected" class="nav-item" data-i18n="nav_selected">Selected</a>
+            <a href="./building.html" class="nav-item" data-i18n="nav_build">Build Log</a>
+            <a href="#connect" class="nav-item" data-i18n="nav_connect">Connect</a>
+        </div>
+        
+        <button class="mobile-menu-btn" id="menuToggle">
+            <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M4 8h24M4 16h24M4 24h24"/></svg>
+        </button>
+
+        <div class="nav-controls">
+            <div class="lang-switch">
+                <button class="lang-btn active" onclick="setLang('en')" id="btn-en">EN</button>
+                <button class="lang-btn" onclick="setLang('de')" id="btn-de">DE</button>
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
+                <span id="themeIcon">🌙</span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#work" class="nav-item" style="font-size: 2.5rem;" data-i18n="nav_work">Work</a>
+        <a href="#selected" class="nav-item" style="font-size: 2.5rem;" data-i18n="nav_selected">Selected</a>
+        <a href="./building.html" class="nav-item" style="font-size: 2.5rem;" data-i18n="nav_build">Build Log</a>
+        <a href="#connect" class="nav-item" style="font-size: 2.5rem;" data-i18n="nav_connect">Connect</a>
+    </div>
+
+    <main>
+        <section class="hero reveal">
+            <span class="signature-line" data-i18n="hero_name">luca sumitra isa dewê fischer</span>
+            <h1 data-i18n="hero_headline">Turn meaning into regenerative growth.</h1>
+            <p class="subheadline" data-i18n="hero_subheadline">I help purpose-led teams turn deep vision into clear offers and calm, scalable systems. AI where it helps. Web3 where coordination matters. Always grounded.</p>
+            <div class="cta-group">
+                <a href="#connect" class="btn btn-primary" data-i18n="hero_primary_cta">Start a conversation</a>
+                <a href="#selected" class="btn btn-secondary" data-i18n="hero_secondary_cta">See selected work</a>
+            </div>
+        </section>
+
+        <section id="story" class="reveal">
+            <span class="section-title" data-i18n="story_title">My path (in 60 seconds)</span>
+            <div class="story-content">
+                <p data-i18n="story_p1">I move between worlds: forest and spreadsheets, ceremony and systems, community and conversion.</p>
+                <p data-i18n="story_p2">I’ve seen what happens when meaningful work stays invisible — and what happens when it’s translated with care.</p>
+                <p data-i18n="story_p3">That’s what I do: I turn living vision into language, structure, and traction — without flattening the soul of the project.</p>
+            </div>
+        </section>
+
+        <section id="work" class="reveal">
+            <div class="bio-orb" style="top: -15%; right: -10%;"></div>
+            <span class="section-title" data-i18n="work_title">What I bring</span>
+            <h2 class="h2" style="font-size: 4rem; line-height: 1;" data-i18n="work_intro">I work best where things are real — but not yet clear.</h2>
+            <ul class="work-list">
+                <li data-i18n="work_li1">Offer clarity (people instantly get it)</li>
+                <li data-i18n="work_li2">Funnels that feel good (and convert)</li>
+                <li data-i18n="work_li3">AI-assisted ops (less chaos, more output)</li>
+                <li data-i18n="work_li4">Web3-native community thinking (coordination, participation, ownership)</li>
+                <li data-i18n="work_li5">Clean tracking + calm iteration</li>
+            </ul>
+            <p style="margin-top: 3rem; font-weight: 500; font-size: 1.2rem; color: var(--accent);" data-i18n="work_line">No pressure tactics. No noise. Just systems that hold.</p>
+        </section>
+
+        <section id="selected" class="reveal">
+            <span class="section-title" data-i18n="selected_title">Selected work</span>
+            <div class="work-grid">
+                <div class="card">
+                    <h3 data-i18n="tile1_title">AMA.RUNA (Switzerland / Brazilian Amazon)</h3>
+                    <p data-i18n="tile1_copy">Swiss non-profit partnering long-term with Indigenous communities in the Brazilian Amazon, especially the Huni Kuin people. I help translate Indigenous-led values into narratives and systems that engage schools, communities, and supporters — without extraction.</p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="tile2_title">UTOPIA MAPS (Web3)</h3>
+                    <p data-i18n="tile2_copy">Decentralized mapping and coordination for communities. Connect locally, organize collaboratively, co-create real-world initiatives.</p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="tile3_title">Tribal Yoga</h3>
+                    <p data-i18n="tile3_copy">A decentralized movement of embodied liberation. I support offer clarity, content systems, and community growth — without losing depth.</p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="tile4_title">Soul Craftery</h3>
+                    <p data-i18n="tile4_copy">A growth studio for clean digital revenue systems. One-pagers, conversion paths, ads + iteration — built to scale without burnout.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="connect" class="reveal">
+            <div class="bio-orb" style="bottom: -10%; left: -15%;"></div>
+            <span class="section-title" data-i18n="connect_title">Start a conversation</span>
+            <div class="story-content">
+                <p data-i18n="connect_copy">If you’re responsible for a project that needs clearer direction, send me:</p>
+                <p data-i18n="connect_list">1) what you’re building<br>2) what you want to grow<br>3) what feels stuck<br>4) your timeline</p>
+            </div>
+            <div class="connect-links">
+                <a href="https://x.com/luca_sumitra" class="social-link" target="_blank">
+                    <svg width="26" height="26" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    <span data-i18n="btn_dm_x">DM on X</span>
+                </a>
+                <a href="https://www.linkedin.com/in/luca-fischer-87b2ba204/" class="social-link" target="_blank">
+                    <svg width="26" height="26" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    <span data-i18n="btn_msg_li">Message on LinkedIn</span>
+                </a>
+                <a href="mailto:hello@lucafischer.com" class="social-link">
+                    <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    <span data-i18n="btn_email">Email me</span>
+                </a>
+            </div>
+            <p style="margin-top: 4rem; font-size: 0.85rem; color: var(--fg-muted); letter-spacing: 0.15em;" data-i18n="connect_small">I reply personally.</p>
+            <p class="closing-line">Hari Om · Haux Haux</p>
+        </section>
+    </main>
+
+    <footer>
+        <p data-i18n="footer_text">Built with care, clarity, and respect for living systems.</p>
+        <div style="margin-top: 3rem; display: flex; justify-content: center; gap: 3rem;">
+            <a href="https://github.com/sumitrabliss" class="social-link" target="_blank" style="opacity: 0.4">GitHub</a>
+            <a href="https://www.instagram.com/" class="social-link" target="_blank" style="opacity: 0.4">Instagram</a>
+        </div>
+    </footer>
+
+    <script>
+        // --- Spore Particle System ---
+        const canvas = document.getElementById('sporeCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouse = { x: null, y: null };
+
+        function initParticles() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            particles = [];
+            const count = Math.min(window.innerWidth / 12, 100);
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    size: Math.random() * 2 + 0.5,
+                    vx: (Math.random() - 0.5) * 0.15,
+                    vy: (Math.random() - 0.5) * 0.15,
+                    opacity: Math.random() * 0.6,
+                    pulse: Math.random() * 0.02
+                });
+            }
         }
-      });
-      document.addEventListener('mouseout', (e) => {
-        if (e.target.closest('a, button')) {
-          document.body.classList.remove('cursor-hover');
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.opacity += p.pulse;
+                if (p.opacity > 0.6 || p.opacity < 0.1) p.pulse *= -1;
+
+                if (p.x < 0) p.x = canvas.width;
+                if (p.x > canvas.width) p.x = 0;
+                if (p.y < 0) p.y = canvas.height;
+                if (p.y > canvas.height) p.y = 0;
+
+                if (mouse.x) {
+                    const dx = mouse.x - p.x;
+                    const dy = mouse.y - p.y;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+                    if (dist < 200) {
+                        p.x -= dx * 0.005;
+                        p.y -= dy * 0.005;
+                    }
+                }
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(163, 217, 165, ${p.opacity})`;
+                ctx.fill();
+            });
+            requestAnimationFrame(animateParticles);
         }
-      });
+
+        window.addEventListener('mousemove', e => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        window.addEventListener('resize', initParticles);
+        initParticles();
+        animateParticles();
+
+        // --- Translations ---
+        const translations = {
+            en: {
+                nav_work: "Work", nav_selected: "Selected", nav_build: "Build Log", nav_connect: "Connect",
+                hero_name: "luca sumitra isa dewê fischer",
+                hero_headline: "Turn meaning into regenerative growth.",
+                hero_subheadline: "I help purpose-led teams turn deep vision into clear offers and calm, scalable systems. AI where it helps. Web3 where coordination matters. Always grounded.",
+                hero_primary_cta: "Start a conversation", hero_secondary_cta: "See selected work",
+                story_title: "My path (in 60 seconds)",
+                story_p1: "I move between worlds: forest and spreadsheets, ceremony and systems, community and conversion.",
+                story_p2: "I’ve seen what happens when meaningful work stays invisible — and what happens when it’s translated with care.",
+                story_p3: "That’s what I do: I turn living vision into language, structure, and traction — without flattening the soul of the project.",
+                work_title: "What I bring",
+                work_intro: "I work best where things are real — but not yet clear.",
+                work_li1: "Offer clarity (people instantly get it)",
+                work_li2: "Funnels that feel good (and convert)",
+                work_li3: "AI-assisted ops (less chaos, more output)",
+                work_li4: "Web3-native community thinking (coordination, participation, ownership)",
+                work_li5: "Clean tracking + calm iteration",
+                work_line: "No pressure tactics. No noise. Just systems that hold.",
+                selected_title: "Selected work",
+                tile1_title: "AMA.RUNA (Switzerland / Brazilian Amazon)",
+                tile1_copy: "Swiss non-profit partnering long-term with Indigenous communities in the Brazilian Amazon, especially the Huni Kuin people. I help translate Indigenous-led values into narratives and systems that engage schools, communities, and supporters — without extraction.",
+                tile2_title: "UTOPIA MAPS (Web3)",
+                tile2_copy: "Decentralized mapping and coordination for communities. Connect locally, organize collaboratively, co-create real-world initiatives.",
+                tile3_title: "Tribal Yoga",
+                tile3_copy: "A decentralized movement of embodied liberation. I support offer clarity, content systems, and community growth — without losing depth.",
+                tile4_title: "Soul Craftery",
+                tile4_copy: "A growth studio for clean digital revenue systems. One-pagers, conversion paths, ads + iteration — built to scale without burnout.",
+                connect_title: "Start a conversation",
+                connect_copy: "If you’re responsible for a project that needs clearer direction, send me:",
+                connect_list: "1) what you’re building<br>2) what you want to grow<br>3) what feels stuck<br>4) your timeline",
+                btn_dm_x: "DM on X", btn_msg_li: "Message on LinkedIn", btn_email: "Email me",
+                connect_small: "I reply personally.",
+                footer_text: "Built with care, clarity, and respect for living systems."
+            },
+            de: {
+                nav_work: "Fokus", nav_selected: "Projekte", nav_build: "Build Log", nav_connect: "Kontakt",
+                hero_name: "luca sumitra isa dewê fischer",
+                hero_headline: "Mach aus Bedeutung regenerative Wirkung.",
+                hero_subheadline: "Ich helfe purpose-led Teams, tiefe Vision in klare Angebote und ruhige, skalierbare Systeme zu übersetzen. AI wo sie hilft. Web3 wo Koordination zählt. Immer geerdet.",
+                hero_primary_cta: "Gespräch starten", hero_secondary_cta: "Ausgewählte Projekte",
+                story_title: "Mein Weg (in 60 Sekunden)",
+                story_p1: "Ich bewege mich zwischen Welten: Wald und Tabellen, Praxis und Systeme, Community und Conversion.",
+                story_p2: "Ich habe gesehen, was passiert, wenn sinnvolle Arbeit unsichtbar bleibt — und was passiert, wenn man sie mit Sorgfalt übersetzt.",
+                story_p3: "Genau das tue ich: Ich übersetze lebendige Vision in Sprache, Struktur und Traktion — ohne die Seele eines Projekts glattzubügeln.",
+                work_title: "Was ich mitbringe",
+                work_intro: "Ich arbeite am besten dort, wo es echt ist — aber noch nicht klar.",
+                work_li1: "Angebots-Klarheit (sofort verständlich)",
+                work_li2: "Funnels, die sich gut anfühlen (und konvertieren)",
+                work_li3: "AI-gestützte Ops (weniger Chaos, mehr Output)",
+                work_li4: "Web3-natives Community-Denken (Koordination, Teilhabe, Ownership)",
+                work_li5: "Sauberes Tracking + ruhige Iteration",
+                work_line: "Keine Drucktaktiken. Kein Lärm. Systeme, die tragen.",
+                selected_title: "Ausgewählte Projekte",
+                tile1_title: "AMA.RUNA (Schweiz / Brasilianischer Amazonas)",
+                tile1_copy: "Schweizer Non-Profit mit langfristigen Partnerschaften mit indigenen Communities im brasilianischen Amazonas, besonders den Huni Kuin. Ich helfe, indigene Werte in Narrative und Systeme zu übersetzen, die Schulen, Communities und Unterstützer:innen verbinden — ohne Extraktion.",
+                tile2_title: "UTOPIA MAPS (Web3)",
+                tile2_copy: "Dezentrales Mapping und Koordination für Communities. Lokal verbinden, gemeinsam organisieren, reale Initiativen co-kreieren.",
+                tile3_title: "Tribal Yoga",
+                tile3_copy: "Eine dezentrale Bewegung verkörperter Befreiung. Ich unterstütze Angebots-Klarheit, Content-Systeme und Community-Wachstum — ohne Tiefe zu verlieren.",
+                tile4_title: "Soul Craftery",
+                tile4_copy: "Growth Studio für saubere digitale Revenue-Systeme. One-Pager, Conversion-Pfade, Ads + Iteration — skalierbar ohne Burnout.",
+                connect_title: "Gespräch starten",
+                connect_copy: "Wenn du Verantwortung für ein Projekt trägst, das klarere Richtung braucht, schick mir:",
+                connect_list: "1) was du baust<br>2) was du wachsen lassen willst<br>3) was gerade hängt<br>4) deinen Zeitrahmen",
+                btn_dm_x: "DM auf X", btn_msg_li: "Nachricht auf LinkedIn", btn_email: "E-Mail",
+                connect_small: "Ich antworte persönlich.",
+                footer_text: "Gebaut mit Sorgfalt, Klarheit und Respekt für lebendige Systeme."
+            }
+        };
+
+        let currentLang = localStorage.getItem('lang') || 'en';
+        let currentTheme = localStorage.getItem('theme') || 'dark';
+
+        function applyTheme(theme) {
+            document.body.setAttribute('data-theme', theme);
+            document.getElementById('themeIcon').textContent = theme === 'dark' ? '🌙' : '☀️';
+            localStorage.setItem('theme', theme);
+        }
+
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(currentTheme);
+        });
+
+        function setLang(lang) {
+            currentLang = lang;
+            localStorage.setItem('lang', lang);
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            document.getElementById('btn-de').classList.toggle('active', lang === 'de');
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) el.innerHTML = translations[lang][key];
+            });
+            document.documentElement.lang = lang;
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section').forEach(section => observer.observe(section));
+
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+            menuToggle.innerHTML = mobileMenu.classList.contains('open') 
+                ? '<svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M6 18L18 6M6 6l12 12"/></svg>'
+                : '<svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M4 8h20M4 16h20M4 24h20"/></svg>';
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            applyTheme(currentTheme);
+            setLang(currentLang);
+        });
     </script>
-  </body>
+</body>
 </html>
