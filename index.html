@@ -290,6 +290,49 @@
             justify-content: center;
         }
 
+        /* Hero Layout for Image */
+        .hero-layout {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3rem;
+            text-align: center;
+        }
+
+        @media (min-width: 1024px) {
+            .hero-layout {
+                flex-direction: row;
+                text-align: left;
+                align-items: center;
+                gap: 5rem;
+            }
+        }
+
+        .hero-image-wrapper {
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .hero-headshot {
+            width: clamp(180px, 25vw, 280px);
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            border-radius: 50px;
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px var(--accent-glow);
+            animation: headshotBreathe 10s infinite ease-in-out;
+            display: block;
+        }
+
+        @keyframes headshotBreathe {
+            0%, 100% { transform: scale(1) translateY(0); opacity: 0.95; }
+            50% { transform: scale(1.03) translateY(-8px); opacity: 1; }
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
         .subheadline {
             font-size: clamp(1.4rem, 4vw, 2.2rem);
             color: var(--fg-muted);
@@ -548,12 +591,19 @@
     <main>
         <!-- Hero Section -->
         <section class="hero reveal">
-            <span class="signature-line" data-i18n="hero_name">luca sumitra isa dewê fischer</span>
-            <h1 data-i18n="hero_headline">Turn meaning into regenerative growth.</h1>
-            <p class="subheadline" data-i18n="hero_subheadline">I help purpose-led teams turn deep vision into clear offers and calm, scalable systems. AI where it helps. Web3 where coordination matters. Always grounded.</p>
-            <div class="cta-group">
-                <a href="#connect" class="btn btn-primary" data-i18n="hero_primary_cta">Start a conversation</a>
-                <a href="#selected" class="btn btn-secondary" data-i18n="hero_secondary_cta">See selected work</a>
+            <div class="hero-layout">
+                <div class="hero-image-wrapper hov">
+                    <img src="headshot.jpg" alt="Luca Fischer" class="hero-headshot">
+                </div>
+                <div class="hero-text">
+                    <span class="signature-line" data-i18n="hero_name">luca sumitra isa dewê fischer</span>
+                    <h1 data-i18n="hero_headline">Turn meaning into regenerative growth.</h1>
+                    <p class="subheadline" data-i18n="hero_subheadline">I help purpose-led teams turn deep vision into clear offers and calm, scalable systems. AI where it helps. Web3 where coordination matters. Always grounded.</p>
+                    <div class="cta-group">
+                        <a href="#connect" class="btn btn-primary" data-i18n="hero_primary_cta">Start a conversation</a>
+                        <a href="#selected" class="btn btn-secondary" data-i18n="hero_secondary_cta">See selected work</a>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -586,19 +636,19 @@
         <section id="selected" class="reveal">
             <span class="section-title" data-i18n="selected_title">Selected work</span>
             <div class="work-grid">
-                <div class="card">
+                <div class="card hov">
                     <h3 data-i18n="tile1_title">AMA.RUNA (Switzerland / Brazil)</h3>
                     <p data-i18n="tile1_copy">Swiss non-profit partnering long-term with Indigenous communities in the Brazilian Amazon, especially the Huni Kuin people. I help translate Indigenous-led values into narratives and systems that engage schools, communities, and supporters — without extraction.</p>
                 </div>
-                <div class="card">
+                <div class="card hov">
                     <h3 data-i18n="tile2_title">UTOPIA MAPS (Web3)</h3>
                     <p data-i18n="tile2_copy">Decentralized mapping and coordination for communities. Connect locally, organize collaboratively, co-create real-world initiatives.</p>
                 </div>
-                <div class="card">
+                <div class="card hov">
                     <h3 data-i18n="tile3_title">Tribal Yoga</h3>
                     <p data-i18n="tile3_copy">A decentralized movement of embodied liberation. I support offer clarity, content systems, and community growth — without losing depth.</p>
                 </div>
-                <div class="card">
+                <div class="card hov">
                     <h3 data-i18n="tile4_title">Soul Craftery</h3>
                     <p data-i18n="tile4_copy">A growth studio for clean digital revenue systems. One-pagers, conversion paths, ads + iteration — built to scale without burnout.</p>
                 </div>
