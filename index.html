@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luca “Sumitra Isa Dewè” Fischer | Regenerative Systems</title>
+    <meta name="description" content="I build growth systems like nature builds ecosystems: Clear, resilient, alive. Personal website of Luca Fischer.">
+    
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Luca “Sumitra Isa Dewè” Fischer">
+    <meta property="og:description" content="Turn meaning into regenerative growth. Clear, resilient, alive systems.">
+    <meta property="og:image" content="https://picsum.photos/1200/630?grayscale">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Palette: Deep forest-charcoal background, off-white text, moss green accents, gold highlights */
+            --bg: #0a0d0c;
+            --bg-glass: rgba(10, 13, 12, 0.8);
+            --text: #f5f5f0;
+            --text-dim: rgba(245, 245, 240, 0.7);
+            --accent: #88a070; /* Bioluminescent moss */
+            --accent-glow: rgba(136, 160, 112, 0.3);
+            --highlight: #c5a059; /* Soft gold */
+            --noise: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            --transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            --max-width: 1200px;
+        }
+
+        [data-theme="light"] {
+            --bg: #f5f5f0;
+            --bg-glass: rgba(245, 245, 240, 0.8);
+            --text: #1a1f1d;
+            --text-dim: rgba(26, 31, 29, 0.7);
+            --accent: #5d754a;
+            --accent-glow: rgba(93, 117, 74, 0.1);
+            --highlight: #a67c37;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--noise);
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        /* Background Effects */
+        .universe-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(136, 160, 112, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Mycelium Pattern overlay */
+        .mycelium-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 50 Q 25 25, 50 50 T 100 50' stroke='rgba(136, 160, 112, 0.05)' fill='transparent'/%3E%3Cpath d='M50 0 Q 75 25, 50 50 T 50 100' stroke='rgba(136, 160, 112, 0.03)' fill='transparent'/%3E%3C/svg%3E");
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Layout */
+        section {
+            padding: clamp(4rem, 10vw, 8rem) 1.5rem;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: var(--transition);
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background: var(--bg-glass);
+            border-bottom: 1px solid rgba(136, 160, 112, 0.1);
+            padding: 1rem 1.5rem;
+        }
+
+        .nav-content {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-size: 0.9rem;
+            font-weight: 500;
+            opacity: 0.7;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            background: transparent;
+            border: 1px solid rgba(136, 160, 112, 0.2);
+            color: var(--text);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            background: var(--accent-glow);
+            transform: rotate(15deg);
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            text-align: left;
+            position: relative;
+        }
+
+        .hero-name {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .hero-position {
+            font-size: 0.95rem;
+            color: var(--text-dim);
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            line-height: 1.1;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            max-width: 900px;
+        }
+
+        .subheadline {
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
+            color: var(--text-dim);
+            max-width: 600px;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .mycelium-pulse {
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            position: relative;
+            margin-top: 1rem;
+        }
+
+        .mycelium-pulse::after {
+            content: '';
+            position: absolute;
+            top: -100%; left: -100%; right: -100%; bottom: -100%;
+            border: 1px solid var(--accent);
+            border-radius: 50%;
+            animation: pulse 3s infinite ease-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+
+        /* Work Section */
+        .section-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            display: block;
+        }
+
+        .work-intro {
+            font-size: 1.8rem;
+            margin-bottom: 3rem;
+            max-width: 600px;
+        }
+
+        .work-list {
+            list-style: none;
+            display: grid;
+            gap: 1.5rem;
+            max-width: 700px;
+        }
+
+        .work-list li {
+            font-size: 1.1rem;
+            padding-left: 2rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(136, 160, 112, 0.1);
+            transition: var(--transition);
+        }
+
+        .work-list li:hover {
+            border-bottom-color: var(--accent);
+            padding-left: 2.5rem;
+        }
+
+        .work-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--highlight);
+        }
+
+        .work-closing {
+            margin-top: 3rem;
+            font-style: italic;
+            color: var(--text-dim);
+        }
+
+        /* Selected Grid */
+        .selected-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .tile {
+            background: rgba(136, 160, 112, 0.03);
+            border: 1px solid rgba(136, 160, 112, 0.1);
+            padding: 2.5rem;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .tile:hover {
+            background: rgba(136, 160, 112, 0.07);
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .tile h3 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--highlight);
+        }
+
+        .tile p {
+            font-size: 0.95rem;
+            color: var(--text-dim);
+            line-height: 1.7;
+        }
+
+        /* Apply / Conversation */
+        .apply-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: flex-start;
+        }
+
+        @media (max-width: 768px) {
+            .apply-content { grid-template-columns: 1fr; gap: 2rem; }
+            .nav-links { display: none; }
+        }
+
+        .apply-steps {
+            list-style: none;
+            counter-reset: steps;
+        }
+
+        .apply-steps li {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 1rem;
+            color: var(--text-dim);
+        }
+
+        .apply-steps li::before {
+            counter-increment: steps;
+            content: counter(steps) ')';
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: 1px solid var(--accent);
+            background: transparent;
+            color: var(--text);
+            text-decoration: none;
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background: var(--accent);
+            color: var(--bg);
+        }
+
+        .subtle-line {
+            margin-top: 3rem;
+            font-size: 0.8rem;
+            opacity: 0.5;
+            letter-spacing: 0.1em;
+        }
+
+        /* Connect */
+        .connect-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .connect-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--text);
+            transition: var(--transition);
+        }
+
+        .connect-item:hover {
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .connect-item span {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-dim);
+        }
+
+        .connect-item b {
+            font-size: 1.2rem;
+            font-weight: 400;
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 1.5rem;
+            text-align: center;
+            border-top: 1px solid rgba(136, 160, 112, 0.1);
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        /* Utils */
+        .reveal-on-scroll {
+            transition: transform 0.8s ease, opacity 0.8s ease;
+        }
+    </style>
+</head>
+<body data-theme="dark">
+    <div class="universe-bg"></div>
+    <div class="mycelium-overlay"></div>
+
+    <nav>
+        <div class="nav-content">
+            <div class="nav-links">
+                <a href="#work">Work</a>
+                <a href="#selected">Selected</a>
+                <a href="#apply">Apply</a>
+                <a href="#connect">Connect</a>
+            </div>
+            <button class="theme-toggle" id="theme-toggle" title="Toggle Theme">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <!-- HERO -->
+        <section id="hero" class="hero">
+            <div class="hero-name">Luca “Sumitra Isa Dewè” Fischer</div>
+            <div class="hero-position">I build growth systems like nature builds ecosystems: Clear, resilient, alive.</div>
+            <h1>Turn meaning into regenerative growth.</h1>
+            <p class="subheadline">
+                I help purpose-led teams turn deep vision into clear offers and calm, scalable systems.
+                AI where it helps. Web3 where coordination matters. Always grounded.
+            </p>
+            <div class="mycelium-pulse"></div>
+        </section>
+
+        <!-- WORK -->
+        <section id="work">
+            <span class="section-title">What I bring</span>
+            <p class="work-intro">I work best where things are real, but not yet clear.</p>
+            <ul class="work-list">
+                <li>Offer clarity — so people instantly understand the value</li>
+                <li>Funnels that feel good — and actually convert</li>
+                <li>AI-assisted operations — less chaos, more focus</li>
+                <li>Web3-native thinking — when coordination, participation, or ownership matter</li>
+                <li>Clean tracking and calm iteration — no panic-driven decisions</li>
+            </ul>
+            <p class="work-closing">No pressure tactics. No noise. Just systems that hold.</p>
+        </section>
+
+        <!-- SELECTED -->
+        <section id="selected">
+            <span class="section-title">Selected work</span>
+            <div class="selected-grid">
+                <div class="tile">
+                    <h3>AMA.RUNA</h3>
+                    <p>Swiss non-profit working in long-term partnership with Indigenous communities in the Brazilian Amazon, especially the Huni Kuin people.</p>
+                    <p>I help translate Indigenous-led values into narratives and systems that engage schools, communities, and supporters. Without extraction.</p>
+                </div>
+                <div class="tile">
+                    <h3>UTOPIA MAPS</h3>
+                    <p>Decentralized mapping and coordination for communities. Connect locally, organize collaboratively and co-create real-world initiatives.</p>
+                </div>
+                <div class="tile">
+                    <h3>Tribal Yoga</h3>
+                    <p>A decentralized movement of embodied liberation.</p>
+                </div>
+                <div class="tile">
+                    <h3>Soul Craftery</h3>
+                    <p>One-pagers, conversion paths, ads, and iteration. Built to scale without burnout.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- APPLY -->
+        <section id="apply">
+            <span class="section-title">Start a conversation</span>
+            <div class="apply-content">
+                <div>
+                    <p style="font-size: 1.2rem; margin-bottom: 2rem;">If you’re responsible for a project that needs clearer direction, send me:</p>
+                    <ul class="apply-steps">
+                        <li>what you’re building</li>
+                        <li>what you want to grow</li>
+                        <li>what currently feels stuck</li>
+                        <li>your timeline</li>
+                    </ul>
+                    <p style="margin-top: 2rem; opacity: 0.7;">I reply personally.</p>
+                </div>
+                <div class="button-group">
+                    <a href="https://x.com/luca_sumitra" class="btn" target="_blank">DM on X</a>
+                    <a href="https://www.linkedin.com/in/luca-fischer-87b2ba204/" class="btn" target="_blank">Message on LinkedIn</a>
+                    <a href="mailto:hello@lucafischer.com" class="btn">Email me</a>
+                </div>
+            </div>
+            <p class="subtle-line">lokah samastah sukhino bhavantu</p>
+        </section>
+
+        <!-- CONNECT -->
+        <section id="connect">
+            <span class="section-title">Connect</span>
+            <div class="connect-links">
+                <a href="https://x.com/luca_sumitra" class="connect-item" target="_blank">
+                    <span>Platform</span>
+                    <b>X</b>
+                </a>
+                <a href="https://www.linkedin.com/in/luca-fischer-87b2ba204/" class="connect-item" target="_blank">
+                    <span>Professional</span>
+                    <b>LinkedIn</b>
+                </a>
+                <a href="https://github.com/sumitrabliss" class="connect-item" target="_blank">
+                    <span>Code</span>
+                    <b>GitHub</b>
+                </a>
+                <a href="https://www.instagram.com/" class="connect-item" target="_blank">
+                    <span>Visuals</span>
+                    <b>Instagram</b>
+                </a>
+            </div>
+            <p style="margin-top: 3rem; opacity: 0.7;">Best entry: DM on X or LinkedIn.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>Built with care, clarity, and respect for living systems.</p>
+        <p style="margin-top: 1rem; opacity: 0.4;">&copy; <span id="year"></span> Luca Fischer</p>
+    </footer>
+
+    <script>
+        // Set year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Theme Toggle Logic
+        const body = document.body;
+        const themeBtn = document.getElementById('theme-toggle');
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+
+        body.setAttribute('data-theme', currentTheme);
+
+        themeBtn.addEventListener('click', () => {
+            const newTheme = body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // Intersection Observer for Section Reveal
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Subtle Mycelium Pulse follow logic (optional flavor)
+        window.addEventListener('scroll', () => {
+            const scrolled = window.scrollY;
+            const universe = document.querySelector('.universe-bg');
+            if(universe) {
+                universe.style.transform = `translateY(${scrolled * 0.1}px)`;
+            }
+        });
+
+        // Smooth nav highlight or other micro-interactions could go here
+    </script>
+</body>
+</html>
