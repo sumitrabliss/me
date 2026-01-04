@@ -315,14 +315,18 @@
         .hero-image-wrapper {
             position: relative;
             flex-shrink: 0;
-            /* No background or restricted padding/frames */
         }
 
         .hero-headshot {
-            max-width: clamp(200px, 40vw, 400px); /* Responsive but keeps original feel */
+            max-width: clamp(250px, 45vw, 500px); /* Displaying comfortably large but responsive */
+            width: 100%;
             height: auto;
             display: block;
-            /* Stationary, no border, no shadow as requested */
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+            background: none;
+            animation: none;
         }
 
         .hero-text {
