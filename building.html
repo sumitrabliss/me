@@ -140,15 +140,24 @@
         }
 
         .reaction-btn {
-            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
         .reaction-btn:hover:not(:disabled) {
             transform: scale(1.1);
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--moss);
+            box-shadow: 0 0 10px rgba(46, 213, 115, 0.2);
         }
-        .reaction-btn:active:not(:disabled) { transform: scale(1.4); }
-        .reaction-btn:disabled { cursor: default; filter: grayscale(0.5); opacity: 0.8; }
-        .reacted { border-color: var(--moss) !important; background: rgba(46, 213, 115, 0.1) !important; }
+        .reaction-btn:active:not(:disabled) { transform: scale(1.3); }
+        .reaction-btn:disabled { cursor: default; }
+        .reacted { 
+            border-color: var(--moss) !important; 
+            background: rgba(46, 213, 115, 0.15) !important;
+            box-shadow: inset 0 0 10px rgba(46, 213, 115, 0.1);
+        }
+        .reacted .reaction-emoji { filter: drop-shadow(0 0 4px var(--moss)); }
     </style>
 </head>
 <body class="p-4 md:p-8">
@@ -227,7 +236,7 @@
         <main class="relative">
             <div class="timeline-line"></div>
             <div id="timelineContainer" class="space-y-12">
-                <!-- Entries -->
+                <!-- Entries will be rendered here -->
             </div>
             
             <div id="emptyState" class="text-center py-32 hidden">
@@ -273,8 +282,8 @@
 
         function init() {
             // Data loading
-            const stored = localStorage.getItem('vibe_entries');
-            if (stored) entries = JSON.parse(stored);
+            const storedEntries = localStorage.getItem('vibe_entries');
+            if (storedEntries) entries = JSON.parse(storedEntries);
             
             const storedReacts = localStorage.getItem('vibe_reactions_log');
             if (storedReacts) reactionsLog = JSON.parse(storedReacts);
@@ -396,14 +405,14 @@
                                 <div class="flex justify-between items-center pt-2">
                                     <div class="flex gap-4">
                                         ${['🔥', '💪', '🚀'].map(emoji => {
-                                            const key = emoji === '🔥' ? 'fire' : emoji === '💪' ? 'muscle' : 'rocket';
-                                            const count = entry.reactions ? entry.reactions[key] || 0 : 0;
-                                            const hasReacted = reactionsLog[`${entry.id}_${key}`];
+                                            const type = emoji === '🔥' ? 'fire' : emoji === '💪' ? 'muscle' : 'rocket';
+                                            const count = entry.reactions ? entry.reactions[type] || 0 : 0;
+                                            const hasReacted = reactionsLog[`${entry.id}_${type}`];
                                             return `
-                                                <button onclick="react('${entry.id}', '${key}')" 
+                                                <button onclick="react('${entry.id}', '${type}')" 
                                                         ${hasReacted ? 'disabled' : ''}
-                                                        class="reaction-btn group flex items-center gap-2 px-3 py-1.5 rounded-xl border border-white border-opacity-5 hover:border-opacity-20 transition-all ${hasReacted ? 'reacted' : ''}">
-                                                    <span class="text-lg grayscale-0 group-hover:filter-none">${emoji}</span>
+                                                        class="reaction-btn group flex items-center gap-2 px-3 py-1.5 rounded-xl transition-all ${hasReacted ? 'reacted' : ''}">
+                                                    <span class="reaction-emoji text-lg grayscale-0 group-hover:filter-none transition-all">${emoji}</span>
                                                     <span class="text-xs mono font-bold opacity-50">${count}</span>
                                                 </button>
                                             `;
@@ -454,6 +463,7 @@
 
         window.react = (entryId, type) => {
             const logKey = `${entryId}_${type}`;
+            // Limit to one reaction per entry per visitor per emoji
             if (reactionsLog[logKey]) return;
 
             const entry = entries.find(e => e.id === entryId);
@@ -490,7 +500,6 @@
             entries.push(newEntry);
             save();
             resetInputs();
-            // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
@@ -503,7 +512,7 @@
                     writeSection.classList.remove('hidden');
                     lockStatusIcon.textContent = '🔓';
                     lockStatusLabel.textContent = 'Write mode active';
-                    renderTimeline(); // Show delete buttons
+                    renderTimeline();
                 } else if (pass !== null) {
                     alert("The ecosystem rejects this input.");
                 }
@@ -513,19 +522,19 @@
                 writeSection.classList.add('hidden');
                 lockStatusIcon.textContent = '🔒';
                 lockStatusLabel.textContent = 'Locked (public view).';
-                renderTimeline(); // Hide delete buttons
+                renderTimeline();
             }
         });
 
         themeToggle.addEventListener('click', () => toggleTheme());
 
         exportBtn.addEventListener('click', () => {
-            const dataStr = JSON.stringify({ entries, reactionsLog, version: '2.0' }, null, 2);
+            const dataStr = JSON.stringify({ entries, reactionsLog, version: '2.1' }, null, 2);
             const blob = new Blob([dataStr], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
-            link.download = `living-systems-lab-${getBerlinDateString()}.json`;
+            link.download = `living-systems-lab-backup-${getBerlinDateString()}.json`;
             link.click();
         });
 
@@ -537,7 +546,6 @@
                 try {
                     const imported = JSON.parse(event.target.result);
                     if (imported.entries) {
-                        // Merge logic: avoid duplicates by ID
                         const existingIds = new Set(entries.map(e => e.id));
                         const newOnes = imported.entries.filter(e => !existingIds.has(e.id));
                         entries = [...entries, ...newOnes];
@@ -546,10 +554,10 @@
                             reactionsLog = { ...reactionsLog, ...imported.reactionsLog };
                         }
                         save();
-                        alert(`${newOnes.length} nodes merged into the collective.`);
+                        alert(`${newOnes.length} nodes successfully merged.`);
                     }
                 } catch (err) {
-                    alert("Data corruption detected. Import failed.");
+                    alert("Import failed: JSON structure is unrecognized.");
                 }
             };
             reader.readAsText(file);
