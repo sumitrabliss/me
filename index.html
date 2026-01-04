@@ -315,24 +315,14 @@
         .hero-image-wrapper {
             position: relative;
             flex-shrink: 0;
-            background: var(--bg-secondary); /* Fallback color */
-            border-radius: 50px;
+            /* No background or restricted padding/frames */
         }
 
         .hero-headshot {
-            width: clamp(180px, 25vw, 280px);
-            aspect-ratio: 1/1;
-            object-fit: cover;
-            border-radius: 50px;
-            border: 1px solid var(--border);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px var(--accent-glow);
-            animation: headshotBreathe 10s infinite ease-in-out;
+            max-width: clamp(200px, 40vw, 400px); /* Responsive but keeps original feel */
+            height: auto;
             display: block;
-        }
-
-        @keyframes headshotBreathe {
-            0%, 100% { transform: scale(1) translateY(0); opacity: 0.95; }
-            50% { transform: scale(1.03) translateY(-8px); opacity: 1; }
+            /* Stationary, no border, no shadow as requested */
         }
 
         .hero-text {
