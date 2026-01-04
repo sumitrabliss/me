@@ -1,439 +1,146 @@
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Luca “Sumitra Isa Dewè” Fischer</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Luca Fischer | Sumitra Isa Dewè</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --transition-speed: 0.8s;
-            --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
-            --forest-emerald: #064e3b;
-        }
+      :root {
+        --cursor-x: 0px;
+        --cursor-y: 0px;
+        --glow-x: 50%;
+        --glow-y: 50%;
+      }
+      body {
+        font-family: 'Inter', sans-serif;
+        scroll-behavior: smooth;
+        cursor: none; /* Hide default cursor */
+      }
+      a, button {
+        cursor: none;
+      }
+      .font-serif {
+        font-family: 'Playfair Display', serif;
+      }
+      
+      /* Custom Cursor */
+      #custom-cursor {
+        position: fixed;
+        width: 8px;
+        height: 8px;
+        background: #10b981;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transition: transform 0.1s ease-out;
+        transform: translate(-50%, -50%);
+        left: var(--cursor-x);
+        top: var(--cursor-y);
+      }
+      #custom-cursor-outline {
+        position: fixed;
+        width: 40px;
+        height: 40px;
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9998;
+        transition: transform 0.2s ease-out, width 0.3s, height 0.3s;
+        transform: translate(-50%, -50%);
+        left: var(--cursor-x);
+        top: var(--cursor-y);
+      }
+      .cursor-hover #custom-cursor-outline {
+        width: 60px;
+        height: 60px;
+        background: rgba(16, 185, 129, 0.1);
+        border-color: rgba(16, 185, 129, 0.6);
+      }
 
-        /* Base Theme */
-        body {
-            font-family: 'Inter', sans-serif;
-            transition: background-color var(--transition-speed) var(--ease-expo), color var(--transition-speed) var(--ease-expo);
-            overflow-x: hidden;
-            cursor: none;
-        }
+      /* Bioluminescent Glow */
+      .flashlight-bg {
+        background: radial-gradient(circle 400px at var(--glow-x) var(--glow-y), rgba(16, 185, 129, 0.08), transparent 80%);
+      }
+      .dark .flashlight-bg {
+        background: radial-gradient(circle 500px at var(--glow-x) var(--glow-y), rgba(16, 185, 129, 0.12), transparent 80%);
+      }
 
-        .font-display { font-family: 'Playfair+Display', serif; }
+      @keyframes drift {
+        0% { transform: translate(0, 0) rotate(0deg); }
+        50% { transform: translate(20px, -20px) rotate(10deg); }
+        100% { transform: translate(0, 0) rotate(0deg); }
+      }
+      .spore {
+        animation: drift 10s ease-in-out infinite;
+      }
 
-        /* Background Colors */
-        .light-mode-bg { background-color: #fdfdfa; }
-        .dark-mode-bg { background-color: #050806; }
+      .huni-kuin-pattern {
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l30 30-30 30L0 30z' fill='none' stroke='%233d7a3d' stroke-opacity='0.1' stroke-width='1'/%3E%3Cpath d='M30 15l15 15-15 15-15-15z' fill='none' stroke='%233d7a3d' stroke-opacity='0.05' stroke-width='1'/%3E%3C/svg%3E");
+        mask-image: radial-gradient(circle 300px at var(--glow-x) var(--glow-y), black, transparent);
+        -webkit-mask-image: radial-gradient(circle 300px at var(--glow-x) var(--glow-y), black, transparent);
+      }
+      .dark .huni-kuin-pattern {
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l30 30-30 30L0 30z' fill='none' stroke='%23e0e7e0' stroke-opacity='0.05' stroke-width='1'/%3E%3Cpath d='M30 15l15 15-15 15-15-15z' fill='none' stroke='%23e0e7e0' stroke-opacity='0.03' stroke-width='1'/%3E%3C/svg%3E");
+      }
 
-        /* Apple-style Glassmorphism */
-        .apple-glass {
-            background: rgba(255, 255, 255, 0.65);
-            backdrop-filter: saturate(180%) blur(25px);
-            -webkit-backdrop-filter: saturate(180%) blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-        }
-        .dark .apple-glass {
-            background: rgba(12, 18, 14, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        /* Custom Forest Cursor */
-        #cursor {
-            position: fixed;
-            width: 12px; height: 12px;
-            background: var(--forest-emerald);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.1s ease-out;
-            mix-blend-mode: difference;
-        }
-        .dark #cursor { background: #34d399; }
-        #cursor-aura {
-            position: fixed;
-            width: 40px; height: 40px;
-            border: 1px solid rgba(5, 150, 105, 0.3);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9998;
-            transition: transform 0.2s var(--ease-expo), width 0.3s, height 0.3s;
-        }
-
-        /* Animations */
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px) rotateX(10deg);
-            transition: opacity 1.4s var(--ease-expo), transform 1.4s var(--ease-expo);
-            perspective: 1000px;
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0) rotateX(0deg);
-        }
-
-        @keyframes drift {
-            0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
-            20% { opacity: 0.5; }
-            80% { opacity: 0.5; }
-            100% { transform: translate(100px, -200px) rotate(360deg); opacity: 0; }
-        }
-        .spore {
-            position: absolute;
-            background: radial-gradient(circle, rgba(52, 211, 153, 0.6) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            animation: drift 15s linear infinite;
-        }
-
-        @keyframes grow {
-            from { stroke-dashoffset: 1000; opacity: 0; }
-            to { stroke-dashoffset: 0; opacity: 1; }
-        }
-        .mycelium-path {
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
-            animation: grow 6s var(--ease-expo) forwards;
-        }
-
-        @keyframes floating {
-            0%, 100% { transform: translate(0, 0); }
-            33% { transform: translate(10px, -15px); }
-            66% { transform: translate(-5px, 10px); }
-        }
-        .animate-blob { animation: floating 20s infinite ease-in-out; }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(5, 150, 105, 0.2); border-radius: 10px; }
-
-        .stagger-1 { transition-delay: 0.1s; }
-        .stagger-2 { transition-delay: 0.2s; }
-        .stagger-3 { transition-delay: 0.3s; }
+      .root-underline {
+        position: relative;
+      }
+      .root-underline::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 50%;
+        width: 0;
+        height: 1px;
+        background: #10b981;
+        box-shadow: 0 0 8px #10b981;
+        transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1), left 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .root-underline:hover::after {
+        width: 100%;
+        left: 0;
+      }
     </style>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        forest: { 800: '#064e3b', 900: '#022c22' },
-                        soil: { 900: '#1a140f', 950: '#0c0a09' },
-                    }
-                }
-            }
-        }
-    </script>
-<script type="importmap">
+  <script type="importmap">
 {
   "imports": {
+    "react/": "https://esm.sh/react@^19.2.3/",
     "react": "https://esm.sh/react@^19.2.3",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/"
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0"
   }
 }
 </script>
 </head>
-<body class="light-mode-bg dark:dark-mode-bg text-soil-900 dark:text-gray-100 antialiased selection:bg-emerald-800 selection:text-white">
-    <div id="cursor"></div>
-    <div id="cursor-aura"></div>
-
-    <!-- Background Layer -->
-    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div class="absolute -top-[20%] -right-[10%] w-[90vw] h-[90vw] rounded-full blur-[140px] bg-emerald-400/10 dark:bg-emerald-900/15 animate-blob"></div>
-        <div id="spore-container"></div>
-        <svg class="absolute inset-0 w-full h-full opacity-[0.08] dark:opacity-[0.2]" xmlns="http://www.w3.org/2000/svg">
-            <g stroke="currentColor" fill="none" strokeWidth="0.8" strokeLinecap="round">
-                <path class="mycelium-path" d="M-10 100 Q 200 50 400 150 T 800 50 T 1200 150" />
-                <path class="mycelium-path" style="animation-delay: 1s" d="M1200 800 Q 900 750 600 850 T 200 750 T -100 850" />
-            </g>
-        </svg>
-        <div class="absolute inset-0 opacity-[0.02] dark:opacity-[0.04]" style="background-image: radial-gradient(circle at 1.5px 1.5px, currentColor 1.5px, transparent 0); background-size: 48px 48px;"></div>
-    </div>
-
-    <!-- Navigation -->
-    <div class="fixed top-6 left-0 right-0 z-[100] px-6 pointer-events-none">
-        <nav class="max-w-fit mx-auto apple-glass rounded-full px-4 py-2 flex items-center gap-2 pointer-events-auto shadow-2xl shadow-black/5">
-            <div class="flex items-center gap-3 pr-2 border-r border-black/5 dark:border-white/5 mr-1">
-                <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-emerald-500 to-indigo-500 flex-shrink-0"></div>
-                <span class="text-[13px] font-semibold tracking-tight hidden sm:block">Luca Fischer</span>
-            </div>
-            <button onclick="toggleLang()" class="px-3 py-1.5 rounded-full text-[11px] font-bold hover:bg-black/5 dark:hover:bg-white/5 transition-all active:scale-95" id="lang-btn">DE</button>
-            <button onclick="toggleTheme()" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-all active:scale-95 overflow-hidden">
-                <span id="theme-icon"></span>
-            </button>
-            <a href="./building.html" class="px-3 py-1.5 rounded-full text-[11px] font-bold hover:bg-black/5 dark:hover:bg-white/5 transition-all">🚀 <span class="hidden sm:inline ml-1" id="nav-build">Follow My Build</span></a>
-        </nav>
-    </div>
-
-    <main class="relative z-10 max-w-6xl mx-auto px-6">
-        <!-- Hero Section -->
-        <section class="pt-48 md:pt-64 pb-32">
-            <div class="max-w-4xl">
-                <h1 class="reveal active text-6xl md:text-8xl lg:text-9xl font-display leading-[0.95] mb-12 tracking-tight" id="hero-headline">
-                    Turn meaning into regenerative growth.
-                </h1>
-                <p class="reveal active stagger-1 text-xl md:text-2xl text-soil-800/70 dark:text-gray-400 leading-relaxed mb-16 font-light max-w-2xl border-l-2 border-emerald-800/20 dark:border-emerald-400/20 pl-8" id="hero-sub">
-                    I help purpose-led teams turn deep vision into clear offers and calm, scalable systems. AI where it helps. Web3 where coordination matters. Always grounded.
-                </p>
-                <div class="reveal active stagger-2 flex flex-col sm:flex-row gap-6">
-                    <button onclick="scrollToContact()" class="group relative px-10 py-5 bg-forest-900 dark:bg-emerald-400 text-white dark:text-black rounded-[2rem] font-semibold overflow-hidden transition-all active:scale-95 shadow-2xl shadow-emerald-900/20 text-lg">
-                        <span class="relative z-10" id="hero-cta">Start a conversation</span>
-                        <div class="absolute inset-0 bg-emerald-600 dark:bg-emerald-300 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
-                    </button>
-                    <a href="./building.html" class="px-10 py-5 apple-glass rounded-[2rem] font-semibold hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all text-center text-lg border border-emerald-800/10 dark:border-emerald-400/10" id="hero-build">Follow My Build 🚀</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Work Section -->
-        <section class="reveal space-y-24 mb-48">
-            <div class="grid md:grid-cols-2 gap-24 items-start">
-                <div class="space-y-16">
-                    <h2 class="text-5xl font-display text-emerald-950 dark:text-emerald-50" id="work-title">What I bring</h2>
-                    <ul class="space-y-10" id="work-bullets">
-                        <!-- Filled by JS -->
-                    </ul>
-                </div>
-                <div class="md:pt-40">
-                    <div class="relative p-12 md:p-16 apple-glass rounded-[4rem] group border border-emerald-800/10 dark:border-white/5">
-                        <div class="absolute top-0 left-0 w-1.5 h-full bg-emerald-800/20 dark:bg-emerald-400/20"></div>
-                        <p class="italic text-4xl md:text-5xl font-display leading-[1.2] text-emerald-950 dark:text-white" id="work-line">
-                            No pressure tactics. No noise. Just systems that hold.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Selected Work -->
-        <section class="reveal mb-48">
-            <div class="flex items-center gap-6 mb-16">
-                <h2 class="text-4xl font-display" id="portfolio-title">Selected Work</h2>
-                <div class="flex-1 h-px bg-gradient-to-r from-emerald-800/20 dark:from-white/10 to-transparent"></div>
-            </div>
-            <div class="grid sm:grid-cols-2 gap-10" id="portfolio-grid">
-                <!-- Filled by JS -->
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact" class="reveal pb-48">
-            <div class="max-w-4xl mx-auto apple-glass p-12 md:p-24 rounded-[4rem] relative overflow-hidden group border border-emerald-800/10 dark:border-white/10">
-                <div class="relative z-10">
-                    <h2 class="text-5xl md:text-7xl font-display mb-10 leading-[1.1]" id="contact-title">Start a conversation</h2>
-                    <p class="text-xl mb-16 text-soil-800/70 dark:text-gray-400 max-w-xl leading-relaxed" id="contact-copy">If you’re responsible for a project that needs clearer direction, send me:</p>
-                    <div class="space-y-4 mb-20" id="contact-prompts">
-                        <!-- Filled by JS -->
-                    </div>
-                    <div class="flex flex-wrap gap-5 mb-20">
-                        <a href="https://x.com/luca_sumitra" target="_blank" class="flex-1 min-w-[200px] p-7 text-center rounded-[2.5rem] bg-emerald-950 dark:bg-emerald-400 text-white dark:text-emerald-950 hover:scale-[1.03] transition-all font-bold text-lg" id="btn-x">DM on X</a>
-                        <a href="https://www.linkedin.com/in/luca-fischer-87b2ba204/" target="_blank" class="flex-1 min-w-[200px] p-7 text-center rounded-[2.5rem] apple-glass hover:bg-emerald-50 dark:hover:bg-emerald-900/30 transition-all font-bold text-lg" id="btn-li">LinkedIn Message</a>
-                    </div>
-                    <div class="text-center pt-10">
-                        <a href="mailto:luca@example.com" class="text-2xl font-display hover:text-emerald-700 transition-colors border-b border-emerald-500/20" id="btn-email">Email me</a>
-                        <div class="mt-24 opacity-30 font-display italic text-lg tracking-[0.4em] uppercase" id="closing-line">Hari Om · Haux Haux</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="border-t border-forest-800/5 dark:border-white/5 py-20 px-6">
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
-            <div class="flex gap-6">
-                <a href="https://www.instagram.com/" class="hover:text-emerald-600 transition-colors">Instagram</a>
-                <a href="https://github.com/sumitrabliss" class="hover:text-emerald-600 transition-colors">GitHub</a>
-                <a href="https://x.com/luca_sumitra" class="hover:text-emerald-600 transition-colors">X</a>
-                <a href="https://www.linkedin.com/in/luca-fischer-87b2ba204/" class="hover:text-emerald-600 transition-colors">LinkedIn</a>
-            </div>
-            <div class="text-right opacity-50 text-sm" id="footer-text">
-                Built with care, clarity, and respect for living systems.
-            </div>
-        </div>
-    </footer>
-
+  <body class="bg-stone-50 text-stone-900 transition-colors duration-500 overflow-x-hidden">
+    <div id="custom-cursor"></div>
+    <div id="custom-cursor-outline"></div>
+    <div id="root"></div>
     <script>
-        // State
-        let theme = localStorage.getItem('theme') || 'dark';
-        let lang = localStorage.getItem('lang') || 'en';
+      // Global cursor handling
+      document.addEventListener('mousemove', (e) => {
+        document.documentElement.style.setProperty('--cursor-x', e.clientX + 'px');
+        document.documentElement.style.setProperty('--cursor-y', e.clientY + 'px');
+        document.documentElement.style.setProperty('--glow-x', e.clientX + 'px');
+        document.documentElement.style.setProperty('--glow-y', e.clientY + 'px');
+      });
 
-        const translations = {
-            en: {
-                navBuild: "Follow My Build 🚀",
-                heroHeadline: "Turn meaning into regenerative growth.",
-                heroSub: "I help purpose-led teams turn deep vision into clear offers and calm, scalable systems. AI where it helps. Web3 where coordination matters. Always grounded.",
-                heroCta: "Start a conversation",
-                heroBuild: "Follow My Build 🚀",
-                workTitle: "What I bring",
-                workBullets: [
-                    "Offer clarity (people instantly get it)",
-                    "Funnels that feel good (and convert)",
-                    "AI-assisted ops (less chaos, more output)",
-                    "Web3-native community thinking",
-                    "Clean tracking + calm iteration"
-                ],
-                workLine: "No pressure tactics. No noise. Just systems that hold.",
-                portfolioTitle: "Selected Work",
-                portfolioItems: [
-                    { title: "AMA.RUNA", meta: "Switzerland / Amazon", desc: "Translating Indigenous-led values into narratives and systems that engage supporters. Without extraction." },
-                    { title: "UTOPIA MAPS", meta: "Web3 / Coordination", desc: "Decentralized mapping for communities. Connect locally, co-create real-world initiatives." },
-                    { title: "Tribal Yoga", meta: "Movement", desc: "A decentralized movement of embodied liberation." },
-                    { title: "Soul Craftery", meta: "Growth", desc: "One-pagers, conversion paths, ads + iteration — built to scale without burnout." }
-                ],
-                contactTitle: "Start a conversation",
-                contactCopy: "If you’re responsible for a project that needs clearer direction, send me:",
-                contactPrompts: ["what you’re building", "what you want to grow", "what feels stuck", "your timeline"],
-                btnX: "DM on X",
-                btnLi: "LinkedIn",
-                btnEmail: "Email me",
-                footerText: "Built with care, clarity, and respect for living systems."
-            },
-            de: {
-                navBuild: "Follow My Build 🚀",
-                heroHeadline: "Verwandle Sinn in regeneratives Wachstum.",
-                heroSub: "Ich helfe werteorientierten Teams, tiefe Visionen in klare Angebote und ruhige Systeme zu verwandeln. KI, wo sie hilft. Web3, wo Koordination zählt. Immer geerdet.",
-                heroCta: "Gespräch beginnen",
-                heroBuild: "Follow My Build 🚀",
-                workTitle: "Was ich einbringe",
-                workBullets: [
-                    "Klarheit der Angebote",
-                    "Funnels, die sich gut anfühlen",
-                    "KI-gestützte Abläufe",
-                    "Web3-native Gemeinschaftskonzepte",
-                    "Sauberes Tracking + Iteration"
-                ],
-                workLine: "Keine Drucktaktiken. Kein Lärm. Nur Systeme, die halten.",
-                portfolioTitle: "Ausgewählte Arbeiten",
-                portfolioItems: [
-                    { title: "AMA.RUNA", meta: "Schweiz / Amazonien", desc: "Indigen geführte Werte in Narrative übersetzen, die Menschen einbinden. Ohne Extraktion." },
-                    { title: "UTOPIA MAPS", meta: "Web3 / Koordination", desc: "Dezentrale Kartierung für Gemeinschaften. Lokal vernetzen, real mitgestalten." },
-                    { title: "Tribal Yoga", meta: "Bewegung", desc: "Eine dezentrale Bewegung verkörperter Befreiung." },
-                    { title: "Soul Craftery", meta: "Wachstum", desc: "One-Pagers, Conversion-Pfade, Ads + Iteration — gebaut für Skalierung ohne Burnout." }
-                ],
-                contactTitle: "Gespräch beginnen",
-                contactCopy: "Sende mir für dein Projekt:",
-                contactPrompts: ["Was du aufbaust", "Was wachsen soll", "Was gerade hakt", "Deinen Zeitplan"],
-                btnX: "DM auf X",
-                btnLi: "LinkedIn",
-                btnEmail: "E-Mail schreiben",
-                footerText: "Mit Sorgfalt, Klarheit und Respekt erstellt."
-            }
-        };
-
-        function updateUI() {
-            const t = translations[lang];
-            document.documentElement.className = theme;
-            document.getElementById('lang-btn').innerText = lang === 'en' ? 'DE' : 'EN';
-            document.getElementById('theme-icon').innerHTML = theme === 'dark' ? 
-                `<svg class="w-4 h-4 text-amber-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707.707M12 5a7 7 0 100 14 7 7 0 000-14z"/></svg>` : 
-                `<svg class="w-4 h-4 text-indigo-900" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>`;
-            
-            document.getElementById('nav-build').innerText = t.navBuild;
-            document.getElementById('hero-headline').innerText = t.heroHeadline;
-            document.getElementById('hero-sub').innerText = t.heroSub;
-            document.getElementById('hero-cta').innerText = t.heroCta;
-            document.getElementById('hero-build').innerText = t.heroBuild;
-            document.getElementById('work-title').innerText = t.workTitle;
-            document.getElementById('work-line').innerText = t.workLine;
-            document.getElementById('portfolio-title').innerText = t.portfolioTitle;
-            document.getElementById('contact-title').innerText = t.contactTitle;
-            document.getElementById('contact-copy').innerText = t.contactCopy;
-            document.getElementById('btn-x').innerText = t.btnX;
-            document.getElementById('btn-li').innerText = t.btnLi;
-            document.getElementById('btn-email').innerText = t.btnEmail;
-            document.getElementById('footer-text').innerText = t.footerText;
-
-            // List populations
-            const bulletContainer = document.getElementById('work-bullets');
-            bulletContainer.innerHTML = t.workBullets.map((b, i) => `
-                <li class="reveal active stagger-${i+1} flex items-start group">
-                    <div class="relative mt-2 mr-8">
-                        <div class="w-3 h-3 rounded-full bg-emerald-800/20 dark:bg-emerald-400/20 border border-emerald-500/30 flex items-center justify-center">
-                            <div class="w-1 h-1 rounded-full bg-emerald-600 dark:bg-emerald-400"></div>
-                        </div>
-                    </div>
-                    <span class="text-xl md:text-2xl font-light leading-relaxed group-hover:text-emerald-700 transition-colors">${b}</span>
-                </li>
-            `).join('');
-
-            const gridContainer = document.getElementById('portfolio-grid');
-            gridContainer.innerHTML = t.portfolioItems.map((item, i) => `
-                <div class="reveal stagger-${i+1} group relative p-12 apple-glass rounded-[3rem] min-h-[360px] flex flex-col justify-between hover:-translate-y-2 transition-transform duration-700">
-                    <div class="relative z-10">
-                        <span class="text-[10px] uppercase tracking-[0.3em] opacity-40 font-black mb-4 block">${item.meta}</span>
-                        <h3 class="text-3xl md:text-4xl font-display mb-6">${item.title}</h3>
-                        <p class="text-lg font-light opacity-70 leading-relaxed">${item.desc}</p>
-                    </div>
-                    <div class="relative z-10 pt-8 border-t border-emerald-500/10 flex justify-between items-center">
-                        <span class="text-sm font-bold">Explore</span>
-                        <svg class="w-5 h-5 group-hover:rotate-45 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
-                    </div>
-                </div>
-            `).join('');
-
-            const promptContainer = document.getElementById('contact-prompts');
-            promptContainer.innerHTML = t.contactPrompts.map((p, i) => `
-                <div class="flex items-center group p-5 rounded-3xl hover:bg-emerald-50/50 dark:hover:bg-emerald-900/10 transition-all">
-                    <span class="w-8 h-8 rounded-full bg-emerald-800/5 dark:bg-emerald-400/5 flex items-center justify-center text-xs mr-6 font-mono opacity-40">${i+1}</span>
-                    <span class="text-xl md:text-2xl font-light">${p}</span>
-                </div>
-            `).join('');
+      document.addEventListener('mouseover', (e) => {
+        if (e.target.closest('a, button')) {
+          document.body.classList.add('cursor-hover');
         }
-
-        function toggleTheme() {
-            theme = theme === 'dark' ? 'light' : 'dark';
-            localStorage.setItem('theme', theme);
-            updateUI();
+      });
+      document.addEventListener('mouseout', (e) => {
+        if (e.target.closest('a, button')) {
+          document.body.classList.remove('cursor-hover');
         }
-
-        function toggleLang() {
-            lang = lang === 'en' ? 'de' : 'en';
-            localStorage.setItem('lang', lang);
-            updateUI();
-        }
-
-        function scrollToContact() {
-            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Initialize Background Spores
-        const sporeContainer = document.getElementById('spore-container');
-        for (let i = 0; i < 15; i++) {
-            const s = document.createElement('div');
-            s.className = 'spore';
-            const size = Math.random() * 8 + 2;
-            s.style.width = `${size}px`;
-            s.style.height = `${size}px`;
-            s.style.left = `${Math.random() * 100}%`;
-            s.style.top = `${Math.random() * 100}%`;
-            s.style.animationDelay = `${Math.random() * 20}s`;
-            s.style.animationDuration = `${Math.random() * 10 + 10}s`;
-            sporeContainer.appendChild(s);
-        }
-
-        // Cursor Movement
-        const cursor = document.getElementById('cursor');
-        const aura = document.getElementById('cursor-aura');
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.transform = `translate(${e.clientX - 6}px, ${e.clientY - 6}px)`;
-            aura.style.transform = `translate(${e.clientX - 20}px, ${e.clientY - 20}px)`;
-        });
-
-        // Intersection Observer for Reveal
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
-        }, { threshold: 0.1 });
-
-        // Initial Run
-        updateUI();
-        setTimeout(() => {
-            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-        }, 100);
+      });
     </script>
-</body>
+  </body>
 </html>
