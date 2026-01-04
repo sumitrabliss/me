@@ -8,41 +8,51 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --bg: #050706;
-            --bg-accent: #0a0d0c;
-            --text: #f5f5f0;
-            --text-muted: rgba(245, 245, 240, 0.5);
+            /* DARK MODE (Default - Forest Night) */
+            --bg: #030806;
+            --bg-accent: #08110c;
+            --text: #f0f2ed;
+            --text-muted: rgba(240, 242, 237, 0.5);
             --accent-moss: #8db37d;
-            --accent-glow: rgba(141, 179, 125, 0.25);
+            --accent-glow: rgba(141, 179, 125, 0.15);
             --gold: #d4af37;
-            --gold-glow: rgba(212, 175, 55, 0.15);
-            --transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-            --noise: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            --gold-glow: rgba(212, 175, 55, 0.1);
+            --card-border: rgba(141, 179, 125, 0.08);
+            --nav-bg: rgba(3, 8, 6, 0.6);
+            --transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+            --ease: cubic-bezier(0.16, 1, 0.3, 1);
+            --kene-opacity: 0.04;
         }
 
         [data-theme="light"] {
-            --bg: #f8f8f5;
-            --bg-accent: #efeee8;
+            /* LIGHT MODE (Forest Day) */
+            --bg: #fcfcf7;
+            --bg-accent: #f4f5ee;
             --text: #1a1c1b;
             --text-muted: rgba(26, 28, 27, 0.6);
-            --accent-moss: #5d7a4d;
-            --accent-glow: rgba(93, 122, 77, 0.1);
+            --accent-moss: #4d6341;
+            --accent-glow: rgba(77, 99, 65, 0.08);
             --gold: #a68a2d;
+            --gold-glow: rgba(166, 138, 45, 0.05);
+            --card-border: rgba(77, 99, 65, 0.15);
+            --nav-bg: rgba(252, 252, 247, 0.7);
+            --kene-opacity: 0.07;
         }
 
         * {
             margin: 0; padding: 0; box-sizing: border-box;
-            cursor: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         html {
             scroll-behavior: smooth;
             scrollbar-width: none;
+            overflow-x: hidden;
+            background-color: var(--bg);
         }
         ::-webkit-scrollbar { display: none; }
 
@@ -52,10 +62,10 @@
             color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
-            transition: background-color 1s ease;
+            transition: background-color 0.8s var(--ease), color 0.8s var(--ease);
         }
 
-        /* --- IMMERSIVE BACKGROUND --- */
+        /* --- BACKGROUND LAYERS --- */
         .canvas-container {
             position: fixed;
             inset: 0;
@@ -64,58 +74,54 @@
             pointer-events: none;
         }
 
-        .grain-overlay {
+        .god-rays {
             position: absolute;
-            inset: -100%;
-            background-image: var(--noise);
-            opacity: 0.06;
-            animation: jitter 0.4s steps(2) infinite;
+            top: -20%; left: -10%;
+            width: 150%; height: 150%;
+            background: repeating-linear-gradient(
+                115deg,
+                transparent,
+                transparent 5%,
+                rgba(141, 179, 125, 0.02) 7%,
+                rgba(212, 175, 55, 0.015) 10%,
+                transparent 12%,
+                transparent 20%
+            );
+            filter: blur(40px);
+            animation: rays-drift 30s ease-in-out infinite alternate;
         }
 
-        @keyframes jitter {
-            0% { transform: translate(0,0); }
-            50% { transform: translate(-1%, -1%); }
-            100% { transform: translate(1%, 1%); }
+        @keyframes rays-drift {
+            0% { transform: rotate(-4deg) scale(1); opacity: 0.3; }
+            100% { transform: rotate(2deg) scale(1.1); opacity: 0.6; }
+        }
+
+        .kene-overlay {
+            position: absolute;
+            inset: -50%;
+            background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M60 0L120 60L60 120L0 60L60 0ZM60 20L100 60L60 100L20 60L60 20ZM60 40L80 60L60 80L40 60L60 40Z' fill='%238db37d' fill-opacity='1'/%3E%3C/svg%3E");
+            opacity: var(--kene-opacity);
+            animation: kene-drift 240s linear infinite;
+        }
+
+        @keyframes kene-drift {
+            from { transform: translate(0,0) rotate(0deg); }
+            to { transform: translate(-10%, -10%) rotate(10deg); }
         }
 
         .nebula {
             position: absolute;
-            width: 100vmax;
-            height: 100vmax;
-            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 75%);
+            width: 160vmax; height: 160vmax;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
             filter: blur(120px);
-            opacity: 0.5;
-            animation: drift 30s infinite alternate ease-in-out;
-            top: -20%; left: -20%;
+            top: -30%; left: -30%;
+            transition: background 1s ease;
         }
 
-        .nebula-2 {
-            top: 30%; right: -20%; left: auto;
-            background: radial-gradient(circle, var(--gold-glow) 0%, transparent 65%);
-            animation-duration: 45s;
-            animation-delay: -10s;
-        }
-
-        @keyframes drift {
-            0% { transform: translate(-5%, -5%) scale(1); }
-            100% { transform: translate(5%, 5%) scale(1.1); }
-        }
-
-        .particle {
-            position: absolute;
-            background: var(--text);
-            border-radius: 50%;
-            pointer-events: none;
-            opacity: 0.15;
-            transition: transform 0.2s ease-out;
-        }
-
-        /* --- MYCELIUM SVG --- */
         .mycelium-web {
             position: absolute;
             inset: 0;
-            opacity: 0.12;
-            transition: opacity 1s ease;
+            opacity: 0.3;
         }
 
         .mycelium-path {
@@ -123,71 +129,116 @@
             stroke-width: 0.6;
             stroke-dasharray: 1200;
             stroke-dashoffset: 1200;
-            animation: mycelium-grow 12s forwards cubic-bezier(0.4, 0, 0.2, 1);
+            animation: mycelium-grow 25s forwards cubic-bezier(0.4, 0, 0.2, 1);
             filter: drop-shadow(0 0 3px var(--accent-moss));
+            opacity: 0.35;
         }
 
-        @keyframes mycelium-grow {
-            to { stroke-dashoffset: 0; }
-        }
-
-        /* --- CUSTOM CURSOR --- */
-        .cursor-dot {
-            position: fixed;
-            width: 4px; height: 4px;
-            background: var(--text);
+        .firefly {
+            position: absolute;
+            background: radial-gradient(circle, #fff 10%, var(--accent-moss) 40%, transparent 70%);
             border-radius: 50%;
-            z-index: 10000;
             pointer-events: none;
-            transform: translate(-50%, -50%);
-        }
-        .cursor-aura {
-            position: fixed;
-            width: 50px; height: 50px;
-            background: radial-gradient(circle, var(--accent-moss) 0%, transparent 70%);
-            border-radius: 50%;
-            z-index: 9999;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            transition: width 0.5s var(--ease-out-expo), height 0.5s var(--ease-out-expo), opacity 0.5s;
-            opacity: 0.4;
-            mix-blend-mode: screen;
+            filter: blur(1px);
+            box-shadow: 0 0 6px var(--accent-moss);
+            z-index: 1;
         }
 
-        /* --- NAV --- */
+        /* --- CURSOR --- */
+        @media (pointer: fine) {
+            body { cursor: none; }
+            .cursor-dot {
+                position: fixed;
+                width: 4px; height: 4px;
+                background: var(--gold);
+                border-radius: 50%;
+                z-index: 10000;
+                pointer-events: none;
+                transform: translate(-50%, -50%);
+            }
+            .cursor-aura {
+                position: fixed;
+                width: 70px; height: 70px;
+                background: radial-gradient(circle, var(--accent-moss) 0%, transparent 70%);
+                border-radius: 50%;
+                z-index: 9999;
+                pointer-events: none;
+                transform: translate(-50%, -50%);
+                transition: width 0.8s var(--ease), height 0.8s var(--ease), opacity 0.6s, background 0.6s;
+                opacity: 0.25;
+                mix-blend-mode: screen;
+            }
+        }
+
+        /* --- NAVIGATION --- */
         nav {
             position: fixed;
-            top: 2.5rem; left: 50%;
+            top: 1.2rem; left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
+            width: 95%;
+            max-width: fit-content;
         }
 
         .nav-pill {
-            background: rgba(10, 13, 12, 0.45);
-            backdrop-filter: blur(30px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 0.75rem 2.8rem;
+            background: var(--nav-bg);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(141, 179, 125, 0.1);
+            padding: 0.6rem 1.4rem;
             border-radius: 100px;
-            display: flex; gap: 2.5rem;
+            display: flex; gap: 0.8rem;
             align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        @media (min-width: 768px) {
+            nav { top: 2rem; }
+            .nav-pill { padding: 0.7rem 2.5rem; gap: 1.8rem; }
         }
 
         .nav-pill a {
             color: var(--text);
             text-decoration: none;
-            font-size: 0.75rem;
+            font-size: 0.6rem;
             text-transform: uppercase;
-            letter-spacing: 0.25em;
-            opacity: 0.4;
+            letter-spacing: 0.15em;
+            opacity: 0.45;
             transition: var(--transition);
         }
+        @media (min-width: 768px) { .nav-pill a { font-size: 0.65rem; letter-spacing: 0.25em; } }
 
-        .nav-pill a:hover { opacity: 1; color: var(--accent-moss); transform: translateY(-1px); }
+        .nav-pill a:hover { opacity: 1; color: var(--gold); }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-left: 1px solid rgba(141, 179, 125, 0.15);
+            padding-left: 1rem;
+        }
+
+        .theme-toggle, .lang-toggle {
+            background: none;
+            border: none;
+            color: var(--text);
+            opacity: 0.5;
+            cursor: pointer;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        .theme-toggle:hover, .lang-toggle:hover { opacity: 1; color: var(--gold); transform: translateY(-1px); }
+        .theme-toggle svg { width: 14px; height: 14px; fill: currentColor; }
 
         /* --- SECTIONS --- */
         section {
-            padding: 15vh 2rem;
-            max-width: 1400px;
+            padding: 12vh 1.5rem;
+            max-width: 1300px;
             margin: 0 auto;
             position: relative;
         }
@@ -197,32 +248,28 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            text-align: center;
         }
 
         .label {
-            font-size: 0.75rem;
+            font-size: 0.6rem;
             text-transform: uppercase;
-            letter-spacing: 0.5em;
-            color: var(--accent-moss);
+            letter-spacing: 0.7em;
+            color: var(--gold);
             margin-bottom: 2.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-        .label::after {
-            content: '';
-            height: 1px;
-            width: 50px;
-            background: var(--accent-moss);
-            opacity: 0.3;
+            display: block;
+            opacity: 0.9;
+            font-weight: 500;
         }
 
         h1 {
-            font-size: clamp(3rem, 11vw, 8.5rem);
-            font-weight: 200;
-            line-height: 0.92;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 12vw, 8.5rem);
+            font-weight: 300;
+            line-height: 0.9;
             margin-bottom: 3.5rem;
-            letter-spacing: -0.04em;
+            letter-spacing: -0.01em;
+            font-style: italic;
         }
 
         .reveal-span {
@@ -233,415 +280,507 @@
         .reveal-span span {
             display: block;
             transform: translateY(110%);
-            transition: transform 1.8s var(--ease-out-expo);
+            transition: transform 1.8s var(--ease);
         }
         .visible .reveal-span span { transform: translateY(0); }
 
         .hero-desc {
-            font-size: clamp(1.1rem, 2.2vw, 1.5rem);
-            max-width: 650px;
+            font-size: clamp(1rem, 2.5vw, 1.45rem);
+            max-width: 780px;
+            margin: 0 auto 3.5rem;
             font-weight: 300;
             color: var(--text-muted);
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
-        .positioning-line {
-            margin-top: 4rem;
-            padding-left: 2rem;
-            border-left: 1px solid var(--gold);
+        .positioning {
             color: var(--gold);
-            font-weight: 400;
-            font-size: 1rem;
-            max-width: 500px;
-            opacity: 0.8;
+            font-weight: 300;
+            font-size: 1.05rem;
+            font-style: italic;
+            opacity: 0.95;
+            max-width: 550px;
+            margin: 0 auto;
+            line-height: 1.4;
         }
 
-        /* --- PROJECT GRID --- */
+        /* --- CARDS --- */
         .selected-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
+            grid-template-columns: 1fr;
             gap: 2rem;
             margin-top: 6rem;
         }
-        @media (max-width: 768px) {
-            .selected-grid { grid-template-columns: 1fr; }
+        @media (min-width: 1024px) {
+            .selected-grid { grid-template-columns: repeat(auto-fill, minmax(460px, 1fr)); gap: 2.5rem; }
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.012);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            padding: 4.5rem 3.5rem;
-            min-height: 520px;
+            background: rgba(255, 255, 255, 0.01);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--card-border);
+            padding: 3rem 2rem;
+            min-height: 400px;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
             position: relative;
             transition: var(--transition);
             overflow: hidden;
+            border-radius: 2px;
         }
+        @media (min-width: 768px) {
+            .card { padding: 4.5rem 3.5rem; min-height: 500px; }
+        }
+
         .card::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(141, 179, 125, 0.08) 0%, transparent 60%);
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), var(--accent-glow) 0%, transparent 70%);
             opacity: 0;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.8s ease;
         }
         .card:hover {
-            border-color: var(--accent-moss);
+            border-color: var(--gold);
             transform: translateY(-8px);
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(255, 255, 255, 0.03);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
         }
         .card:hover::before { opacity: 1; }
 
-        .card-content { position: relative; z-index: 2; }
         .card h3 {
-            font-size: 2.2rem;
-            font-weight: 200;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            font-weight: 300;
+            font-style: italic;
             color: var(--gold);
             margin-bottom: 1.5rem;
+            position: relative; z-index: 2;
         }
-        .card p { color: var(--text-muted); font-size: 1rem; line-height: 1.7; }
+        .card p { color: var(--text-muted); font-size: 1rem; line-height: 1.7; position: relative; z-index: 2; font-weight: 300; }
 
-        /* --- CONVERSATION --- */
-        .apply-container {
-            background: radial-gradient(circle at top right, var(--bg-accent), var(--bg));
-            padding: 10rem 4rem;
-            border-radius: 4px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            text-align: center;
+        /* --- WORK LIST --- */
+        .work-list {
+            margin-top: 4rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
         }
-        .apply-container h2 { font-size: clamp(2.5rem, 7vw, 5rem); font-weight: 100; margin-bottom: 4rem; }
+        @media (min-width: 1024px) {
+            .work-list { grid-template-columns: repeat(2, 1fr); gap: 5rem; }
+        }
+
+        .work-item {
+            border-left: 1px solid var(--card-border);
+            padding-left: 1.5rem;
+            transition: var(--transition);
+        }
+        .work-item:hover { border-left-color: var(--gold); transform: translateX(5px); }
+        .work-item h4 { 
+            text-transform: uppercase; letter-spacing: 0.25em; 
+            font-size: 0.75rem; color: var(--accent-moss); 
+            margin-bottom: 1rem; 
+        }
+
+        /* --- CTA --- */
+        .apply-container {
+            background: linear-gradient(to bottom right, var(--bg-accent), var(--bg));
+            padding: 7rem 2rem;
+            border: 1px solid var(--card-border);
+            text-align: center;
+            border-radius: 4px;
+            margin-top: 4rem;
+        }
+        @media (min-width: 768px) { .apply-container { padding: 10rem 4rem; } }
+
+        .apply-container h2 { 
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 9vw, 6rem); 
+            font-weight: 300; 
+            font-style: italic;
+            margin-bottom: 4rem; 
+        }
 
         .cta-box {
             display: flex;
-            gap: 2.5rem;
+            gap: 1.5rem;
             justify-content: center;
             flex-wrap: wrap;
         }
+
         .btn-fancy {
-            padding: 1.4rem 3.8rem;
-            border: 0.5px solid var(--accent-moss);
+            padding: 1.4rem 4rem;
+            border: 1px solid var(--accent-moss);
             color: var(--text);
             text-decoration: none;
             text-transform: uppercase;
             letter-spacing: 0.35em;
-            font-size: 0.75rem;
+            font-size: 0.65rem;
             transition: var(--transition);
-            background: rgba(141, 179, 125, 0.04);
+            background: rgba(141, 179, 125, 0.05);
             position: relative;
-            overflow: hidden;
+            backdrop-filter: blur(5px);
         }
         .btn-fancy:hover {
             background: var(--accent-moss);
             color: var(--bg);
             box-shadow: 0 0 40px var(--accent-glow);
-            transform: scale(1.02);
+            letter-spacing: 0.45em;
         }
 
         .mantra {
-            margin-top: 10rem;
-            font-size: 0.65rem;
+            margin-top: 8rem;
+            font-size: 0.6rem;
             letter-spacing: 0.7em;
             text-transform: uppercase;
-            opacity: 0.15;
-            animation: pulse-slow 8s infinite alternate ease-in-out;
+            opacity: 0.25;
+            animation: mantra-pulse 15s infinite alternate ease-in-out;
+            font-style: italic;
         }
-        @keyframes pulse-slow {
-            from { opacity: 0.05; letter-spacing: 0.6em; }
-            to { opacity: 0.25; letter-spacing: 0.8em; }
+        @keyframes mantra-pulse {
+            from { opacity: 0.1; letter-spacing: 0.6em; }
+            to { opacity: 0.4; letter-spacing: 0.9em; }
         }
 
         /* --- REVEAL --- */
         .reveal {
             opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 1.6s var(--ease-out-expo), transform 1.6s var(--ease-out-expo);
+            transform: translateY(40px);
+            transition: opacity 1.8s var(--ease), transform 1.8s var(--ease);
         }
         .reveal.visible { opacity: 1; transform: translateY(0); }
 
         footer {
-            padding: 6rem 2rem;
+            padding: 6rem 1.5rem;
             text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.03);
-            font-size: 0.7rem;
+            border-top: 1px solid var(--card-border);
+            font-size: 0.65rem;
             color: var(--text-muted);
-            letter-spacing: 0.15em;
+            letter-spacing: 0.25em;
             text-transform: uppercase;
+            font-weight: 300;
         }
 
+        /* Language visibility */
+        [lang="en"] .lang-de, [lang="de"] .lang-en { display: none; }
     </style>
 </head>
-<body data-theme="dark">
+<body data-theme="dark" data-lang="en">
 
     <div class="cursor-dot"></div>
     <div class="cursor-aura"></div>
 
     <div class="canvas-container">
-        <div class="grain-overlay"></div>
+        <div class="god-rays"></div>
+        <div class="kene-overlay"></div>
         <div class="nebula nebula-1"></div>
-        <div class="nebula nebula-2"></div>
-        <svg class="mycelium-web" id="mycelium-svg" width="100%" height="100%" preserveAspectRatio="none">
-            <!-- Procedural Paths -->
-        </svg>
-        <div id="particles-container"></div>
+        <svg class="mycelium-web" id="mycelium-svg" width="100%" height="100%" preserveAspectRatio="none"></svg>
+        <div id="fireflies-container"></div>
     </div>
 
     <nav>
         <div class="nav-pill">
-            <a href="#work">Work</a>
-            <a href="#selected">Selected</a>
-            <a href="#apply">Apply</a>
-            <a href="#connect">Connect</a>
+            <a href="#work" class="lang-en">Work</a>
+            <a href="#work" class="lang-de">Arbeit</a>
+            
+            <a href="#selected" class="lang-en">Selected</a>
+            <a href="#selected" class="lang-de">Portfolio</a>
+            
+            <a href="#apply" class="lang-en">Apply</a>
+            <a href="#apply" class="lang-de">Anfrage</a>
+
+            <a href="#apply" class="lang-en">Next</a>
+            <a href="#apply" class="lang-de">Nächstes</a>
+            
+            <a href="#connect" class="lang-en">Connect</a>
+            <a href="#connect" class="lang-de">Kontakt</a>
+            
+            <div class="controls">
+                <button class="lang-toggle" id="lang-toggle">EN</button>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Theme">
+                    <svg viewBox="0 0 24 24" id="sun-icon"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 000-1.41l-1.06-1.06zm1.06-12.37a.996.996 0 00-1.41-1.41l-1.06 1.06a.996.996 0 000 1.41c.39.39 1.03.39 1.41 0l1.06-1.06zM7.05 18.01a.996.996 0 00-1.41-1.41l-1.06 1.06a.996.996 0 000 1.41s.39.39 1.41 0l1.06-1.06z"/></svg>
+                </button>
+            </div>
         </div>
     </nav>
 
     <main>
         <!-- HERO -->
-        <section id="hero" class="hero reveal">
-            <span class="label">Luca Fischer • Sumitra Isa Dewè</span>
-            <h1>
+        <section id="hero" class="hero reveal" data-cursor="universe">
+            <span class="label">Luca “Sumitra Isa Dewè” Fischer</span>
+            <h1 class="lang-en">
                 <div class="reveal-span"><span>Turn meaning</span></div><br>
                 <div class="reveal-span"><span>into regenerative</span></div><br>
                 <div class="reveal-span"><span>growth.</span></div>
             </h1>
-            <p class="hero-desc">
+            <h1 class="lang-de">
+                <div class="reveal-span"><span>Sinn in regeneratives</span></div><br>
+                <div class="reveal-span"><span>Wachstum</span></div><br>
+                <div class="reveal-span"><span>verwandeln.</span></div>
+            </h1>
+            
+            <p class="hero-desc lang-en">
                 I help purpose-led teams turn deep vision into clear offers and calm, scalable systems. 
                 AI where it helps. Web3 where coordination matters. Always grounded.
             </p>
-            <div class="positioning-line">
-                I build growth systems like nature builds ecosystems: Clear, resilient, alive.
+            <p class="hero-desc lang-de">
+                Ich helfe werteorientierten Teams, tiefe Visionen in klare Angebote und ruhige, skalierbare Systeme zu verwandeln. 
+                KI wo sie hilft. Web3 wo Koordination zählt. Immer geerdet.
+            </p>
+            
+            <div class="positioning lang-en">
+                I build growth systems like nature builds ecosystems:<br>Clear, resilient, alive.
+            </div>
+            <div class="positioning lang-de">
+                Ich baue Wachstumssysteme wie die Natur Ökosysteme baut:<br>Klar, resilient, lebendig.
             </div>
         </section>
 
         <!-- WORK -->
-        <section id="work" class="reveal" style="padding-top: 10vh;">
-            <span class="label">The Foundation</span>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8rem; margin-top: 5rem;">
-                <h2 style="font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 200; line-height: 1.1;">I work best where things are real, but not yet clear.</h2>
-                <div style="display: flex; flex-direction: column; gap: 4rem;">
-                    <div class="reveal">
-                        <h4 style="color: var(--accent-moss); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.2em; margin-bottom: 1rem;">System Design</h4>
-                        <p style="color: var(--text-muted);">Offer clarity and funnels that feel good. Converting without the noise, pressure tactics, or burnout-inducing chaos.</p>
+        <section id="work" class="reveal" data-cursor="roots">
+            <span class="label lang-en" style="text-align: left;">The Offering</span>
+            <span class="label lang-de" style="text-align: left;">Das Angebot</span>
+            
+            <div style="display: flex; flex-direction: column; gap: 4rem; margin-top: 3rem;">
+                <h2 class="lang-en" style="font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 6vw, 4.2rem); font-weight: 300; line-height: 1.1; font-style: italic;">I work best where things are real, but not yet clear.</h2>
+                <h2 class="lang-de" style="font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 6vw, 4.2rem); font-weight: 300; line-height: 1.1; font-style: italic;">Ich arbeite dort am besten, wo die Dinge real, aber noch nicht klar sind.</h2>
+                
+                <div class="work-list">
+                    <div class="work-item reveal">
+                        <h4 class="lang-en">Clarity</h4><h4 class="lang-de">Klarheit</h4>
+                        <p class="lang-en">Offer clarity — so people instantly understand the value. Funnels that feel good — and actually convert.</p>
+                        <p class="lang-de">Angebotsklarheit — damit der Wert sofort verstanden wird. Funnels, die sich gut anfühlen und konvertieren.</p>
                     </div>
-                    <div class="reveal">
-                        <h4 style="color: var(--accent-moss); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.2em; margin-bottom: 1rem;">Coordination Tech</h4>
-                        <p style="color: var(--text-muted);">Leveraging AI for efficiency and Web3 for participative ownership. Practical tools for visionary coordination.</p>
+                    <div class="work-item reveal">
+                        <h4 class="lang-en">Native Tech</h4><h4 class="lang-de">Native Tech</h4>
+                        <p class="lang-en">AI-assisted operations — less chaos, more focus. Web3-native thinking — when coordination or ownership matter.</p>
+                        <p class="lang-de">KI-gestützte Abläufe — weniger Chaos, mehr Fokus. Web3-Denken — wenn Koordination oder Ownership zählen.</p>
                     </div>
-                    <div class="reveal">
-                        <h4 style="color: var(--accent-moss); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.2em; margin-bottom: 1rem;">Iterative Calm</h4>
-                        <p style="color: var(--text-muted);">Clean tracking and grounded decision making. Systems that hold firm through the complexity of rapid growth.</p>
+                    <div class="work-item reveal">
+                        <h4 class="lang-en">Resilience</h4><h4 class="lang-de">Resilienz</h4>
+                        <p class="lang-en">Clean tracking and calm iteration — no panic-driven decisions. Systems that hold through complexity.</p>
+                        <p class="lang-de">Klares Tracking und ruhige Iteration — keine panikgetriebenen Entscheidungen. Systeme, die Komplexität halten.</p>
+                    </div>
+                    <div class="work-item reveal">
+                        <h4 class="lang-en">Integrity</h4><h4 class="lang-de">Integrität</h4>
+                        <p class="lang-en">No pressure tactics. No noise. Just meaningful structures that scale without burning out the soul.</p>
+                        <p class="lang-de">Keine Drucktaktiken. Kein Lärm. Nur sinnvolle Strukturen, die skalieren, ohne die Seele auszubrennen.</p>
                     </div>
                 </div>
+                
+                <p class="lang-en" style="margin-top: 3rem; font-style: italic; color: var(--gold);">No pressure tactics. No noise. Just systems that hold.</p>
+                <p class="lang-de" style="margin-top: 3rem; font-style: italic; color: var(--gold);">Keine Drucktaktiken. Kein Lärm. Nur Systeme, die halten.</p>
             </div>
         </section>
 
         <!-- SELECTED -->
-        <section id="selected" class="reveal">
+        <section id="selected" class="reveal" data-cursor="moss">
             <span class="label">Selected Ecosystems</span>
             <div class="selected-grid">
                 <div class="card">
-                    <div class="card-content">
-                        <h3>AMA.RUNA</h3>
-                        <p>Swiss non-profit partnering with Huni Kuin communities in the Brazilian Amazon. Translating Indigenous values into systems that engage and empower without extraction.</p>
-                    </div>
+                    <h3>AMA.RUNA</h3>
+                    <p class="lang-en">Switzerland / Brazilian Amazon. Partnering with Indigenous communities, especially the Huni Kuin people. Translating Indigenous-led values into narrative systems that engage schools and supporters without extraction.</p>
+                    <p class="lang-de">Schweiz / Brasilianischer Amazonas. Partnerschaft mit indigenen Gemeinschaften, besonders den Huni Kuin. Übersetzung indigener Werte in engagierende Systeme ohne Extraktion.</p>
                 </div>
                 <div class="card">
-                    <div class="card-content">
-                        <h3>UTOPIA MAPS</h3>
-                        <p>Decentralized coordination for local communities. Connecting digital transparency with real-world co-creation initiatives.</p>
-                    </div>
+                    <h3>UTOPIA MAPS</h3>
+                    <p class="lang-en">Web3. Decentralized mapping and coordination for communities. Connect locally, organize collaboratively and co-create real-world initiatives.</p>
+                    <p class="lang-de">Web3. Dezentrale Kartierung und Koordination für Gemeinschaften. Lokal vernetzen, kollaborativ organisieren und reale Initiativen erschaffen.</p>
                 </div>
                 <div class="card">
-                    <div class="card-content">
-                        <h3>Tribal Yoga</h3>
-                        <p>A decentralized movement of embodied liberation. Scaling collective consciousness through participative network structures.</p>
-                    </div>
+                    <h3>Tribal Yoga</h3>
+                    <p class="lang-en">A decentralized movement of embodied liberation. Scaling collective presence through participative network logic.</p>
+                    <p class="lang-de">Eine dezentrale Bewegung für verkörperte Befreiung. Skalierung kollektiver Präsenz durch partizipative Netzwerklogik.</p>
                 </div>
                 <div class="card">
-                    <div class="card-content">
-                        <h3>Soul Craftery</h3>
-                        <p>Built for scale without burnout. High-performing conversion paths, ads, and iteration flows treated as living, breathing systems.</p>
-                    </div>
+                    <h3>Soul Craftery</h3>
+                    <p class="lang-en">One-pagers, conversion paths, ads, and iteration. Built to scale without burnout. Calm systems for high-impact growth.</p>
+                    <p class="lang-de">Onepager, Konversionspfade und Ads. Gebaut für Skalierung ohne Burnout. Ruhige Systeme für wirkungsvolles Wachstum.</p>
                 </div>
             </div>
         </section>
 
         <!-- APPLY -->
-        <section id="apply" class="reveal">
+        <section id="apply" class="reveal" data-cursor="sacred">
             <div class="apply-container">
-                <span class="label" style="justify-content: center;">Start the Conversation</span>
-                <h2>Let's build together.</h2>
-                <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 5rem; font-size: 1.1rem; font-weight: 300;">
-                    If you’re responsible for a project that needs clearer direction, tell me what you’re building, what you want to grow, and what currently feels stuck.
+                <span class="label">The Seed</span>
+                <h2 class="lang-en">Start a conversation</h2>
+                <h2 class="lang-de">Ein Gespräch beginnen</h2>
+                
+                <p class="hero-desc lang-en" style="margin-bottom: 4rem;">
+                    If you’re responsible for a project that needs clearer direction, send me: 1) what you’re building 2) what you want to grow 3) what currently feels stuck 4) your timeline.
                 </p>
+                <p class="hero-desc lang-de" style="margin-bottom: 4rem;">
+                    Wenn du ein Projekt leitest, das klare Richtung braucht, sende mir: 1) was du baust 2) was wachsen soll 3) wo es aktuell hakt 4) deinen Zeitplan.
+                </p>
+                
                 <div class="cta-box">
                     <a href="https://x.com/luca_sumitra" target="_blank" class="btn-fancy">DM on X</a>
                     <a href="https://www.linkedin.com/in/luca-fischer-87b2ba204/" target="_blank" class="btn-fancy">LinkedIn</a>
-                    <a href="mailto:hello@lucafischer.com" class="btn-fancy">Direct Email</a>
+                    <a href="mailto:hello@lucafischer.com" class="btn-fancy">Email</a>
                 </div>
+                
+                <p class="lang-en" style="margin-top: 2rem; opacity: 0.5; font-size: 0.75rem;">I reply personally.</p>
+                <p class="lang-de" style="margin-top: 2rem; opacity: 0.5; font-size: 0.75rem;">Ich antworte persönlich.</p>
+                
                 <div class="mantra">lokah samastah sukhino bhavantu</div>
             </div>
         </section>
 
         <!-- CONNECT -->
-        <section id="connect" class="reveal" style="text-align: center;">
-            <span class="label" style="justify-content: center;">Connect</span>
-            <div style="display: flex; justify-content: center; gap: clamp(2rem, 8vw, 6rem); margin-top: 5rem; flex-wrap: wrap;">
-                <a href="https://x.com/luca_sumitra" target="_blank" style="color: var(--text); text-decoration: none; font-size: 1.8rem; font-weight: 100;" class="reveal">X / Twitter</a>
-                <a href="https://www.linkedin.com/in/luca-fischer-87b2ba204/" target="_blank" style="color: var(--text); text-decoration: none; font-size: 1.8rem; font-weight: 100;" class="reveal">LinkedIn</a>
-                <a href="https://github.com/sumitrabliss" target="_blank" style="color: var(--text); text-decoration: none; font-size: 1.8rem; font-weight: 100;" class="reveal">GitHub</a>
-                <a href="https://www.instagram.com/" target="_blank" style="color: var(--text); text-decoration: none; font-size: 1.8rem; font-weight: 100;" class="reveal">Instagram</a>
+        <section id="connect" class="reveal" style="text-align: center;" data-cursor="universe">
+            <span class="label">The Canopy</span>
+            <div style="display: flex; justify-content: center; gap: clamp(2rem, 8vw, 6rem); margin-top: 4rem; flex-wrap: wrap;">
+                <a href="https://x.com/luca_sumitra" target="_blank" style="color: var(--gold); text-decoration: none; font-size: 1.8rem; font-weight: 300; font-family: 'Cormorant Garamond', serif; font-style: italic;" class="reveal">X / Twitter</a>
+                <a href="https://www.linkedin.com/in/luca-fischer-87b2ba204/" target="_blank" style="color: var(--gold); text-decoration: none; font-size: 1.8rem; font-weight: 300; font-family: 'Cormorant Garamond', serif; font-style: italic;" class="reveal">LinkedIn</a>
+                <a href="https://github.com/sumitrabliss" target="_blank" style="color: var(--gold); text-decoration: none; font-size: 1.8rem; font-weight: 300; font-family: 'Cormorant Garamond', serif; font-style: italic;" class="reveal">GitHub</a>
+                <a href="https://www.instagram.com/" target="_blank" style="color: var(--gold); text-decoration: none; font-size: 1.8rem; font-weight: 300; font-family: 'Cormorant Garamond', serif; font-style: italic;" class="reveal">Instagram</a>
             </div>
-            <p style="margin-top: 6rem; opacity: 0.35; font-size: 0.75rem; letter-spacing: 0.1em;">Best entry point: DM via X or LinkedIn.</p>
+            
+            <p class="lang-en" style="margin-top: 6rem; opacity: 0.45; font-size: 0.75rem; letter-spacing: 0.2em;">Best entry: DM on X or LinkedIn.</p>
+            <p class="lang-de" style="margin-top: 6rem; opacity: 0.45; font-size: 0.75rem; letter-spacing: 0.2em;">Bester Einstieg: DM auf X oder LinkedIn.</p>
         </section>
     </main>
 
     <footer>
-        <p>Built with care, clarity, and respect for living systems.</p>
-        <p style="margin-top: 1.5rem; opacity: 0.2; font-size: 0.6rem;">&copy; <span id="year"></span> Luca Fischer. No tracking. Pure intent.</p>
+        <p class="lang-en">Built with care, clarity, and respect for living systems.</p>
+        <p class="lang-de">Mit Sorgfalt, Klarheit und Respekt für lebendige Systeme gebaut.</p>
+        <p style="margin-top: 2rem; opacity: 0.25; font-size: 0.55rem;">&copy; <span id="year"></span> LUCA FISCHER. NO TRACKING. FOREST MINDSET.</p>
     </footer>
 
     <script>
-        // --- CURSOR ---
-        const dot = document.querySelector('.cursor-dot');
+        // --- TRANSLATION ENGINE ---
+        const langToggle = document.getElementById('lang-toggle');
+        let currentLang = localStorage.getItem('lang') || 'en';
+        function setLang(l) {
+            document.body.setAttribute('data-lang', l);
+            langToggle.textContent = l.toUpperCase();
+            localStorage.setItem('lang', l);
+            currentLang = l;
+        }
+        setLang(currentLang);
+        langToggle.addEventListener('click', () => setLang(currentLang === 'en' ? 'de' : 'en'));
+
+        // --- THEME ENGINE ---
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeStored = localStorage.getItem('theme') || 'dark';
+        document.body.setAttribute('data-theme', themeStored);
+        themeToggle.addEventListener('click', () => {
+            const next = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            document.body.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+        });
+
+        // --- CURSOR LOGIC ---
         const aura = document.querySelector('.cursor-aura');
-        let mouseX = window.innerWidth / 2;
-        let mouseY = window.innerHeight / 2;
-        
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            dot.style.left = mouseX + 'px';
-            dot.style.top = mouseY + 'px';
-            aura.style.left = mouseX + 'px';
-            aura.style.top = mouseY + 'px';
-        });
+        const dot = document.querySelector('.cursor-dot');
+        let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+        let cursorMode = 'universe';
 
-        document.querySelectorAll('a, button').forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                aura.style.width = '120px';
-                aura.style.height = '120px';
-                aura.style.opacity = '0.6';
-                aura.style.background = 'radial-gradient(circle, var(--gold) 0%, transparent 70%)';
+        if (window.matchMedia('(pointer: fine)').matches) {
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX; mouseY = e.clientY;
+                if (dot) { dot.style.left = mouseX + 'px'; dot.style.top = mouseY + 'px'; }
+                if (aura) { aura.style.left = mouseX + 'px'; aura.style.top = mouseY + 'px'; }
             });
-            el.addEventListener('mouseleave', () => {
-                aura.style.width = '50px';
-                aura.style.height = '50px';
-                aura.style.opacity = '0.4';
-                aura.style.background = 'radial-gradient(circle, var(--accent-moss) 0%, transparent 70%)';
+
+            const sections = document.querySelectorAll('section');
+            window.addEventListener('scroll', () => {
+                sections.forEach(s => {
+                    const r = s.getBoundingClientRect();
+                    if (r.top <= window.innerHeight/2 && r.bottom >= window.innerHeight/2) {
+                        cursorMode = s.getAttribute('data-cursor') || 'universe';
+                        updateCursorStyle();
+                    }
+                });
             });
-        });
 
-        // --- MYCELIUM GENERATOR ---
-        const svg = document.getElementById('mycelium-svg');
-        function createMyceliumBranch() {
-            const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-            const startX = Math.random() * window.innerWidth;
-            const startY = Math.random() * window.innerHeight;
-            const c1x = startX + (Math.random() - 0.5) * 600;
-            const c1y = startY + (Math.random() - 0.5) * 600;
-            const c2x = startX + (Math.random() - 0.5) * 400;
-            const c2y = startY + (Math.random() - 0.5) * 400;
-            const endX = startX + (Math.random() - 0.5) * 200;
-            const endY = startY + (Math.random() - 0.5) * 200;
-            
-            path.setAttribute("d", `M${startX},${startY} C${c1x},${c1y} ${c2x},${c2y} ${endX},${endY}`);
-            path.setAttribute("class", "mycelium-path");
-            path.style.animationDelay = Math.random() * 4 + "s";
-            return path;
-        }
-
-        for (let i = 0; i < 20; i++) {
-            svg.appendChild(createMyceliumBranch());
-        }
-
-        // --- SPORES ENGINE ---
-        const particlesContainer = document.getElementById('particles-container');
-        const particleCount = 50;
-        const particles = [];
-
-        for (let i = 0; i < particleCount; i++) {
-            const p = document.createElement('div');
-            p.className = 'particle';
-            const size = Math.random() * 3 + 1;
-            p.style.width = size + 'px';
-            p.style.height = size + 'px';
-            
-            const particleData = {
-                el: p,
-                x: Math.random() * window.innerWidth,
-                y: Math.random() * window.innerHeight,
-                vx: (Math.random() - 0.5) * 0.2,
-                vy: -Math.random() * 0.4 - 0.1,
-                opacity: Math.random() * 0.4 + 0.1
-            };
-            
-            p.style.opacity = particleData.opacity;
-            particlesContainer.appendChild(p);
-            particles.push(particleData);
-        }
-
-        function updateParticles() {
-            particles.forEach(p => {
-                // Gentle drift
-                p.y += p.vy;
-                p.x += p.vx;
-                
-                // Interaction with mouse "wind"
-                const dx = p.x - mouseX;
-                const dy = p.y - mouseY;
-                const dist = Math.sqrt(dx*dx + dy*dy);
-                if (dist < 200) {
-                    const force = (200 - dist) / 200;
-                    p.x += (dx / dist) * force * 5;
-                    p.y += (dy / dist) * force * 5;
+            function updateCursorStyle() {
+                if (!aura) return;
+                switch(cursorMode) {
+                    case 'roots':
+                        aura.style.background = 'radial-gradient(circle, var(--accent-moss) 0%, transparent 60%)';
+                        aura.style.width = '100px'; aura.style.opacity = '0.4';
+                        break;
+                    case 'moss':
+                        aura.style.background = 'radial-gradient(circle, var(--accent-moss) 0%, transparent 80%)';
+                        aura.style.width = '140px'; aura.style.opacity = '0.3';
+                        break;
+                    case 'sacred':
+                        aura.style.background = 'radial-gradient(circle, var(--gold) 0%, transparent 50%)';
+                        aura.style.width = '60px'; aura.style.opacity = '0.6';
+                        break;
+                    default:
+                        aura.style.background = 'radial-gradient(circle, var(--accent-glow) 0%, transparent 75%)';
+                        aura.style.width = '80px'; aura.style.opacity = '0.3';
                 }
-
-                // Wrap around
-                if (p.y < -20) p.y = window.innerHeight + 20;
-                if (p.x < -20) p.x = window.innerWidth + 20;
-                if (p.x > window.innerWidth + 20) p.x = -20;
-
-                p.el.style.transform = `translate(${p.x}px, ${p.y}px)`;
-            });
-            requestAnimationFrame(updateParticles);
+            }
         }
-        updateParticles();
 
-        // --- REVEAL ---
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
+        // --- MYCELIUM SYSTEM ---
+        const svg = document.getElementById('mycelium-svg');
+        function populateMycelium() {
+            const count = window.innerWidth > 768 ? 24 : 12;
+            for(let i=0; i<count; i++) {
+                const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                const x = Math.random()*window.innerWidth, y = Math.random()*window.innerHeight;
+                const c1x = x + (Math.random()-0.5)*800, c1y = y + (Math.random()-0.5)*800;
+                const ex = x + (Math.random()-0.5)*400, ey = y + (Math.random()-0.5)*400;
+                path.setAttribute("d", `M${x},${y} Q${c1x},${c1y} ${ex},${ey}`);
+                path.setAttribute("class", "mycelium-path");
+                path.style.animationDelay = (Math.random()*8)+"s";
+                svg.appendChild(path);
+            }
+        }
+        populateMycelium();
+
+        // --- FIREFLIES SYSTEM ---
+        const fContainer = document.getElementById('fireflies-container');
+        const fList = [];
+        for(let i=0; i<35; i++) {
+            const el = document.createElement('div');
+            el.className = 'firefly';
+            const size = Math.random()*4+2;
+            el.style.width = size+'px'; el.style.height = size+'px';
+            const f = {
+                el, x: Math.random()*window.innerWidth, y: Math.random()*window.innerHeight,
+                vx: (Math.random()-0.5)*0.25, vy: (Math.random()-0.5)*0.25,
+                a: Math.random()*0.4+0.1, p: Math.random()*Math.PI*2
+            };
+            fContainer.appendChild(el);
+            fList.push(f);
+        }
+
+        function loop() {
+            fList.forEach(f => {
+                f.x += f.vx; f.y += f.vy; f.p += 0.012;
+                f.el.style.opacity = f.a * (Math.sin(f.p)*0.5+0.5);
+                const dx = f.x - mouseX, dy = f.y - mouseY, d = Math.sqrt(dx*dx+dy*dy);
+                if(d < 160) { const fr = (160-d)/160; f.x += (dx/d)*fr*3.5; f.y += (dy/d)*fr*3.5; }
+                if(f.x < -30) f.x = window.innerWidth+30; if(f.x > window.innerWidth+30) f.x = -30;
+                if(f.y < -30) f.y = window.innerHeight+30; if(f.y > window.innerHeight+30) f.y = -30;
+                f.el.style.transform = `translate3d(${f.x}px, ${f.y}px, 0)`;
             });
-        }, { threshold: 0.12 });
+            requestAnimationFrame(loop);
+        }
+        loop();
 
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        // --- REVEAL ON SCROLL ---
+        const revealObs = new IntersectionObserver(es => {
+            es.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-        // --- INTERACTIVE CARDS ---
-        document.querySelectorAll('.card').forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = ((e.clientX - rect.left) / rect.width) * 100;
-                const y = ((e.clientY - rect.top) / rect.height) * 100;
-                card.style.setProperty('--mouse-x', x + '%');
-                card.style.setProperty('--mouse-y', y + '%');
+        // --- CARD HOVER INTERACTION ---
+        document.querySelectorAll('.card').forEach(c => {
+            c.addEventListener('mousemove', (e) => {
+                const r = c.getBoundingClientRect();
+                c.style.setProperty('--mouse-x', ((e.clientX-r.left)/r.width)*100+'%');
+                c.style.setProperty('--mouse-y', ((e.clientY-r.top)/r.height)*100+'%');
             });
         });
 
-        // --- PARALLAX SCROLL ---
-        window.addEventListener('scroll', () => {
-            const scrolled = window.scrollY;
-            const nebula1 = document.querySelector('.nebula-1');
-            const nebula2 = document.querySelector('.nebula-2');
-            const mycelium = document.querySelector('.mycelium-web');
-            
-            nebula1.style.transform = `translate3d(0, ${scrolled * 0.2}px, 0)`;
-            nebula2.style.transform = `translate3d(0, ${scrolled * -0.1}px, 0)`;
-            mycelium.style.transform = `translate3d(0, ${scrolled * 0.15}px, 0)`;
-        });
-
-        // --- YEAR ---
         document.getElementById('year').textContent = new Date().getFullYear();
     </script>
 </body>
