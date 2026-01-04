@@ -131,7 +131,7 @@
             filter: blur(120px);
         }
 
-        #sporeCanvas { z-index: 0; }
+        #sporeCanvas { z-index: 0; pointer-events: none; }
 
         /* --- Navigation --- */
         nav {
@@ -704,8 +704,11 @@
         // --- Custom Cursor Logic ---
         const cursor = document.getElementById('cursor');
         const glow = document.getElementById('cursor-glow');
+        const mousePos = { x: -100, y: -100 };
         
         document.addEventListener('mousemove', (e) => {
+            mousePos.x = e.clientX;
+            mousePos.y = e.clientY;
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
             glow.style.left = e.clientX + 'px';
@@ -717,54 +720,99 @@
             el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hover'));
         });
 
-        // --- Spore Particle System ---
+        // --- Mycelium Particle System (Advanced Rhizome) ---
         const canvas = document.getElementById('sporeCanvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
-        let mouse = { x: null, y: null };
+        const MAX_DISTANCE = 150; // Max connection distance
+        const CURSOR_RADIUS = 250; // Area affected by cursor
 
         function initParticles() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             particles = [];
-            const count = Math.min(window.innerWidth / 10, 120);
+            // Adaptive count based on screen size
+            const count = Math.min(window.innerWidth / 15, 100);
             for (let i = 0; i < count; i++) {
                 particles.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
-                    size: Math.random() * 2.5 + 0.5,
-                    vx: (Math.random() - 0.5) * 0.1,
-                    vy: (Math.random() - 0.5) * 0.1,
-                    opacity: Math.random() * 0.5,
-                    pulse: Math.random() * 0.01
+                    size: Math.random() * 2 + 1,
+                    vx: (Math.random() - 0.5) * 0.2,
+                    vy: (Math.random() - 0.5) * 0.2,
+                    opacity: Math.random() * 0.3 + 0.1,
+                    pulse: Math.random() * 0.005 + 0.002
                 });
             }
         }
 
-        function animateParticles() {
+        function drawMycelium() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
+            
+            // Move and draw nodes
+            for (let i = 0; i < particles.length; i++) {
+                let p = particles[i];
                 p.x += p.vx;
                 p.y += p.vy;
-                p.opacity += p.pulse;
-                if (p.opacity > 0.5 || p.opacity < 0.1) p.pulse *= -1;
 
+                // Slow boundary bounce with wrapping feel
                 if (p.x < 0) p.x = canvas.width;
                 if (p.x > canvas.width) p.x = 0;
                 if (p.y < 0) p.y = canvas.height;
                 if (p.y > canvas.height) p.y = 0;
 
+                // Cursor proximity interaction
+                const dx = mousePos.x - p.x;
+                const dy = mousePos.y - p.y;
+                const distToMouse = Math.sqrt(dx * dx + dy * dy);
+                
+                let activeOpacity = p.opacity;
+                if (distToMouse < CURSOR_RADIUS) {
+                    // Attract slightly or react to mouse
+                    p.vx += dx * 0.00005;
+                    p.vy += dy * 0.00005;
+                    // Increase brightness near cursor
+                    activeOpacity = Math.max(activeOpacity, (1 - distToMouse / CURSOR_RADIUS) * 0.6);
+                }
+
+                // Draw Hyphae (Connections)
+                for (let j = i + 1; j < particles.length; j++) {
+                    let p2 = particles[j];
+                    const dHyphaX = p.x - p2.x;
+                    const dHyphaY = p.y - p2.y;
+                    const hyphaDist = Math.sqrt(dHyphaX * dHyphaX + dHyphaY * dHyphaY);
+
+                    if (hyphaDist < MAX_DISTANCE) {
+                        // Connections become visible only when close or near cursor
+                        let lineOpacity = (1 - hyphaDist / MAX_DISTANCE) * 0.15;
+                        
+                        // Boost line opacity if mouse is nearby either node
+                        if (distToMouse < CURSOR_RADIUS) {
+                            lineOpacity *= 2.5;
+                        }
+
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = `rgba(163, 217, 165, ${lineOpacity})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+
+                // Draw Node
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(163, 217, 165, ${p.opacity})`;
+                ctx.fillStyle = `rgba(163, 217, 165, ${activeOpacity})`;
                 ctx.fill();
-            });
-            requestAnimationFrame(animateParticles);
+            }
+            
+            requestAnimationFrame(drawMycelium);
         }
 
         window.addEventListener('resize', initParticles);
         initParticles();
-        animateParticles();
+        drawMycelium();
 
         // --- Translations ---
         const translations = {
