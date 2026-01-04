@@ -3,624 +3,646 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Luca “Sumitra Isa Dewè” Fischer | Regenerative Systems</title>
-    <meta name="description" content="I build growth systems like nature builds ecosystems: Clear, resilient, alive. Personal website of Luca Fischer.">
+    <title>Luca “Sumitra Isa Dewè” Fischer | Regenerative Systems Builder</title>
+    <meta name="description" content="I build growth systems like nature builds ecosystems: Clear, resilient, alive.">
     
-    <!-- Open Graph / Social -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Luca “Sumitra Isa Dewè” Fischer">
-    <meta property="og:description" content="Turn meaning into regenerative growth. Clear, resilient, alive systems.">
-    <meta property="og:image" content="https://picsum.photos/1200/630?grayscale">
-
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            /* Palette: Deep forest-charcoal background, off-white text, moss green accents, gold highlights */
-            --bg: #0a0d0c;
-            --bg-glass: rgba(10, 13, 12, 0.8);
+            --bg: #050706;
+            --bg-accent: #0a0d0c;
             --text: #f5f5f0;
-            --text-dim: rgba(245, 245, 240, 0.7);
-            --accent: #88a070; /* Bioluminescent moss */
-            --accent-glow: rgba(136, 160, 112, 0.3);
-            --highlight: #c5a059; /* Soft gold */
-            --noise: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            --transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-            --max-width: 1200px;
+            --text-muted: rgba(245, 245, 240, 0.5);
+            --accent-moss: #8db37d;
+            --accent-glow: rgba(141, 179, 125, 0.25);
+            --gold: #d4af37;
+            --gold-glow: rgba(212, 175, 55, 0.15);
+            --transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --noise: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
         }
 
         [data-theme="light"] {
-            --bg: #f5f5f0;
-            --bg-glass: rgba(245, 245, 240, 0.8);
-            --text: #1a1f1d;
-            --text-dim: rgba(26, 31, 29, 0.7);
-            --accent: #5d754a;
-            --accent-glow: rgba(93, 117, 74, 0.1);
-            --highlight: #a67c37;
+            --bg: #f8f8f5;
+            --bg-accent: #efeee8;
+            --text: #1a1c1b;
+            --text-muted: rgba(26, 28, 27, 0.6);
+            --accent-moss: #5d7a4d;
+            --accent-glow: rgba(93, 122, 77, 0.1);
+            --gold: #a68a2d;
         }
 
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-font-smoothing: antialiased;
+            margin: 0; padding: 0; box-sizing: border-box;
+            cursor: none;
         }
 
         html {
             scroll-behavior: smooth;
+            scrollbar-width: none;
         }
+        ::-webkit-scrollbar { display: none; }
 
         body {
-            font-family: 'Inter', -apple-system, sans-serif;
+            font-family: 'Inter', sans-serif;
             background-color: var(--bg);
             color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
-            transition: background-color 0.5s ease, color 0.5s ease;
+            transition: background-color 1s ease;
         }
 
-        body::before {
-            content: "";
+        /* --- IMMERSIVE BACKGROUND --- */
+        .canvas-container {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--noise);
-            opacity: 0.03;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
             pointer-events: none;
+        }
+
+        .grain-overlay {
+            position: absolute;
+            inset: -100%;
+            background-image: var(--noise);
+            opacity: 0.06;
+            animation: jitter 0.4s steps(2) infinite;
+        }
+
+        @keyframes jitter {
+            0% { transform: translate(0,0); }
+            50% { transform: translate(-1%, -1%); }
+            100% { transform: translate(1%, 1%); }
+        }
+
+        .nebula {
+            position: absolute;
+            width: 100vmax;
+            height: 100vmax;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 75%);
+            filter: blur(120px);
+            opacity: 0.5;
+            animation: drift 30s infinite alternate ease-in-out;
+            top: -20%; left: -20%;
+        }
+
+        .nebula-2 {
+            top: 30%; right: -20%; left: auto;
+            background: radial-gradient(circle, var(--gold-glow) 0%, transparent 65%);
+            animation-duration: 45s;
+            animation-delay: -10s;
+        }
+
+        @keyframes drift {
+            0% { transform: translate(-5%, -5%) scale(1); }
+            100% { transform: translate(5%, 5%) scale(1.1); }
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--text);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.15;
+            transition: transform 0.2s ease-out;
+        }
+
+        /* --- MYCELIUM SVG --- */
+        .mycelium-web {
+            position: absolute;
+            inset: 0;
+            opacity: 0.12;
+            transition: opacity 1s ease;
+        }
+
+        .mycelium-path {
+            stroke: var(--accent-moss);
+            stroke-width: 0.6;
+            stroke-dasharray: 1200;
+            stroke-dashoffset: 1200;
+            animation: mycelium-grow 12s forwards cubic-bezier(0.4, 0, 0.2, 1);
+            filter: drop-shadow(0 0 3px var(--accent-moss));
+        }
+
+        @keyframes mycelium-grow {
+            to { stroke-dashoffset: 0; }
+        }
+
+        /* --- CUSTOM CURSOR --- */
+        .cursor-dot {
+            position: fixed;
+            width: 4px; height: 4px;
+            background: var(--text);
+            border-radius: 50%;
+            z-index: 10000;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+        }
+        .cursor-aura {
+            position: fixed;
+            width: 50px; height: 50px;
+            background: radial-gradient(circle, var(--accent-moss) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: width 0.5s var(--ease-out-expo), height 0.5s var(--ease-out-expo), opacity 0.5s;
+            opacity: 0.4;
+            mix-blend-mode: screen;
+        }
+
+        /* --- NAV --- */
+        nav {
+            position: fixed;
+            top: 2.5rem; left: 50%;
+            transform: translateX(-50%);
             z-index: 1000;
         }
 
-        /* Background Effects */
-        .universe-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 50%, rgba(136, 160, 112, 0.05) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        /* Mycelium Pattern overlay */
-        .mycelium-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 50 Q 25 25, 50 50 T 100 50' stroke='rgba(136, 160, 112, 0.05)' fill='transparent'/%3E%3Cpath d='M50 0 Q 75 25, 50 50 T 50 100' stroke='rgba(136, 160, 112, 0.03)' fill='transparent'/%3E%3C/svg%3E");
-            opacity: 0.4;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        /* Layout */
-        section {
-            padding: clamp(4rem, 10vw, 8rem) 1.5rem;
-            max-width: var(--max-width);
-            margin: 0 auto;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: var(--transition);
-        }
-
-        section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Navigation */
-        nav {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(10px);
-            background: var(--bg-glass);
-            border-bottom: 1px solid rgba(136, 160, 112, 0.1);
-            padding: 1rem 1.5rem;
-        }
-
-        .nav-content {
-            max-width: var(--max-width);
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
+        .nav-pill {
+            background: rgba(10, 13, 12, 0.45);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 0.75rem 2.8rem;
+            border-radius: 100px;
+            display: flex; gap: 2.5rem;
             align-items: center;
         }
 
-        .nav-links {
-            display: flex;
-            gap: 1.5rem;
+        .nav-pill a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            opacity: 0.4;
+            transition: var(--transition);
         }
 
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text);
-            font-size: 0.9rem;
-            font-weight: 500;
-            opacity: 0.7;
-            transition: var(--transition);
+        .nav-pill a:hover { opacity: 1; color: var(--accent-moss); transform: translateY(-1px); }
+
+        /* --- SECTIONS --- */
+        section {
+            padding: 15vh 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
             position: relative;
         }
 
-        .nav-links a:hover {
-            opacity: 1;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: var(--accent);
-            transition: var(--transition);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Theme Toggle */
-        .theme-toggle {
-            background: transparent;
-            border: 1px solid rgba(136, 160, 112, 0.2);
-            color: var(--text);
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-        }
-
-        .theme-toggle:hover {
-            background: var(--accent-glow);
-            transform: rotate(15deg);
-        }
-
-        /* Hero */
         .hero {
-            min-height: 80vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: flex-start;
-            text-align: left;
-            position: relative;
         }
 
-        .hero-name {
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: var(--accent);
-            margin-bottom: 0.5rem;
-            letter-spacing: 0.05em;
+        .label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5em;
+            color: var(--accent-moss);
+            margin-bottom: 2.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
         }
-
-        .hero-position {
-            font-size: 0.95rem;
-            color: var(--text-dim);
-            margin-bottom: 3rem;
+        .label::after {
+            content: '';
+            height: 1px;
+            width: 50px;
+            background: var(--accent-moss);
+            opacity: 0.3;
         }
 
         h1 {
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            line-height: 1.1;
-            font-weight: 300;
-            margin-bottom: 2rem;
-            max-width: 900px;
+            font-size: clamp(3rem, 11vw, 8.5rem);
+            font-weight: 200;
+            line-height: 0.92;
+            margin-bottom: 3.5rem;
+            letter-spacing: -0.04em;
         }
 
-        .subheadline {
-            font-size: clamp(1.1rem, 3vw, 1.4rem);
-            color: var(--text-dim);
-            max-width: 600px;
-            margin-bottom: 2rem;
-            font-weight: 300;
+        .reveal-span {
+            display: inline-block;
+            overflow: hidden;
+            vertical-align: top;
         }
-
-        .mycelium-pulse {
-            width: 12px;
-            height: 12px;
-            background: var(--accent);
-            border-radius: 50%;
-            position: relative;
-            margin-top: 1rem;
-        }
-
-        .mycelium-pulse::after {
-            content: '';
-            position: absolute;
-            top: -100%; left: -100%; right: -100%; bottom: -100%;
-            border: 1px solid var(--accent);
-            border-radius: 50%;
-            animation: pulse 3s infinite ease-out;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(0.5); opacity: 0; }
-            50% { opacity: 0.5; }
-            100% { transform: scale(3); opacity: 0; }
-        }
-
-        /* Work Section */
-        .section-title {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: var(--accent);
-            margin-bottom: 2rem;
+        .reveal-span span {
             display: block;
+            transform: translateY(110%);
+            transition: transform 1.8s var(--ease-out-expo);
+        }
+        .visible .reveal-span span { transform: translateY(0); }
+
+        .hero-desc {
+            font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+            max-width: 650px;
+            font-weight: 300;
+            color: var(--text-muted);
+            line-height: 1.5;
         }
 
-        .work-intro {
-            font-size: 1.8rem;
-            margin-bottom: 3rem;
-            max-width: 600px;
-        }
-
-        .work-list {
-            list-style: none;
-            display: grid;
-            gap: 1.5rem;
-            max-width: 700px;
-        }
-
-        .work-list li {
-            font-size: 1.1rem;
+        .positioning-line {
+            margin-top: 4rem;
             padding-left: 2rem;
-            position: relative;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid rgba(136, 160, 112, 0.1);
-            transition: var(--transition);
+            border-left: 1px solid var(--gold);
+            color: var(--gold);
+            font-weight: 400;
+            font-size: 1rem;
+            max-width: 500px;
+            opacity: 0.8;
         }
 
-        .work-list li:hover {
-            border-bottom-color: var(--accent);
-            padding-left: 2.5rem;
-        }
-
-        .work-list li::before {
-            content: '•';
-            position: absolute;
-            left: 0;
-            color: var(--highlight);
-        }
-
-        .work-closing {
-            margin-top: 3rem;
-            font-style: italic;
-            color: var(--text-dim);
-        }
-
-        /* Selected Grid */
+        /* --- PROJECT GRID --- */
         .selected-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
             gap: 2rem;
-            margin-top: 2rem;
+            margin-top: 6rem;
         }
-
-        .tile {
-            background: rgba(136, 160, 112, 0.03);
-            border: 1px solid rgba(136, 160, 112, 0.1);
-            padding: 2.5rem;
-            transition: var(--transition);
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .tile:hover {
-            background: rgba(136, 160, 112, 0.07);
-            transform: translateY(-5px);
-            border-color: var(--accent);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }
-
-        .tile h3 {
-            font-size: 1.25rem;
-            font-weight: 500;
-            color: var(--highlight);
-        }
-
-        .tile p {
-            font-size: 0.95rem;
-            color: var(--text-dim);
-            line-height: 1.7;
-        }
-
-        /* Apply / Conversation */
-        .apply-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: flex-start;
-        }
-
         @media (max-width: 768px) {
-            .apply-content { grid-template-columns: 1fr; gap: 2rem; }
-            .nav-links { display: none; }
+            .selected-grid { grid-template-columns: 1fr; }
         }
 
-        .apply-steps {
-            list-style: none;
-            counter-reset: steps;
-        }
-
-        .apply-steps li {
-            margin-bottom: 1rem;
-            display: flex;
-            gap: 1rem;
-            color: var(--text-dim);
-        }
-
-        .apply-steps li::before {
-            counter-increment: steps;
-            content: counter(steps) ')';
-            color: var(--accent);
-            font-weight: 600;
-        }
-
-        .button-group {
+        .card {
+            background: rgba(255, 255, 255, 0.012);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 4.5rem 3.5rem;
+            min-height: 520px;
             display: flex;
             flex-direction: column;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .btn {
-            padding: 1rem 2rem;
-            border: 1px solid var(--accent);
-            background: transparent;
-            color: var(--text);
-            text-decoration: none;
-            text-align: center;
-            font-size: 0.9rem;
-            font-weight: 500;
+            justify-content: flex-end;
+            position: relative;
             transition: var(--transition);
-            display: inline-block;
+            overflow: hidden;
         }
-
-        .btn:hover {
-            background: var(--accent);
-            color: var(--bg);
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(141, 179, 125, 0.08) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
         }
-
-        .subtle-line {
-            margin-top: 3rem;
-            font-size: 0.8rem;
-            opacity: 0.5;
-            letter-spacing: 0.1em;
+        .card:hover {
+            border-color: var(--accent-moss);
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.02);
         }
+        .card:hover::before { opacity: 1; }
 
-        /* Connect */
-        .connect-links {
+        .card-content { position: relative; z-index: 2; }
+        .card h3 {
+            font-size: 2.2rem;
+            font-weight: 200;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+        }
+        .card p { color: var(--text-muted); font-size: 1rem; line-height: 1.7; }
+
+        /* --- CONVERSATION --- */
+        .apply-container {
+            background: radial-gradient(circle at top right, var(--bg-accent), var(--bg));
+            padding: 10rem 4rem;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            text-align: center;
+        }
+        .apply-container h2 { font-size: clamp(2.5rem, 7vw, 5rem); font-weight: 100; margin-bottom: 4rem; }
+
+        .cta-box {
             display: flex;
+            gap: 2.5rem;
+            justify-content: center;
             flex-wrap: wrap;
-            gap: 3rem;
-            margin-top: 2rem;
         }
-
-        .connect-item {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            text-decoration: none;
+        .btn-fancy {
+            padding: 1.4rem 3.8rem;
+            border: 0.5px solid var(--accent-moss);
             color: var(--text);
-            transition: var(--transition);
-        }
-
-        .connect-item:hover {
-            color: var(--accent);
-            transform: translateY(-2px);
-        }
-
-        .connect-item span {
-            font-size: 0.8rem;
+            text-decoration: none;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--text-dim);
+            letter-spacing: 0.35em;
+            font-size: 0.75rem;
+            transition: var(--transition);
+            background: rgba(141, 179, 125, 0.04);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-fancy:hover {
+            background: var(--accent-moss);
+            color: var(--bg);
+            box-shadow: 0 0 40px var(--accent-glow);
+            transform: scale(1.02);
         }
 
-        .connect-item b {
-            font-size: 1.2rem;
-            font-weight: 400;
+        .mantra {
+            margin-top: 10rem;
+            font-size: 0.65rem;
+            letter-spacing: 0.7em;
+            text-transform: uppercase;
+            opacity: 0.15;
+            animation: pulse-slow 8s infinite alternate ease-in-out;
+        }
+        @keyframes pulse-slow {
+            from { opacity: 0.05; letter-spacing: 0.6em; }
+            to { opacity: 0.25; letter-spacing: 0.8em; }
         }
 
-        /* Footer */
+        /* --- REVEAL --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1.6s var(--ease-out-expo), transform 1.6s var(--ease-out-expo);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
         footer {
-            padding: 4rem 1.5rem;
+            padding: 6rem 2rem;
             text-align: center;
-            border-top: 1px solid rgba(136, 160, 112, 0.1);
-            font-size: 0.85rem;
-            color: var(--text-dim);
-            max-width: var(--max-width);
-            margin: 0 auto;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
         }
 
-        /* Utils */
-        .reveal-on-scroll {
-            transition: transform 0.8s ease, opacity 0.8s ease;
-        }
     </style>
 </head>
 <body data-theme="dark">
-    <div class="universe-bg"></div>
-    <div class="mycelium-overlay"></div>
+
+    <div class="cursor-dot"></div>
+    <div class="cursor-aura"></div>
+
+    <div class="canvas-container">
+        <div class="grain-overlay"></div>
+        <div class="nebula nebula-1"></div>
+        <div class="nebula nebula-2"></div>
+        <svg class="mycelium-web" id="mycelium-svg" width="100%" height="100%" preserveAspectRatio="none">
+            <!-- Procedural Paths -->
+        </svg>
+        <div id="particles-container"></div>
+    </div>
 
     <nav>
-        <div class="nav-content">
-            <div class="nav-links">
-                <a href="#work">Work</a>
-                <a href="#selected">Selected</a>
-                <a href="#apply">Apply</a>
-                <a href="#connect">Connect</a>
-            </div>
-            <button class="theme-toggle" id="theme-toggle" title="Toggle Theme">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="5"></circle>
-                    <line x1="12" y1="1" x2="12" y2="3"></line>
-                    <line x1="12" y1="21" x2="12" y2="23"></line>
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                    <line x1="1" y1="12" x2="3" y2="12"></line>
-                    <line x1="21" y1="12" x2="23" y2="12"></line>
-                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                </svg>
-            </button>
+        <div class="nav-pill">
+            <a href="#work">Work</a>
+            <a href="#selected">Selected</a>
+            <a href="#apply">Apply</a>
+            <a href="#connect">Connect</a>
         </div>
     </nav>
 
     <main>
         <!-- HERO -->
-        <section id="hero" class="hero">
-            <div class="hero-name">Luca “Sumitra Isa Dewè” Fischer</div>
-            <div class="hero-position">I build growth systems like nature builds ecosystems: Clear, resilient, alive.</div>
-            <h1>Turn meaning into regenerative growth.</h1>
-            <p class="subheadline">
-                I help purpose-led teams turn deep vision into clear offers and calm, scalable systems.
+        <section id="hero" class="hero reveal">
+            <span class="label">Luca Fischer • Sumitra Isa Dewè</span>
+            <h1>
+                <div class="reveal-span"><span>Turn meaning</span></div><br>
+                <div class="reveal-span"><span>into regenerative</span></div><br>
+                <div class="reveal-span"><span>growth.</span></div>
+            </h1>
+            <p class="hero-desc">
+                I help purpose-led teams turn deep vision into clear offers and calm, scalable systems. 
                 AI where it helps. Web3 where coordination matters. Always grounded.
             </p>
-            <div class="mycelium-pulse"></div>
+            <div class="positioning-line">
+                I build growth systems like nature builds ecosystems: Clear, resilient, alive.
+            </div>
         </section>
 
         <!-- WORK -->
-        <section id="work">
-            <span class="section-title">What I bring</span>
-            <p class="work-intro">I work best where things are real, but not yet clear.</p>
-            <ul class="work-list">
-                <li>Offer clarity — so people instantly understand the value</li>
-                <li>Funnels that feel good — and actually convert</li>
-                <li>AI-assisted operations — less chaos, more focus</li>
-                <li>Web3-native thinking — when coordination, participation, or ownership matter</li>
-                <li>Clean tracking and calm iteration — no panic-driven decisions</li>
-            </ul>
-            <p class="work-closing">No pressure tactics. No noise. Just systems that hold.</p>
+        <section id="work" class="reveal" style="padding-top: 10vh;">
+            <span class="label">The Foundation</span>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8rem; margin-top: 5rem;">
+                <h2 style="font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 200; line-height: 1.1;">I work best where things are real, but not yet clear.</h2>
+                <div style="display: flex; flex-direction: column; gap: 4rem;">
+                    <div class="reveal">
+                        <h4 style="color: var(--accent-moss); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.2em; margin-bottom: 1rem;">System Design</h4>
+                        <p style="color: var(--text-muted);">Offer clarity and funnels that feel good. Converting without the noise, pressure tactics, or burnout-inducing chaos.</p>
+                    </div>
+                    <div class="reveal">
+                        <h4 style="color: var(--accent-moss); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.2em; margin-bottom: 1rem;">Coordination Tech</h4>
+                        <p style="color: var(--text-muted);">Leveraging AI for efficiency and Web3 for participative ownership. Practical tools for visionary coordination.</p>
+                    </div>
+                    <div class="reveal">
+                        <h4 style="color: var(--accent-moss); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.2em; margin-bottom: 1rem;">Iterative Calm</h4>
+                        <p style="color: var(--text-muted);">Clean tracking and grounded decision making. Systems that hold firm through the complexity of rapid growth.</p>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <!-- SELECTED -->
-        <section id="selected">
-            <span class="section-title">Selected work</span>
+        <section id="selected" class="reveal">
+            <span class="label">Selected Ecosystems</span>
             <div class="selected-grid">
-                <div class="tile">
-                    <h3>AMA.RUNA</h3>
-                    <p>Swiss non-profit working in long-term partnership with Indigenous communities in the Brazilian Amazon, especially the Huni Kuin people.</p>
-                    <p>I help translate Indigenous-led values into narratives and systems that engage schools, communities, and supporters. Without extraction.</p>
+                <div class="card">
+                    <div class="card-content">
+                        <h3>AMA.RUNA</h3>
+                        <p>Swiss non-profit partnering with Huni Kuin communities in the Brazilian Amazon. Translating Indigenous values into systems that engage and empower without extraction.</p>
+                    </div>
                 </div>
-                <div class="tile">
-                    <h3>UTOPIA MAPS</h3>
-                    <p>Decentralized mapping and coordination for communities. Connect locally, organize collaboratively and co-create real-world initiatives.</p>
+                <div class="card">
+                    <div class="card-content">
+                        <h3>UTOPIA MAPS</h3>
+                        <p>Decentralized coordination for local communities. Connecting digital transparency with real-world co-creation initiatives.</p>
+                    </div>
                 </div>
-                <div class="tile">
-                    <h3>Tribal Yoga</h3>
-                    <p>A decentralized movement of embodied liberation.</p>
+                <div class="card">
+                    <div class="card-content">
+                        <h3>Tribal Yoga</h3>
+                        <p>A decentralized movement of embodied liberation. Scaling collective consciousness through participative network structures.</p>
+                    </div>
                 </div>
-                <div class="tile">
-                    <h3>Soul Craftery</h3>
-                    <p>One-pagers, conversion paths, ads, and iteration. Built to scale without burnout.</p>
+                <div class="card">
+                    <div class="card-content">
+                        <h3>Soul Craftery</h3>
+                        <p>Built for scale without burnout. High-performing conversion paths, ads, and iteration flows treated as living, breathing systems.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- APPLY -->
-        <section id="apply">
-            <span class="section-title">Start a conversation</span>
-            <div class="apply-content">
-                <div>
-                    <p style="font-size: 1.2rem; margin-bottom: 2rem;">If you’re responsible for a project that needs clearer direction, send me:</p>
-                    <ul class="apply-steps">
-                        <li>what you’re building</li>
-                        <li>what you want to grow</li>
-                        <li>what currently feels stuck</li>
-                        <li>your timeline</li>
-                    </ul>
-                    <p style="margin-top: 2rem; opacity: 0.7;">I reply personally.</p>
+        <section id="apply" class="reveal">
+            <div class="apply-container">
+                <span class="label" style="justify-content: center;">Start the Conversation</span>
+                <h2>Let's build together.</h2>
+                <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 5rem; font-size: 1.1rem; font-weight: 300;">
+                    If you’re responsible for a project that needs clearer direction, tell me what you’re building, what you want to grow, and what currently feels stuck.
+                </p>
+                <div class="cta-box">
+                    <a href="https://x.com/luca_sumitra" target="_blank" class="btn-fancy">DM on X</a>
+                    <a href="https://www.linkedin.com/in/luca-fischer-87b2ba204/" target="_blank" class="btn-fancy">LinkedIn</a>
+                    <a href="mailto:hello@lucafischer.com" class="btn-fancy">Direct Email</a>
                 </div>
-                <div class="button-group">
-                    <a href="https://x.com/luca_sumitra" class="btn" target="_blank">DM on X</a>
-                    <a href="https://www.linkedin.com/in/luca-fischer-87b2ba204/" class="btn" target="_blank">Message on LinkedIn</a>
-                    <a href="mailto:hello@lucafischer.com" class="btn">Email me</a>
-                </div>
+                <div class="mantra">lokah samastah sukhino bhavantu</div>
             </div>
-            <p class="subtle-line">lokah samastah sukhino bhavantu</p>
         </section>
 
         <!-- CONNECT -->
-        <section id="connect">
-            <span class="section-title">Connect</span>
-            <div class="connect-links">
-                <a href="https://x.com/luca_sumitra" class="connect-item" target="_blank">
-                    <span>Platform</span>
-                    <b>X</b>
-                </a>
-                <a href="https://www.linkedin.com/in/luca-fischer-87b2ba204/" class="connect-item" target="_blank">
-                    <span>Professional</span>
-                    <b>LinkedIn</b>
-                </a>
-                <a href="https://github.com/sumitrabliss" class="connect-item" target="_blank">
-                    <span>Code</span>
-                    <b>GitHub</b>
-                </a>
-                <a href="https://www.instagram.com/" class="connect-item" target="_blank">
-                    <span>Visuals</span>
-                    <b>Instagram</b>
-                </a>
+        <section id="connect" class="reveal" style="text-align: center;">
+            <span class="label" style="justify-content: center;">Connect</span>
+            <div style="display: flex; justify-content: center; gap: clamp(2rem, 8vw, 6rem); margin-top: 5rem; flex-wrap: wrap;">
+                <a href="https://x.com/luca_sumitra" target="_blank" style="color: var(--text); text-decoration: none; font-size: 1.8rem; font-weight: 100;" class="reveal">X / Twitter</a>
+                <a href="https://www.linkedin.com/in/luca-fischer-87b2ba204/" target="_blank" style="color: var(--text); text-decoration: none; font-size: 1.8rem; font-weight: 100;" class="reveal">LinkedIn</a>
+                <a href="https://github.com/sumitrabliss" target="_blank" style="color: var(--text); text-decoration: none; font-size: 1.8rem; font-weight: 100;" class="reveal">GitHub</a>
+                <a href="https://www.instagram.com/" target="_blank" style="color: var(--text); text-decoration: none; font-size: 1.8rem; font-weight: 100;" class="reveal">Instagram</a>
             </div>
-            <p style="margin-top: 3rem; opacity: 0.7;">Best entry: DM on X or LinkedIn.</p>
+            <p style="margin-top: 6rem; opacity: 0.35; font-size: 0.75rem; letter-spacing: 0.1em;">Best entry point: DM via X or LinkedIn.</p>
         </section>
     </main>
 
     <footer>
         <p>Built with care, clarity, and respect for living systems.</p>
-        <p style="margin-top: 1rem; opacity: 0.4;">&copy; <span id="year"></span> Luca Fischer</p>
+        <p style="margin-top: 1.5rem; opacity: 0.2; font-size: 0.6rem;">&copy; <span id="year"></span> Luca Fischer. No tracking. Pure intent.</p>
     </footer>
 
     <script>
-        // Set year in footer
-        document.getElementById('year').textContent = new Date().getFullYear();
-
-        // Theme Toggle Logic
-        const body = document.body;
-        const themeBtn = document.getElementById('theme-toggle');
-        const currentTheme = localStorage.getItem('theme') || 'dark';
-
-        body.setAttribute('data-theme', currentTheme);
-
-        themeBtn.addEventListener('click', () => {
-            const newTheme = body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-            body.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
+        // --- CURSOR ---
+        const dot = document.querySelector('.cursor-dot');
+        const aura = document.querySelector('.cursor-aura');
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            dot.style.left = mouseX + 'px';
+            dot.style.top = mouseY + 'px';
+            aura.style.left = mouseX + 'px';
+            aura.style.top = mouseY + 'px';
         });
 
-        // Intersection Observer for Section Reveal
-        const observerOptions = {
-            threshold: 0.1
-        };
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                aura.style.width = '120px';
+                aura.style.height = '120px';
+                aura.style.opacity = '0.6';
+                aura.style.background = 'radial-gradient(circle, var(--gold) 0%, transparent 70%)';
+            });
+            el.addEventListener('mouseleave', () => {
+                aura.style.width = '50px';
+                aura.style.height = '50px';
+                aura.style.opacity = '0.4';
+                aura.style.background = 'radial-gradient(circle, var(--accent-moss) 0%, transparent 70%)';
+            });
+        });
 
+        // --- MYCELIUM GENERATOR ---
+        const svg = document.getElementById('mycelium-svg');
+        function createMyceliumBranch() {
+            const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            const startX = Math.random() * window.innerWidth;
+            const startY = Math.random() * window.innerHeight;
+            const c1x = startX + (Math.random() - 0.5) * 600;
+            const c1y = startY + (Math.random() - 0.5) * 600;
+            const c2x = startX + (Math.random() - 0.5) * 400;
+            const c2y = startY + (Math.random() - 0.5) * 400;
+            const endX = startX + (Math.random() - 0.5) * 200;
+            const endY = startY + (Math.random() - 0.5) * 200;
+            
+            path.setAttribute("d", `M${startX},${startY} C${c1x},${c1y} ${c2x},${c2y} ${endX},${endY}`);
+            path.setAttribute("class", "mycelium-path");
+            path.style.animationDelay = Math.random() * 4 + "s";
+            return path;
+        }
+
+        for (let i = 0; i < 20; i++) {
+            svg.appendChild(createMyceliumBranch());
+        }
+
+        // --- SPORES ENGINE ---
+        const particlesContainer = document.getElementById('particles-container');
+        const particleCount = 50;
+        const particles = [];
+
+        for (let i = 0; i < particleCount; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            const size = Math.random() * 3 + 1;
+            p.style.width = size + 'px';
+            p.style.height = size + 'px';
+            
+            const particleData = {
+                el: p,
+                x: Math.random() * window.innerWidth,
+                y: Math.random() * window.innerHeight,
+                vx: (Math.random() - 0.5) * 0.2,
+                vy: -Math.random() * 0.4 - 0.1,
+                opacity: Math.random() * 0.4 + 0.1
+            };
+            
+            p.style.opacity = particleData.opacity;
+            particlesContainer.appendChild(p);
+            particles.push(particleData);
+        }
+
+        function updateParticles() {
+            particles.forEach(p => {
+                // Gentle drift
+                p.y += p.vy;
+                p.x += p.vx;
+                
+                // Interaction with mouse "wind"
+                const dx = p.x - mouseX;
+                const dy = p.y - mouseY;
+                const dist = Math.sqrt(dx*dx + dy*dy);
+                if (dist < 200) {
+                    const force = (200 - dist) / 200;
+                    p.x += (dx / dist) * force * 5;
+                    p.y += (dy / dist) * force * 5;
+                }
+
+                // Wrap around
+                if (p.y < -20) p.y = window.innerHeight + 20;
+                if (p.x < -20) p.x = window.innerWidth + 20;
+                if (p.x > window.innerWidth + 20) p.x = -20;
+
+                p.el.style.transform = `translate(${p.x}px, ${p.y}px)`;
+            });
+            requestAnimationFrame(updateParticles);
+        }
+        updateParticles();
+
+        // --- REVEAL ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
+                if (entry.isIntersecting) entry.target.classList.add('visible');
             });
-        }, observerOptions);
+        }, { threshold: 0.12 });
 
-        document.querySelectorAll('section').forEach(section => {
-            observer.observe(section);
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // --- INTERACTIVE CARDS ---
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                card.style.setProperty('--mouse-x', x + '%');
+                card.style.setProperty('--mouse-y', y + '%');
+            });
         });
 
-        // Subtle Mycelium Pulse follow logic (optional flavor)
+        // --- PARALLAX SCROLL ---
         window.addEventListener('scroll', () => {
             const scrolled = window.scrollY;
-            const universe = document.querySelector('.universe-bg');
-            if(universe) {
-                universe.style.transform = `translateY(${scrolled * 0.1}px)`;
-            }
+            const nebula1 = document.querySelector('.nebula-1');
+            const nebula2 = document.querySelector('.nebula-2');
+            const mycelium = document.querySelector('.mycelium-web');
+            
+            nebula1.style.transform = `translate3d(0, ${scrolled * 0.2}px, 0)`;
+            nebula2.style.transform = `translate3d(0, ${scrolled * -0.1}px, 0)`;
+            mycelium.style.transform = `translate3d(0, ${scrolled * 0.15}px, 0)`;
         });
 
-        // Smooth nav highlight or other micro-interactions could go here
+        // --- YEAR ---
+        document.getElementById('year').textContent = new Date().getFullYear();
     </script>
 </body>
 </html>
