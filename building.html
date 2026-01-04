@@ -1,0 +1,562 @@
+
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibe Coding / Living Systems Lab | Build in Public</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --moss: #2ed573;
+            --gold: #f1c40f;
+            --violet: #a29bfe;
+            --deep-space: #060907;
+            --card-bg: rgba(15, 23, 18, 0.6);
+            --card-border: rgba(46, 213, 115, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--deep-space);
+            color: #e2e8f0;
+            transition: background-color 0.5s ease, color 0.5s ease;
+            overflow-x: hidden;
+            min-height: 100vh;
+            background-attachment: fixed;
+        }
+
+        .light-mode {
+            --deep-space: #f0f4f1;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --card-border: rgba(0, 0, 0, 0.05);
+            color: #1a2e1a;
+        }
+
+        /* Nebula & Star Effect */
+        .nebula {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: 
+                radial-gradient(circle at 15% 25%, rgba(46, 213, 115, 0.08) 0%, transparent 35%),
+                radial-gradient(circle at 85% 75%, rgba(162, 155, 254, 0.06) 0%, transparent 35%),
+                radial-gradient(circle at 50% 50%, rgba(241, 196, 15, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.4;
+            background-image: radial-gradient(white 1px, transparent 1px);
+            background-size: 50px 50px;
+            background-position: 0 0, 25px 25px;
+            pointer-events: none;
+        }
+
+        /* Mycelium Lines Overlay */
+        .mycelium {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.08;
+            background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 190 Q 50 150 100 100 T 190 10' stroke='%232ed573' fill='transparent' stroke-width='0.5'/%3E%3Cpath d='M10 10 Q 150 50 100 100 T 10 190' stroke='%23a29bfe' fill='transparent' stroke-width='0.5'/%3E%3C/svg%3E");
+            background-size: 400px 400px;
+            pointer-events: none;
+        }
+
+        .light-mode .mycelium { opacity: 0.03; }
+
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(46, 213, 115, 0.4);
+            box-shadow: 0 12px 40px -12px rgba(46, 213, 115, 0.25);
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, var(--moss), transparent);
+            opacity: 0.2;
+        }
+
+        @media (min-width: 768px) {
+            .timeline-line { left: 50%; transform: translateX(-50%); }
+        }
+
+        .moss-text { color: var(--moss); }
+        .gold-text { color: var(--gold); }
+        
+        .btn-glow:hover {
+            box-shadow: 0 0 20px rgba(46, 213, 115, 0.3);
+            filter: brightness(1.1);
+        }
+
+        .fade-in { animation: fadeIn 0.8s ease-out forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        input, textarea {
+            background: rgba(255, 255, 255, 0.03) !important;
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            color: inherit !important;
+            transition: border-color 0.3s ease;
+        }
+        input:focus, textarea:focus {
+            border-color: var(--moss) !important;
+            outline: none;
+        }
+        .light-mode input, .light-mode textarea {
+            background: rgba(255, 255, 255, 0.9) !important;
+            border: 1px solid rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .reaction-btn {
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .reaction-btn:hover:not(:disabled) {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .reaction-btn:active:not(:disabled) { transform: scale(1.4); }
+        .reaction-btn:disabled { cursor: default; filter: grayscale(0.5); opacity: 0.8; }
+        .reacted { border-color: var(--moss) !important; background: rgba(46, 213, 115, 0.1) !important; }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="nebula"></div>
+    <div class="stars"></div>
+    <div class="mycelium"></div>
+
+    <!-- UI Controls -->
+    <div class="fixed top-4 right-4 z-50 flex gap-3">
+        <button id="themeToggle" class="p-2.5 rounded-full card hover:bg-opacity-20 transition-all shadow-xl" title="Toggle Theme">
+            🌓
+        </button>
+        <button id="writeModeToggle" class="px-4 py-1.5 text-xs font-medium rounded-full card flex items-center gap-2 hover:bg-opacity-20 transition-all shadow-xl border-dashed">
+            <span id="lockStatusIcon">🔒</span>
+            <span id="lockStatusLabel">Locked (public view).</span>
+        </button>
+    </div>
+
+    <div class="max-w-4xl mx-auto space-y-16 py-8">
+        <!-- Header -->
+        <header class="text-center space-y-6">
+            <div class="inline-block px-4 py-1 rounded-full border border-moss border-opacity-20 bg-moss bg-opacity-5 mb-2">
+               <span class="text-[10px] uppercase tracking-[0.3em] font-bold moss-text">Laboratory for Post-Digital Biology</span>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-bold tracking-tighter leading-none">
+                Vibe Coding / <br class="md:hidden"> <span class="moss-text">Living Systems Lab</span>
+            </h1>
+            <p class="text-sm md:text-lg opacity-60 tracking-[0.15em] uppercase font-light">Daily notes. Real progress. No hiding.</p>
+            
+            <div class="flex justify-center gap-12 pt-6">
+                <div class="text-center group">
+                    <p class="text-[10px] uppercase opacity-40 mono tracking-widest group-hover:opacity-70 transition-opacity">Day</p>
+                    <p id="dayCounter" class="text-4xl md:text-5xl font-bold moss-text mono">--</p>
+                </div>
+                <div class="text-center group">
+                    <p class="text-[10px] uppercase opacity-40 mono tracking-widest group-hover:opacity-70 transition-opacity">Streak</p>
+                    <p id="streakCounter" class="text-4xl md:text-5xl font-bold gold-text mono">0</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Write Section (Hidden by default) -->
+        <section id="writeSection" class="hidden space-y-6 card p-8 rounded-3xl border-dashed border-2">
+            <h2 class="text-xl font-bold flex items-center gap-3">
+                <span class="text-2xl">🌱</span> Manifest New Progress
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-2">
+                    <label class="text-[10px] opacity-40 uppercase font-bold mono tracking-wider">Target Date</label>
+                    <input type="date" id="inputDate" class="w-full p-3 rounded-xl text-sm font-medium">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-[10px] opacity-40 uppercase font-bold mono tracking-wider">Future Node (Tomorrow)</label>
+                    <input type="text" id="inputTomorrow" placeholder="What's the next branch?" class="w-full p-3 rounded-xl text-sm">
+                </div>
+            </div>
+            <div class="space-y-2">
+                <label class="text-[10px] opacity-40 uppercase font-bold mono tracking-wider">Observation / Log</label>
+                <textarea id="inputText" rows="5" placeholder="What transpired in the lab today?" class="w-full p-4 rounded-xl text-sm leading-relaxed resize-none"></textarea>
+            </div>
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex gap-2">
+                    <button id="exportBtn" class="px-4 py-2 text-[10px] rounded-lg border border-white border-opacity-10 hover:bg-white hover:bg-opacity-5 transition-all uppercase mono font-bold tracking-tighter">Export JSON</button>
+                    <label class="px-4 py-2 text-[10px] rounded-lg border border-white border-opacity-10 hover:bg-white hover:bg-opacity-5 transition-all cursor-pointer uppercase mono font-bold tracking-tighter">
+                        Import JSON
+                        <input type="file" id="importFile" class="hidden" accept=".json">
+                    </label>
+                </div>
+                <button id="postBtn" class="w-full md:w-auto px-10 py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl font-bold shadow-2xl btn-glow transition-all transform active:scale-95">
+                    Post update
+                </button>
+            </div>
+        </section>
+
+        <!-- Timeline -->
+        <main class="relative">
+            <div class="timeline-line"></div>
+            <div id="timelineContainer" class="space-y-12">
+                <!-- Entries -->
+            </div>
+            
+            <div id="emptyState" class="text-center py-32 hidden">
+                <div class="inline-block p-6 rounded-full bg-white bg-opacity-5 mb-4 animate-pulse">🌌</div>
+                <p class="opacity-40 italic text-sm tracking-wide">No updates yet. Start documenting your journey.</p>
+            </div>
+        </main>
+
+        <footer class="text-center py-20">
+            <div class="w-12 h-1px bg-white opacity-10 mx-auto mb-6"></div>
+            <p class="opacity-30 text-[10px] uppercase tracking-[0.5em] font-bold mono">Built in public. Rooted in reality.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Configuration
+        const START_DATE = new Date("2026-01-04T00:00:00");
+        const TIMEZONE = 'Europe/Berlin';
+        const AUTH_KEY = 'vibe_authorized';
+        const PASSPHRASE = 'manifest';
+
+        // State Management
+        let entries = [];
+        let reactionsLog = {};
+        let isAuthorized = localStorage.getItem(AUTH_KEY) === 'true';
+
+        // Selectors
+        const writeSection = document.getElementById('writeSection');
+        const writeModeToggle = document.getElementById('writeModeToggle');
+        const lockStatusIcon = document.getElementById('lockStatusIcon');
+        const lockStatusLabel = document.getElementById('lockStatusLabel');
+        const timelineContainer = document.getElementById('timelineContainer');
+        const emptyState = document.getElementById('emptyState');
+        const dayCounterEl = document.getElementById('dayCounter');
+        const streakCounterEl = document.getElementById('streakCounter');
+        const inputDate = document.getElementById('inputDate');
+        const inputText = document.getElementById('inputText');
+        const inputTomorrow = document.getElementById('inputTomorrow');
+        const postBtn = document.getElementById('postBtn');
+        const themeToggle = document.getElementById('themeToggle');
+        const exportBtn = document.getElementById('exportBtn');
+        const importFile = document.getElementById('importFile');
+
+        function init() {
+            // Data loading
+            const stored = localStorage.getItem('vibe_entries');
+            if (stored) entries = JSON.parse(stored);
+            
+            const storedReacts = localStorage.getItem('vibe_reactions_log');
+            if (storedReacts) reactionsLog = JSON.parse(storedReacts);
+
+            const theme = localStorage.getItem('vibe_theme') || 'dark';
+            if (theme === 'light') toggleTheme(true);
+
+            // Set initial UI state
+            if (isAuthorized) {
+                writeSection.classList.remove('hidden');
+                lockStatusIcon.textContent = '🔓';
+                lockStatusLabel.textContent = 'Write mode active';
+            }
+
+            updateStats();
+            renderTimeline();
+            resetInputs();
+        }
+
+        function getBerlinDate(date = new Date()) {
+            return new Date(date.toLocaleString('en-US', { timeZone: TIMEZONE }));
+        }
+
+        function getBerlinDateString(date = new Date()) {
+            return new Intl.DateTimeFormat('en-CA', { 
+                timeZone: TIMEZONE, 
+                year: 'numeric', 
+                month: '2-digit', 
+                day: '2-digit' 
+            }).format(date);
+        }
+
+        function updateStats() {
+            const now = getBerlinDate();
+            const start = getBerlinDate(START_DATE);
+            
+            const diffTime = now - start;
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+            dayCounterEl.textContent = diffDays > 0 ? diffDays : `0`;
+
+            // Streak logic
+            if (entries.length === 0) {
+                streakCounterEl.textContent = 0;
+                return;
+            }
+
+            // Get unique dates sorted descending
+            const dates = [...new Set(entries.map(e => e.date))].sort().reverse();
+            const todayStr = getBerlinDateString();
+            const yesterdayDate = new Date(now);
+            yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+            const yesterdayStr = getBerlinDateString(yesterdayDate);
+
+            let currentStreak = 0;
+            // Only count streak if there's a post today or yesterday
+            if (dates[0] === todayStr || dates[0] === yesterdayStr) {
+                let tempDate = new Date(dates[0]);
+                for (let i = 0; i < dates.length; i++) {
+                    const dStr = dates[i];
+                    const expectedStr = getBerlinDateString(tempDate);
+                    
+                    if (dStr === expectedStr) {
+                        currentStreak++;
+                        tempDate.setDate(tempDate.getDate() - 1);
+                    } else {
+                        break;
+                    }
+                }
+            }
+            streakCounterEl.textContent = currentStreak;
+        }
+
+        function renderTimeline() {
+            timelineContainer.innerHTML = '';
+            if (entries.length === 0) {
+                emptyState.classList.remove('hidden');
+                return;
+            }
+            emptyState.classList.add('hidden');
+
+            const sorted = [...entries].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            sorted.forEach((entry, idx) => {
+                const entryDate = new Date(entry.date);
+                const dayNum = Math.floor((entryDate - START_DATE) / (1000 * 60 * 60 * 24)) + 1;
+                
+                const cardWrapper = document.createElement('div');
+                cardWrapper.className = 'fade-in relative pl-12 md:pl-0';
+                cardWrapper.style.animationDelay = `${idx * 0.1}s`;
+
+                cardWrapper.innerHTML = `
+                    <div class="md:grid md:grid-cols-12 gap-10 items-start">
+                        <!-- Desktop Sidebar -->
+                        <div class="hidden md:block col-span-3 text-right pt-6">
+                            <p class="mono text-[10px] opacity-30 uppercase tracking-[0.2em] font-bold">Node ${dayNum}</p>
+                            <p class="font-bold text-sm mt-1 opacity-80">${formatPrettyDate(entry.date)}</p>
+                        </div>
+
+                        <!-- Content Area -->
+                        <div class="col-span-9 relative">
+                            <!-- Intersection Node -->
+                            <div class="absolute -left-[45px] md:left-1/2 md:-translate-x-1/2 top-8 w-4 h-4 rounded-full border-4 border-emerald-950 bg-emerald-500 shadow-[0_0_15px_rgba(46,213,115,0.6)] z-10 transition-transform hover:scale-125"></div>
+                            
+                            <div class="card p-8 rounded-[2rem] space-y-5">
+                                <div class="md:hidden flex justify-between items-center border-b border-white border-opacity-5 pb-3">
+                                    <span class="mono text-[10px] moss-text font-bold uppercase tracking-widest">Day ${dayNum}</span>
+                                    <span class="text-[10px] opacity-40 font-bold uppercase">${formatPrettyDate(entry.date)}</span>
+                                </div>
+                                
+                                <p class="text-sm md:text-base leading-[1.8] opacity-90 whitespace-pre-wrap font-medium">${entry.text}</p>
+                                
+                                ${entry.tomorrow ? `
+                                <div class="p-4 rounded-2xl bg-white bg-opacity-[0.03] border border-white border-opacity-5">
+                                    <span class="text-[10px] font-black gold-text uppercase mono tracking-[0.3em] block mb-2">Next Branch:</span>
+                                    <p class="text-sm opacity-60 italic font-medium leading-relaxed">${entry.tomorrow}</p>
+                                </div>
+                                ` : ''}
+
+                                <div class="flex justify-between items-center pt-2">
+                                    <div class="flex gap-4">
+                                        ${['🔥', '💪', '🚀'].map(emoji => {
+                                            const key = emoji === '🔥' ? 'fire' : emoji === '💪' ? 'muscle' : 'rocket';
+                                            const count = entry.reactions ? entry.reactions[key] || 0 : 0;
+                                            const hasReacted = reactionsLog[`${entry.id}_${key}`];
+                                            return `
+                                                <button onclick="react('${entry.id}', '${key}')" 
+                                                        ${hasReacted ? 'disabled' : ''}
+                                                        class="reaction-btn group flex items-center gap-2 px-3 py-1.5 rounded-xl border border-white border-opacity-5 hover:border-opacity-20 transition-all ${hasReacted ? 'reacted' : ''}">
+                                                    <span class="text-lg grayscale-0 group-hover:filter-none">${emoji}</span>
+                                                    <span class="text-xs mono font-bold opacity-50">${count}</span>
+                                                </button>
+                                            `;
+                                        }).join('')}
+                                    </div>
+                                    ${isAuthorized ? `
+                                        <button onclick="deleteEntry('${entry.id}')" class="text-[10px] opacity-20 hover:opacity-100 hover:text-red-400 transition-all uppercase mono font-bold tracking-widest px-2 py-1">Delete Node</button>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                timelineContainer.appendChild(cardWrapper);
+            });
+        }
+
+        function formatPrettyDate(dateStr) {
+            const date = new Date(dateStr);
+            return new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(date);
+        }
+
+        function resetInputs() {
+            inputDate.value = getBerlinDateString();
+            inputText.value = '';
+            inputTomorrow.value = '';
+        }
+
+        function toggleTheme(forceLight = false) {
+            const isLight = forceLight || !document.documentElement.classList.contains('light-mode');
+            if (isLight) {
+                document.documentElement.classList.remove('dark');
+                document.body.classList.add('light-mode');
+            } else {
+                document.documentElement.classList.add('dark');
+                document.body.classList.remove('light-mode');
+            }
+            localStorage.setItem('vibe_theme', isLight ? 'light' : 'dark');
+        }
+
+        // Action Handlers
+        window.deleteEntry = (id) => {
+            if (confirm("Permanently collapse this temporal node?")) {
+                entries = entries.filter(e => e.id !== id);
+                save();
+            }
+        };
+
+        window.react = (entryId, type) => {
+            const logKey = `${entryId}_${type}`;
+            if (reactionsLog[logKey]) return;
+
+            const entry = entries.find(e => e.id === entryId);
+            if (entry) {
+                if (!entry.reactions) entry.reactions = { fire: 0, muscle: 0, rocket: 0 };
+                entry.reactions[type] = (entry.reactions[type] || 0) + 1;
+                reactionsLog[logKey] = true;
+                save();
+            }
+        };
+
+        function save() {
+            localStorage.setItem('vibe_entries', JSON.stringify(entries));
+            localStorage.setItem('vibe_reactions_log', JSON.stringify(reactionsLog));
+            updateStats();
+            renderTimeline();
+        }
+
+        postBtn.addEventListener('click', () => {
+            if (!inputText.value.trim()) {
+                inputText.classList.add('border-red-500');
+                setTimeout(() => inputText.classList.remove('border-red-500'), 1000);
+                return;
+            }
+
+            const newEntry = {
+                id: Date.now().toString(),
+                date: inputDate.value,
+                text: inputText.value.trim(),
+                tomorrow: inputTomorrow.value.trim(),
+                reactions: { fire: 0, muscle: 0, rocket: 0 }
+            };
+
+            entries.push(newEntry);
+            save();
+            resetInputs();
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        writeModeToggle.addEventListener('click', () => {
+            if (!isAuthorized) {
+                const pass = prompt("Enter Passphrase to awaken the system:");
+                if (pass === PASSPHRASE) {
+                    isAuthorized = true;
+                    localStorage.setItem(AUTH_KEY, 'true');
+                    writeSection.classList.remove('hidden');
+                    lockStatusIcon.textContent = '🔓';
+                    lockStatusLabel.textContent = 'Write mode active';
+                    renderTimeline(); // Show delete buttons
+                } else if (pass !== null) {
+                    alert("The ecosystem rejects this input.");
+                }
+            } else {
+                isAuthorized = false;
+                localStorage.removeItem(AUTH_KEY);
+                writeSection.classList.add('hidden');
+                lockStatusIcon.textContent = '🔒';
+                lockStatusLabel.textContent = 'Locked (public view).';
+                renderTimeline(); // Hide delete buttons
+            }
+        });
+
+        themeToggle.addEventListener('click', () => toggleTheme());
+
+        exportBtn.addEventListener('click', () => {
+            const dataStr = JSON.stringify({ entries, reactionsLog, version: '2.0' }, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `living-systems-lab-${getBerlinDateString()}.json`;
+            link.click();
+        });
+
+        importFile.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    const imported = JSON.parse(event.target.result);
+                    if (imported.entries) {
+                        // Merge logic: avoid duplicates by ID
+                        const existingIds = new Set(entries.map(e => e.id));
+                        const newOnes = imported.entries.filter(e => !existingIds.has(e.id));
+                        entries = [...entries, ...newOnes];
+                        
+                        if (imported.reactionsLog) {
+                            reactionsLog = { ...reactionsLog, ...imported.reactionsLog };
+                        }
+                        save();
+                        alert(`${newOnes.length} nodes merged into the collective.`);
+                    }
+                } catch (err) {
+                    alert("Data corruption detected. Import failed.");
+                }
+            };
+            reader.readAsText(file);
+        });
+
+        // Global Initialization
+        init();
+    </script>
+</body>
+</html>
