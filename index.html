@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Luca Fischer | AI Growth & Practical Systems</title>
     <meta name="description" content="Luca Fischer helps mission-led teams turn vision into working systems using AI automation and grounded growth marketing. 10+ years experience.">
     
@@ -55,18 +55,21 @@
             padding: 0;
             box-sizing: border-box;
             -webkit-font-smoothing: antialiased;
-            cursor: none;
         }
 
-        html { scroll-behavior: smooth; }
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            position: relative;
+        }
 
         body {
             background-color: var(--bg);
             color: var(--fg);
             font-family: 'Inter', -apple-system, sans-serif;
             line-height: 1.6;
-            overflow-x: hidden;
             transition: background-color 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: none;
         }
 
         /* --- Cursor --- */
@@ -90,6 +93,11 @@
             z-index: 9999;
             transform: translate(-50%, -50%);
             transition: width 0.3s ease, height 0.3s ease;
+        }
+
+        @media (max-width: 1024px) {
+            #cursor, #cursor-glow { display: none; }
+            body { cursor: auto; }
         }
 
         .cursor-hover { transform: scale(3); background: transparent !important; border: 1px solid var(--accent); }
@@ -129,7 +137,10 @@
         }
 
         .nav-links { display: flex; gap: 2.2rem; align-items: center; }
-        @media (max-width: 768px) { .nav-links { display: none; } }
+        @media (max-width: 768px) { 
+            .nav-links { display: none; } 
+            nav { justify-content: center; width: auto; min-width: 200px; }
+        }
 
         .nav-item {
             text-decoration: none;
@@ -152,94 +163,90 @@
         }
         .nav-item:hover::after { width: 100%; }
 
-        .nav-controls { display: flex; align-items: center; gap: 1.5rem; }
-        .theme-toggle { background: none; border: none; color: var(--fg); font-size: 1.1rem; cursor: pointer; }
-        .lang-switch { background: var(--border); border-radius: 50px; padding: 4px; display: flex; }
+        .nav-controls { display: flex; align-items: center; gap: 1rem; }
+        .theme-toggle { background: none; border: none; color: var(--fg); font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; }
+        .lang-switch { background: var(--border); border-radius: 50px; padding: 3px; display: flex; }
         .lang-btn {
-            background: none; border: none; padding: 6px 14px; font-size: 0.65rem;
+            background: none; border: none; padding: 5px 10px; font-size: 0.6rem;
             font-weight: 800; color: var(--fg-muted); border-radius: 50px; cursor: pointer; transition: all 0.3s;
         }
         .lang-btn.active { background: var(--bg); color: var(--fg); box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
 
         /* --- Typography --- */
         h1, h2, .h2, .h3 { font-family: 'Instrument Serif', serif; font-weight: 400; font-style: italic; letter-spacing: -0.01em; }
-        h1 { font-size: clamp(3rem, 10vw, 6.5rem); line-height: 0.85; margin-bottom: 2.5rem; }
+        h1 { font-size: clamp(2.8rem, 10vw, 6.5rem); line-height: 0.85; margin-bottom: 2.5rem; }
         .signature-line { font-family: 'Instrument Serif', serif; font-size: 1.4rem; font-style: italic; color: var(--accent); margin-bottom: 1.5rem; display: block; opacity: 0.85; }
-        .section-title { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.6em; color: var(--accent); margin-bottom: 3rem; display: block; font-weight: 700; opacity: 0.7; }
+        .section-title { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.6em; color: var(--accent); margin-bottom: 2rem; display: block; font-weight: 700; opacity: 0.7; }
 
         /* --- Layout --- */
-        main { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 10; }
-        section { padding: 10rem 0; opacity: 0; transform: translateY(60px); transition: opacity 1.8s ease, transform 1.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        main { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; position: relative; z-index: 10; width: 100%; }
+        section { padding: 8rem 0; opacity: 0; transform: translateY(60px); transition: opacity 1.8s ease, transform 1.5s cubic-bezier(0.16, 1, 0.3, 1); width: 100%; max-width: 100%; }
         section.visible { opacity: 1; transform: translateY(0); }
 
         /* --- Hero --- */
         .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
-        .hero-layout { display: flex; flex-direction: column; align-items: center; gap: 3rem; text-align: center; }
+        .hero-layout { display: flex; flex-direction: column; align-items: center; gap: 3rem; text-align: center; width: 100%; }
         @media (min-width: 1024px) { .hero-layout { flex-direction: row; text-align: left; align-items: center; gap: 5rem; } }
-        .hero-image-wrapper { position: relative; flex-shrink: 0; }
-        .hero-headshot { max-width: clamp(250px, 40vw, 450px); width: 100%; height: auto; display: block; filter: saturate(0.9) contrast(1.1); }
-        .hero-text { flex: 1; }
-        .subheadline { font-size: clamp(1.2rem, 3.5vw, 1.8rem); color: var(--fg-muted); max-width: 850px; margin-bottom: 3.5rem; font-weight: 300; line-height: 1.5; }
+        .hero-image-wrapper { position: relative; flex-shrink: 0; width: 100%; max-width: 450px; }
+        .hero-headshot { width: 100%; height: auto; display: block; filter: saturate(0.9) contrast(1.1); }
+        .hero-text { flex: 1; width: 100%; }
+        .subheadline { font-size: clamp(1.1rem, 3.5vw, 1.8rem); color: var(--fg-muted); max-width: 850px; margin-bottom: 3.5rem; font-weight: 300; line-height: 1.5; }
 
-        .btn { padding: 1.1rem 3rem; border-radius: 100px; text-decoration: none; font-weight: 500; font-size: 0.9rem; transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1); display: inline-block; }
+        .btn { padding: 1.1rem 2.5rem; border-radius: 100px; text-decoration: none; font-weight: 500; font-size: 0.9rem; transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1); display: inline-block; white-space: nowrap; }
         .btn-primary { background: var(--accent); color: var(--bg); }
         .btn-primary:hover { transform: translateY(-8px); box-shadow: 0 25px 50px var(--accent-glow); }
-        .btn-secondary { border: 1px solid var(--border); color: var(--fg); margin-left: 1.2rem; }
+        .btn-secondary { border: 1px solid var(--border); color: var(--fg); margin-left: 1rem; }
         .btn-secondary:hover { border-color: var(--accent); background: var(--card-hover); }
 
+        @media (max-width: 480px) {
+            .btn { width: 100%; text-align: center; }
+            .btn-secondary { margin-left: 0; margin-top: 1rem; }
+        }
+
         /* --- Cards & Grid --- */
-        .work-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2.5rem; margin-top: 4rem; }
-        @media (max-width: 768px) { .work-grid { grid-template-columns: 1fr; } .btn-secondary { margin-left: 0; margin-top: 1rem; } }
+        .work-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem; width: 100%; }
+        @media (max-width: 768px) { .work-grid { grid-template-columns: 1fr; } }
 
         .card {
             background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(8,10,9,0.5) 100%);
-            border: 1px solid var(--border); border-radius: 40px; padding: 3rem;
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); position: relative; overflow: hidden;
+            border: 1px solid var(--border); border-radius: 30px; padding: 2.5rem;
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); position: relative; overflow: hidden; width: 100%;
         }
         .card::after {
-            content: ''; position: absolute; top: 0; right: 0; width: 180px; height: 180px;
-            background-image: var(--huni-kuin-pattern); background-size: 60px 60px; opacity: 0.3;
+            content: ''; position: absolute; top: 0; right: 0; width: 150px; height: 150px;
+            background-image: var(--huni-kuin-pattern); background-size: 60px 60px; opacity: 0.25;
             mask-image: linear-gradient(to bottom left, black, transparent); -webkit-mask-image: linear-gradient(to bottom left, black, transparent);
         }
         .card:hover { border-color: var(--accent); background: var(--card-hover); transform: translateY(-10px); }
 
-        .card h3 { font-size: 1.8rem; margin-bottom: 1.2rem; }
-        .card p { color: var(--fg-muted); font-size: 1rem; line-height: 1.7; font-weight: 300; }
+        .card h3 { font-size: 1.6rem; margin-bottom: 1rem; }
+        .card p { color: var(--fg-muted); font-size: 0.95rem; line-height: 1.7; font-weight: 300; }
 
-        .work-list { list-style: none; margin: 4rem 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem 4rem; }
+        .work-list { list-style: none; margin: 3rem 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem 3rem; width: 100%; }
         .work-list li {
-            padding: 1.2rem 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 1.2rem;
-            font-size: 1.3rem; font-family: 'Instrument Serif', serif; font-style: italic; transition: transform 0.4s ease, color 0.4s ease;
+            padding: 1rem 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 1rem;
+            font-size: 1.2rem; font-family: 'Instrument Serif', serif; font-style: italic; transition: transform 0.4s ease, color 0.4s ease;
         }
-        .work-list li:hover { transform: translateX(15px); color: var(--accent); }
-        .work-list li::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--bio-teal); box-shadow: 0 0 12px var(--bio-teal); }
+        .work-list li:hover { transform: translateX(10px); color: var(--accent); }
+        .work-list li::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--bio-teal); box-shadow: 0 0 10px var(--bio-teal); flex-shrink: 0; }
 
         /* --- Specific Section Styles --- */
-        .story-content { font-size: 1.6rem; max-width: 900px; color: var(--fg); font-family: 'Instrument Serif', serif; font-style: italic; line-height: 1.5; }
-        .story-content p { margin-bottom: 2.5rem; }
+        .story-content { font-size: 1.5rem; max-width: 900px; color: var(--fg); font-family: 'Instrument Serif', serif; font-style: italic; line-height: 1.4; width: 100%; }
+        .story-content p { margin-bottom: 2rem; }
 
         .social-link { display: flex; align-items: center; gap: 1rem; color: var(--fg); text-decoration: none; font-size: 1.1rem; transition: all 0.4s; padding: 0.8rem 0; }
         .social-link:hover { color: var(--accent); transform: translateX(10px); }
 
-        footer { padding: 8rem 2rem; text-align: center; border-top: 1px solid var(--border); position: relative; }
-        .footer-pattern { position: absolute; top: 0; left: 0; width: 100%; height: 60px; background-image: var(--huni-kuin-pattern); opacity: 0.2; }
+        footer { padding: 6rem 1.5rem; text-align: center; border-top: 1px solid var(--border); position: relative; width: 100%; }
+        .footer-pattern { position: absolute; top: 0; left: 0; width: 100%; height: 60px; background-image: var(--huni-kuin-pattern); opacity: 0.15; }
 
         .bio-orb {
-            position: absolute; width: 450px; height: 450px; border-radius: 50%;
+            position: absolute; width: clamp(250px, 40vw, 450px); height: clamp(250px, 40vw, 450px); border-radius: 50%;
             background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-            z-index: -1; filter: blur(80px); animation: breathe 15s infinite ease-in-out;
+            z-index: -1; filter: blur(60px); animation: breathe 15s infinite ease-in-out;
+            pointer-events: none;
         }
         @keyframes breathe { 0%, 100% { transform: scale(1); opacity: 0.6; } 50% { transform: scale(1.05); opacity: 0.9; } }
-
-        /* Mobile Menu */
-        .mobile-menu-btn { display: none; background: none; border: none; color: var(--fg); cursor: pointer; }
-        @media (max-width: 768px) { .mobile-menu-btn { display: block; } }
-        .mobile-menu {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--bg);
-            z-index: 150; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 2.5rem;
-            transition: 0.5s ease; clip-path: circle(0% at 50% 50%);
-        }
-        .mobile-menu.open { clip-path: circle(150% at 50% 50%); }
 
     </style>
 </head>
@@ -260,10 +267,6 @@
             <a href="#connect" class="nav-item" data-i18n="nav_connect">Connect</a>
         </div>
         
-        <button class="mobile-menu-btn" id="menuToggle" aria-label="Menu">
-            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-        </button>
-
         <div class="nav-controls">
             <div class="lang-switch">
                 <button class="lang-btn active" onclick="setLang('en')" id="btn-en">EN</button>
@@ -275,24 +278,17 @@
         </div>
     </nav>
 
-    <div class="mobile-menu" id="mobileMenu">
-        <a href="#ai" class="nav-item" style="font-size: 2rem;" data-i18n="nav_ai">Consulting</a>
-        <a href="#enable" class="nav-item" style="font-size: 2rem;" data-i18n="nav_enable">Enable</a>
-        <a href="#delivery" class="nav-item" style="font-size: 2rem;" data-i18n="nav_delivery">Delivery</a>
-        <a href="#connect" class="nav-item" style="font-size: 2rem;" data-i18n="nav_connect">Connect</a>
-    </div>
-
     <main>
         <!-- Hero Section -->
-        <section class="hero reveal">
+        <section class="hero reveal" id="hero">
             <div class="hero-layout">
                 <div class="hero-image-wrapper hov">
-                    <img src="./Untitled%20design%20%288%29.png" alt="Luca Sumitra Isa Dewê Fischer" class="hero-headshot">
+                    <img src="./Untitled%20design%20%288%29.png" alt="Luca Fischer AI Growth Marketing" class="hero-headshot">
                 </div>
                 <div class="hero-text">
                     <span class="signature-line" data-i18n="hero_name">Luca Fischer • AI Growth & Practical Systems</span>
                     <h1 data-i18n="hero_headline">Regenerative AI that actually ships.</h1>
-                    <p class="subheadline" data-i18n="hero_subheadline">I help mission-led teams use AI to automate complex processes and simplify internal workflows. 10+ years experience in Growth Marketing & Production.</p>
+                    <p class="subheadline" data-i18n="hero_subheadline">I help mission-led teams use AI to automate complex processes and simplify workflows. 10+ years experience in Growth Marketing & Production.</p>
                     <div class="cta-group">
                         <a href="#connect" class="btn btn-primary" data-i18n="hero_primary_cta">Start a conversation</a>
                         <a href="#ai" class="btn btn-secondary" data-i18n="hero_secondary_cta">The Approach</a>
@@ -311,29 +307,29 @@
             </div>
         </section>
 
-        <!-- Consulting Section -->
+        <!-- Consulting & Marketing Section -->
         <section id="ai" class="reveal">
             <div class="bio-orb" style="top: -10%; right: -5%;"></div>
-            <span class="section-title" data-i18n="ai_title">Consulting & Marketing</span>
-            <h2 class="h2" style="font-size: 4rem; line-height: 0.9;" data-i18n="ai_intro">Grounded Strategy. Systemic Growth.</h2>
-            <p style="margin-top: 2rem; max-width: 800px; font-size: 1.2rem; color: var(--fg-muted);" data-i18n="ai_copy">I bridge the gap between deep mission and digital performance. I rebuild your internal engine using AI to automate the heavy lifting of marketing ops, allowing your team to focus on what matters.</p>
+            <span class="section-title" data-i18n="ai_title">Consulting & Marketing Mastery</span>
+            <h2 class="h2" style="font-size: clamp(2.5rem, 6vw, 4rem); line-height: 0.9;" data-i18n="ai_intro">Grounded Strategy. Systemic Growth.</h2>
+            <p style="margin-top: 2rem; max-width: 800px; font-size: 1.1rem; color: var(--fg-muted);" data-i18n="ai_copy">I bridge the gap between deep mission and digital performance. I rebuild your internal engine using AI to automate the heavy lifting of marketing ops, allowing your team to focus on what matters.</p>
             <ul class="work-list">
-                <li data-i18n="ai_li1">Funnel Architecture (Logical & Calm)</li>
-                <li data-i18n="ai_li2">Workflow Automation (Friction removal)</li>
-                <li data-i18n="ai_li3">Conversion Optimization (Data-driven)</li>
-                <li data-i18n="ai_li4">Internal Playbooks (Scalability)</li>
-                <li data-i18n="ai_li5">Growth Analytics & Tracking</li>
+                <li data-i18n="ai_li1">Funnel Architecture (Non-extractive Journeys)</li>
+                <li data-i18n="ai_li2">CRO (Conversion Rate Optimization)</li>
+                <li data-i18n="ai_li3">Data Infrastructure & Growth Tracking</li>
+                <li data-i18n="ai_li4">Retention & LTV Systems (Community Value)</li>
+                <li data-i18n="ai_li5">AI-Automated Content Pipelines</li>
             </ul>
         </section>
 
         <!-- Enablement Section -->
         <section id="enable" class="reveal">
             <span class="section-title" data-i18n="enable_title">Team Enablement</span>
-            <h2 class="h2" style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 3rem;" data-i18n="enable_headline">Master the tools, don't be replaced by them.</h2>
+            <h2 class="h2" style="font-size: clamp(2.2rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 2rem;" data-i18n="enable_headline">Autonomy through systems.</h2>
             <div class="work-grid">
                 <div class="card hov">
                     <h3 data-i18n="enable_card1_title">Impact Workshops</h3>
-                    <p data-i18n="enable_card1_copy">Hands-on sessions tailored to your team's specific roles. We move from AI-curiosity to AI-competence in hours. Focus on immediate time-savings and high-quality creative output.</p>
+                    <p data-i18n="enable_card1_copy">Hands-on sessions tailored to your team's specific roles. We move from AI-curiosity to AI-competence in hours. Focus on immediate time-savings and high-quality creative output without dependency.</p>
                 </div>
                 <div class="card hov">
                     <h3 data-i18n="enable_card2_title">Enablement Sprints</h3>
@@ -346,16 +342,16 @@
         <section id="delivery" class="reveal">
             <div class="bio-orb" style="top: 20%; left: -10%; opacity: 0.1;"></div>
             <span class="section-title" data-i18n="delivery_title">System Delivery</span>
-            <h2 class="h2" style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 3rem;" data-i18n="delivery_headline">The Collective Network.</h2>
-            <p style="margin-bottom: 4rem; max-width: 850px; font-size: 1.2rem; color: var(--fg-muted);" data-i18n="delivery_copy">When advice isn't enough, I orchestrate a hand-picked network of specialists across Tech, Ops, and Creative to turn strategy into reality at a premium standard.</p>
+            <h2 class="h2" style="font-size: clamp(2.2rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 2rem;" data-i18n="delivery_headline">The Collective Network.</h2>
+            <p style="margin-bottom: 3rem; max-width: 850px; font-size: 1.1rem; color: var(--fg-muted);" data-i18n="delivery_copy">When advice isn't enough, I orchestrate a hand-picked network of specialists across Tech, Ops, and Creative to turn strategy into reality at a premium standard.</p>
             <div class="work-grid">
                 <div class="card hov">
                     <h3 data-i18n="delivery_card1_title">Tech & AI Builds</h3>
-                    <p data-i18n="delivery_card1_copy">Custom AI content pipelines, automated dashboards, and internal tool integrations built by veteran engineers who understand mission-led logic.</p>
+                    <p data-i18n="delivery_card1_copy">Custom AI content pipelines, automated dashboards, and internal tool integrations built by veteran full-stack engineers who understand mission-led logic.</p>
                 </div>
                 <div class="card hov">
                     <h3 data-i18n="delivery_card2_title">Production & Storytelling</h3>
-                    <p data-i18n="delivery_card2_copy">Premium film production, branding, and content systems from a network of award-winning creative directors and artists.</p>
+                    <p data-i18n="delivery_card2_copy">Premium film production, branding, and content systems from a network of award-winning creative directors and artists who respect the project's soul.</p>
                 </div>
             </div>
         </section>
@@ -378,14 +374,14 @@
                     <span data-i18n="btn_email">Email me</span>
                 </a>
             </div>
-            <p style="margin-top: 4rem; font-size: 0.85rem; color: var(--fg-muted); letter-spacing: 0.2em; text-transform: uppercase;" data-i18n="connect_small">I reply personally.</p>
+            <p style="margin-top: 3rem; font-size: 0.8rem; color: var(--fg-muted); letter-spacing: 0.15em; text-transform: uppercase;" data-i18n="connect_small">I reply personally.</p>
         </section>
     </main>
 
     <footer>
         <div class="footer-pattern"></div>
         <p data-i18n="footer_text">Built with care, clarity, and respect for living systems.</p>
-        <div style="margin-top: 3rem; display: flex; justify-content: center; gap: 3rem;">
+        <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 2rem;">
             <a href="https://github.com/sumitrabliss" class="social-link hov" target="_blank" style="opacity: 0.3">GitHub</a>
             <a href="https://www.instagram.com/luca_sumitra" class="social-link hov" target="_blank" style="opacity: 0.3">Instagram</a>
         </div>
@@ -398,13 +394,15 @@
         
         document.addEventListener('mousemove', (e) => {
             mousePos.x = e.clientX; mousePos.y = e.clientY;
-            cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
-            glow.style.left = e.clientX + 'px'; glow.style.top = e.clientY + 'px';
+            if (cursor && glow) {
+                cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
+                glow.style.left = e.clientX + 'px'; glow.style.top = e.clientY + 'px';
+            }
         });
 
         document.querySelectorAll('a, button, .hov').forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('cursor-hover'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hover'));
+            el.addEventListener('mouseenter', () => cursor && cursor.classList.add('cursor-hover'));
+            el.addEventListener('mouseleave', () => cursor && cursor.classList.remove('cursor-hover'));
         });
 
         const canvas = document.getElementById('sporeCanvas');
@@ -416,12 +414,12 @@
         function initParticles() {
             canvas.width = window.innerWidth; canvas.height = window.innerHeight;
             particles = [];
-            const count = Math.min(window.innerWidth / 15, 100);
+            const count = Math.min(window.innerWidth / 15, 80);
             for (let i = 0; i < count; i++) {
                 particles.push({
                     x: Math.random() * canvas.width, y: Math.random() * canvas.height,
-                    size: Math.random() * 2 + 1, vx: (Math.random() - 0.5) * 0.2,
-                    vy: (Math.random() - 0.5) * 0.2, opacity: Math.random() * 0.3 + 0.1
+                    size: Math.random() * 2 + 1, vx: (Math.random() - 0.5) * 0.15,
+                    vy: (Math.random() - 0.5) * 0.15, opacity: Math.random() * 0.3 + 0.1
                 });
             }
         }
@@ -437,16 +435,16 @@
                 const distToMouse = Math.sqrt(dx * dx + dy * dy);
                 let activeOpacity = p.opacity;
                 if (distToMouse < CURSOR_RADIUS) {
-                    p.vx += dx * 0.00005; p.vy += dy * 0.00005;
-                    activeOpacity = Math.max(activeOpacity, (1 - distToMouse / CURSOR_RADIUS) * 0.6);
+                    p.vx += dx * 0.00003; p.vy += dy * 0.00003;
+                    activeOpacity = Math.max(activeOpacity, (1 - distToMouse / CURSOR_RADIUS) * 0.5);
                 }
 
                 for (let j = i + 1; j < particles.length; j++) {
                     let p2 = particles[j];
                     const hDist = Math.sqrt((p.x - p2.x)**2 + (p.y - p2.y)**2);
                     if (hDist < MAX_DISTANCE) {
-                        let lOpacity = (1 - hDist / MAX_DISTANCE) * 0.15;
-                        if (distToMouse < CURSOR_RADIUS) lOpacity *= 2.5;
+                        let lOpacity = (1 - hDist / MAX_DISTANCE) * 0.1;
+                        if (distToMouse < CURSOR_RADIUS) lOpacity *= 2;
                         ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y);
                         ctx.strokeStyle = `rgba(163, 217, 165, ${lOpacity})`;
                         ctx.lineWidth = 0.5; ctx.stroke();
@@ -472,27 +470,27 @@
                 filter_p1: "Regenerative, or I’m not interested.",
                 filter_p2: "I’m here for work that strengthens life: people, culture, ecosystems. If your “innovation” extracts, burns out teams, or blurs truth, I’m not your guy.",
                 filter_p3: "If you’re building the future with integrity: <span style='color: var(--accent);'>I’m in.</span>",
-                ai_title: "Consulting & Marketing",
+                ai_title: "Consulting & Marketing Mastery",
                 ai_intro: "Grounded Strategy. Systemic Growth.",
                 ai_copy: "I bridge the gap between deep mission and digital performance. I rebuild your internal engine using AI to automate the heavy lifting of marketing ops, allowing your team to focus on what matters.",
-                ai_li1: "Funnel Architecture (Logical & Calm)",
-                ai_li2: "Workflow Automation (Friction removal)",
-                ai_li3: "Conversion Optimization (Data-driven)",
-                ai_li4: "Internal Playbooks (Scalability)",
-                ai_li5: "Growth Analytics & Tracking",
+                ai_li1: "Funnel Architecture (Non-extractive Journeys)",
+                ai_li2: "CRO (Conversion Rate Optimization)",
+                ai_li3: "Data Infrastructure & Growth Tracking",
+                ai_li4: "Retention & LTV Systems (Community Value)",
+                ai_li5: "AI-Automated Content Pipelines",
                 enable_title: "Team Enablement",
-                enable_headline: "Master the tools, don't be replaced by them.",
+                enable_headline: "Autonomy through systems.",
                 enable_card1_title: "Impact Workshops",
-                enable_card1_copy: "Hands-on sessions tailored to your team's specific roles. We move from AI-curiosity to AI-competence in hours. Focus on immediate time-savings and high-quality creative output.",
+                enable_card1_copy: "Hands-on sessions tailored to your team's specific roles. We move from AI-curiosity to AI-competence in hours. Focus on immediate time-savings and high-quality creative output without dependency.",
                 enable_card2_title: "Enablement Sprints",
                 enable_card2_copy: "We build your internal AI playbook. Together, we identify high-leverage workflows and codify them into repeatable systems that your team can maintain and evolve with confidence.",
                 delivery_title: "System Delivery",
                 delivery_headline: "The Collective Network.",
                 delivery_copy: "When advice isn't enough, I orchestrate a hand-picked network of specialists across Tech, Ops, and Creative to turn strategy into reality at a premium standard.",
                 delivery_card1_title: "Tech & AI Builds",
-                delivery_card1_copy: "Custom AI content pipelines, automated dashboards, and internal tool integrations built by veteran engineers who understand mission-led logic.",
+                delivery_card1_copy: "Custom AI content pipelines, automated dashboards, and internal tool integrations built by veteran full-stack engineers who understand mission-led logic.",
                 delivery_card2_title: "Production & Storytelling",
-                delivery_card2_copy: "Premium film production, branding, and content systems from a network of award-winning creative directors and artists.",
+                delivery_card2_copy: "Premium film production, branding, and content systems from a network of award-winning creative directors and artists who respect the project's soul.",
                 connect_title: "Start a conversation",
                 connect_copy: "If you need clear systems and automated growth workflows, send me:",
                 connect_list: "1) what you’re building<br>2) what you want to improve<br>3) what feels stuck<br>4) your timeline",
@@ -510,18 +508,18 @@
                 filter_p1: "Regenerativ, oder ich bin raus.",
                 filter_p2: "Ich arbeite für Dinge, die das Leben stärken: Menschen, Kultur, Natur. Wenn deine 'Innovation' nur ausbeutet, Teams ausbrennt oder die Wahrheit dehnt, bin ich nicht dein Typ.",
                 filter_p3: "Wenn du mit Integrität die Zukunft baust: <span style='color: var(--accent);'>Ich bin dabei.</span>",
-                ai_title: "Beratung & Marketing",
+                ai_title: "Beratung & Marketing Mastery",
                 ai_intro: "Gerdete Strategie. Systemisches Wachstum.",
                 ai_copy: "Ich schließe die Lücke zwischen tiefer Vision und digitaler Performance. Ich baue deine internen Prozesse neu und nutze KI dort, wo sie Marketing-Ops entlastet, damit dein Team sich auf das Wesentliche konzentrieren kann.",
-                ai_li1: "Funnel-Architektur (Logisch & Ruhig)",
-                ai_li2: "Workflow-Automatisierung (Reibung senken)",
-                ai_li3: "Conversion-Optimierung (Datengetrieben)",
-                ai_li4: "Interne Playbooks (Skalierbarkeit)",
-                ai_li5: "Growth Analytics & Tracking",
+                ai_li1: "Funnel-Architektur (Ethische Journeys)",
+                ai_li2: "CRO (Conversion-Optimierung)",
+                ai_li3: "Daten-Infrastruktur & Growth Tracking",
+                ai_li4: "Retention & LTV Systeme (Community-Wert)",
+                ai_li5: "KI-Automatisierte Content-Pipelines",
                 enable_title: "Team Enablement",
-                enable_headline: "Werkzeuge beherrschen, nicht ersetzt werden.",
+                enable_headline: "Autonomie durch Systeme.",
                 enable_card1_title: "Impact-Workshops",
-                enable_card1_copy: "Rollenbasierte Sessions, die KI in Zeitersparnis übersetzen. Wir kommen in Stunden von Neugier zu echter Kompetenz und hohem kreativem Output.",
+                enable_card1_copy: "Rollenbasierte Sessions, die KI in Zeitersparnis übersetzen. Wir kommen in Stunden von Neugier zu echter Kompetenz ohne Abhängigkeiten zu schaffen.",
                 enable_card2_title: "Enablement-Sprints",
                 enable_card2_copy: "Wir bauen dein internes KI-Playbook. Gemeinsam identifizieren wir Hebel-Workflows und machen sie zu wiederholbaren Systemen, die dein Team selbstständig führen kann.",
                 delivery_title: "System Umsetzung",
@@ -569,10 +567,6 @@
             entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
         }, { threshold: 0.1 });
         document.querySelectorAll('section').forEach(s => observer.observe(s));
-
-        document.getElementById('menuToggle').addEventListener('click', () => {
-            document.getElementById('mobileMenu').classList.toggle('open');
-        });
 
         document.addEventListener('DOMContentLoaded', () => { applyTheme(currentTheme); setLang(currentLang); });
     </script>
