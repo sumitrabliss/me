@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Luca “Sumitra Isa Dewè” Fischer | Regenerative Systems</title>
-    <meta name="description" content="Luca Fischer helps purpose-led teams turn vision into clear offers and calm, scalable systems using AI and Web3. Grounded in forest intelligence and Swiss clarity.">
+    <title>Luca Fischer | AI Growth & Practical Systems</title>
+    <meta name="description" content="Luca Fischer helps mission-led teams turn vision into working systems using AI automation and grounded growth marketing. 10+ years experience.">
+    
     <!-- Social Preview Placeholder -->
-    <meta property="og:title" content="Luca “Sumitra Isa Dewè” Fischer">
-    <meta property="og:description" content="Turn meaning into regenerative growth. Solarpunk × Lunarpunk × Soilpunk.">
+    <meta property="og:title" content="Luca Fischer | AI Growth & Practical Systems">
+    <meta property="og:description" content="Regenerative AI that actually ships. Solarpunk × Swiss Clarity.">
     <meta property="og:type" content="website">
     
     <!-- Fonts -->
@@ -31,7 +32,6 @@
             --card-hover: rgba(163, 217, 165, 0.04);
             --noise: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3%3Cfilter id='noiseFilter'%3%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3%3C/filter%3%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3%3C/svg%3%3E");
             
-            /* Huni Kuin Pattern (Kené) - More intricate tribal path */
             --huni-kuin-pattern: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3%3Cpath d='M40 0 L80 40 L40 80 L0 40 Z M40 10 L70 40 L40 70 L10 40 Z M40 25 L55 40 L40 55 L25 40 Z' fill='none' stroke='rgba(163, 217, 165, 0.2)' stroke-width='1.2'/%3%3Cpath d='M0 0 L20 20 M80 0 L60 20 M0 80 L20 60 M80 80 L60 60' stroke='rgba(163, 217, 165, 0.15)' stroke-width='1'/%3%3C/svg%3%3E");
         }
 
@@ -55,12 +55,10 @@
             padding: 0;
             box-sizing: border-box;
             -webkit-font-smoothing: antialiased;
-            cursor: none; /* Hide default cursor */
+            cursor: none;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
 
         body {
             background-color: var(--bg);
@@ -71,11 +69,10 @@
             transition: background-color 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* --- Custom Cursor --- */
+        /* --- Cursor --- */
         #cursor {
             position: fixed;
-            width: 8px;
-            height: 8px;
+            width: 8px; height: 8px;
             background: var(--accent);
             border-radius: 50%;
             pointer-events: none;
@@ -86,8 +83,7 @@
 
         #cursor-glow {
             position: fixed;
-            width: 40px;
-            height: 40px;
+            width: 40px; height: 40px;
             background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
@@ -96,41 +92,18 @@
             transition: width 0.3s ease, height 0.3s ease;
         }
 
-        .cursor-hover {
-            transform: scale(3);
-            background: transparent !important;
-            border: 1px solid var(--accent);
-        }
+        .cursor-hover { transform: scale(3); background: transparent !important; border: 1px solid var(--accent); }
 
         /* --- Immersive Layers --- */
-        .layer {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .noise-overlay {
-            opacity: 0.04;
-            background-image: var(--noise);
-            z-index: 1000;
-        }
-
-        /* Scaled up background pattern */
-        .huni-kuin-bg {
-            background-image: var(--huni-kuin-pattern);
-            background-size: 160px 160px;
-            opacity: 1;
-            z-index: -2;
-        }
-
+        .layer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; }
+        .noise-overlay { opacity: 0.04; background-image: var(--noise); z-index: 1000; }
+        .huni-kuin-bg { background-image: var(--huni-kuin-pattern); background-size: 160px 160px; opacity: 1; z-index: -2; }
         .glow-field {
             background: 
                 radial-gradient(circle at 15% 15%, var(--accent-glow) 0%, transparent 40%),
                 radial-gradient(circle at 85% 85%, rgba(79, 209, 197, 0.08) 0%, transparent 40%);
             filter: blur(120px);
         }
-
         #sporeCanvas { z-index: 0; pointer-events: none; }
 
         /* --- Navigation --- */
@@ -155,16 +128,8 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.3);
         }
 
-        .nav-links {
-            display: flex;
-            gap: 2.2rem;
-            align-items: center;
-        }
-
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .mobile-menu-btn { display: block; }
-        }
+        .nav-links { display: flex; gap: 2.2rem; align-items: center; }
+        @media (max-width: 768px) { .nav-links { display: none; } }
 
         .nav-item {
             text-decoration: none;
@@ -176,9 +141,7 @@
             transition: color 0.3s;
             position: relative;
         }
-
         .nav-item:hover { color: var(--accent); }
-
         .nav-item::after {
             content: '';
             position: absolute;
@@ -187,370 +150,94 @@
             box-shadow: 0 0 10px var(--accent);
             transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
-
         .nav-item:hover::after { width: 100%; }
 
-        .nav-controls {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        .theme-toggle {
-            background: none;
-            border: none;
-            color: var(--fg);
-            font-size: 1.1rem;
-            transition: transform 0.4s ease;
-        }
-
-        .theme-toggle:hover { transform: scale(1.2) rotate(10deg); }
-
-        .lang-switch {
-            background: var(--border);
-            border-radius: 50px;
-            padding: 4px;
-            display: flex;
-        }
-
+        .nav-controls { display: flex; align-items: center; gap: 1.5rem; }
+        .theme-toggle { background: none; border: none; color: var(--fg); font-size: 1.1rem; cursor: pointer; }
+        .lang-switch { background: var(--border); border-radius: 50px; padding: 4px; display: flex; }
         .lang-btn {
-            background: none;
-            border: none;
-            padding: 6px 14px;
-            font-size: 0.65rem;
-            font-weight: 800;
-            color: var(--fg-muted);
-            border-radius: 50px;
-            transition: all 0.3s;
+            background: none; border: none; padding: 6px 14px; font-size: 0.65rem;
+            font-weight: 800; color: var(--fg-muted); border-radius: 50px; cursor: pointer; transition: all 0.3s;
         }
-
-        .lang-btn.active {
-            background: var(--bg);
-            color: var(--fg);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-        }
+        .lang-btn.active { background: var(--bg); color: var(--fg); box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
 
         /* --- Typography --- */
-        h1, h2, .h2, .h3 {
-            font-family: 'Instrument Serif', serif;
-            font-weight: 400;
-            font-style: italic;
-            letter-spacing: -0.01em;
-        }
-
-        h1 {
-            font-size: clamp(3.5rem, 12vw, 7rem);
-            line-height: 0.85;
-            margin-bottom: 2.5rem;
-        }
-
-        .signature-line {
-            font-family: 'Instrument Serif', serif;
-            font-size: 1.4rem;
-            font-style: italic;
-            color: var(--accent);
-            margin-bottom: 1.5rem;
-            display: block;
-            opacity: 0.85;
-        }
-
-        .section-title {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.6em;
-            color: var(--accent);
-            margin-bottom: 3rem;
-            display: block;
-            font-weight: 700;
-            opacity: 0.7;
-        }
+        h1, h2, .h2, .h3 { font-family: 'Instrument Serif', serif; font-weight: 400; font-style: italic; letter-spacing: -0.01em; }
+        h1 { font-size: clamp(3rem, 10vw, 6.5rem); line-height: 0.85; margin-bottom: 2.5rem; }
+        .signature-line { font-family: 'Instrument Serif', serif; font-size: 1.4rem; font-style: italic; color: var(--accent); margin-bottom: 1.5rem; display: block; opacity: 0.85; }
+        .section-title { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.6em; color: var(--accent); margin-bottom: 3rem; display: block; font-weight: 700; opacity: 0.7; }
 
         /* --- Layout --- */
-        main {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            position: relative;
-            z-index: 10;
-        }
-
-        section {
-            padding: 12rem 0;
-            opacity: 0;
-            transform: translateY(60px);
-            transition: opacity 1.8s ease, transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        main { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 10; }
+        section { padding: 10rem 0; opacity: 0; transform: translateY(60px); transition: opacity 1.8s ease, transform 1.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        section.visible { opacity: 1; transform: translateY(0); }
 
         /* --- Hero --- */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
+        .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+        .hero-layout { display: flex; flex-direction: column; align-items: center; gap: 3rem; text-align: center; }
+        @media (min-width: 1024px) { .hero-layout { flex-direction: row; text-align: left; align-items: center; gap: 5rem; } }
+        .hero-image-wrapper { position: relative; flex-shrink: 0; }
+        .hero-headshot { max-width: clamp(250px, 40vw, 450px); width: 100%; height: auto; display: block; filter: saturate(0.9) contrast(1.1); }
+        .hero-text { flex: 1; }
+        .subheadline { font-size: clamp(1.2rem, 3.5vw, 1.8rem); color: var(--fg-muted); max-width: 850px; margin-bottom: 3.5rem; font-weight: 300; line-height: 1.5; }
 
-        /* Hero Layout for Image */
-        .hero-layout {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 3rem;
-            text-align: center;
-        }
+        .btn { padding: 1.1rem 3rem; border-radius: 100px; text-decoration: none; font-weight: 500; font-size: 0.9rem; transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1); display: inline-block; }
+        .btn-primary { background: var(--accent); color: var(--bg); }
+        .btn-primary:hover { transform: translateY(-8px); box-shadow: 0 25px 50px var(--accent-glow); }
+        .btn-secondary { border: 1px solid var(--border); color: var(--fg); margin-left: 1.2rem; }
+        .btn-secondary:hover { border-color: var(--accent); background: var(--card-hover); }
 
-        @media (min-width: 1024px) {
-            .hero-layout {
-                flex-direction: row;
-                text-align: left;
-                align-items: center;
-                gap: 5rem;
-            }
-        }
-
-        .hero-image-wrapper {
-            position: relative;
-            flex-shrink: 0;
-        }
-
-        .hero-headshot {
-            max-width: clamp(250px, 45vw, 500px); /* Displaying comfortably large but responsive */
-            width: 100%;
-            height: auto;
-            display: block;
-            border: none;
-            border-radius: 0;
-            box-shadow: none;
-            background: none;
-            animation: none;
-        }
-
-        .hero-text {
-            flex: 1;
-        }
-
-        .subheadline {
-            font-size: clamp(1.4rem, 4vw, 2.2rem);
-            color: var(--fg-muted);
-            max-width: 900px;
-            margin-bottom: 4.5rem;
-            font-weight: 300;
-            line-height: 1.4;
-        }
-
-        .btn {
-            padding: 1.2rem 3.5rem;
-            border-radius: 100px;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 1rem;
-            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            overflow: hidden;
-            display: inline-block;
-        }
-
-        .btn-primary {
-            background: var(--accent);
-            color: var(--bg);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 25px 50px var(--accent-glow);
-        }
-
-        .btn-secondary {
-            border: 1px solid var(--border);
-            color: var(--fg);
-            margin-left: 1.5rem;
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--accent);
-            background: var(--card-hover);
-        }
-
-        /* --- Cards & Scannability --- */
-        .work-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-            gap: 3.5rem;
-            margin-top: 6rem;
-        }
-
-        @media (max-width: 768px) {
-            .work-grid { grid-template-columns: 1fr; }
-            .btn-secondary { margin-left: 0; margin-top: 1rem; }
-        }
+        /* --- Cards & Grid --- */
+        .work-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2.5rem; margin-top: 4rem; }
+        @media (max-width: 768px) { .work-grid { grid-template-columns: 1fr; } .btn-secondary { margin-left: 0; margin-top: 1rem; } }
 
         .card {
             background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(8,10,9,0.5) 100%);
-            border: 1px solid var(--border);
-            border-radius: 40px;
-            padding: 4rem;
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            overflow: hidden;
+            border: 1px solid var(--border); border-radius: 40px; padding: 3rem;
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); position: relative; overflow: hidden;
         }
-
-        /* Scaled and more opaque card pattern */
         .card::after {
-            content: '';
-            position: absolute;
-            top: 0; right: 0; width: 220px; height: 220px;
-            background-image: var(--huni-kuin-pattern);
-            background-size: 80px 80px;
-            opacity: 0.45;
-            mask-image: linear-gradient(to bottom left, black, transparent);
-            -webkit-mask-image: linear-gradient(to bottom left, black, transparent);
-            transition: transform 1s ease;
+            content: ''; position: absolute; top: 0; right: 0; width: 180px; height: 180px;
+            background-image: var(--huni-kuin-pattern); background-size: 60px 60px; opacity: 0.3;
+            mask-image: linear-gradient(to bottom left, black, transparent); -webkit-mask-image: linear-gradient(to bottom left, black, transparent);
         }
+        .card:hover { border-color: var(--accent); background: var(--card-hover); transform: translateY(-10px); }
 
-        .card:hover::after {
-            transform: scale(1.2) rotate(5deg);
-        }
+        .card h3 { font-size: 1.8rem; margin-bottom: 1.2rem; }
+        .card p { color: var(--fg-muted); font-size: 1rem; line-height: 1.7; font-weight: 300; }
 
-        .card:hover {
-            border-color: var(--accent);
-            background: var(--card-hover);
-            transform: translateY(-15px) scale(1.01);
-            box-shadow: 0 40px 80px rgba(0,0,0,0.4);
-        }
-
-        .card h3 {
-            font-size: 2.6rem;
-            margin-bottom: 2rem;
-            color: var(--fg);
-        }
-
-        .card p {
-            color: var(--fg-muted);
-            font-size: 1.15rem;
-            line-height: 1.8;
-            font-weight: 300;
-        }
-
-        .work-list {
-            list-style: none;
-            margin: 5rem 0;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem 5rem;
-        }
-
+        .work-list { list-style: none; margin: 4rem 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem 4rem; }
         .work-list li {
-            padding: 1.5rem 0;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            font-size: 1.4rem;
-            font-family: 'Instrument Serif', serif;
-            font-style: italic;
-            transition: transform 0.4s ease, color 0.4s ease;
+            padding: 1.2rem 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 1.2rem;
+            font-size: 1.3rem; font-family: 'Instrument Serif', serif; font-style: italic; transition: transform 0.4s ease, color 0.4s ease;
         }
+        .work-list li:hover { transform: translateX(15px); color: var(--accent); }
+        .work-list li::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--bio-teal); box-shadow: 0 0 12px var(--bio-teal); }
 
-        .work-list li:hover {
-            transform: translateX(20px);
-            color: var(--accent);
-        }
+        /* --- Specific Section Styles --- */
+        .story-content { font-size: 1.6rem; max-width: 900px; color: var(--fg); font-family: 'Instrument Serif', serif; font-style: italic; line-height: 1.5; }
+        .story-content p { margin-bottom: 2.5rem; }
 
-        .work-list li::before {
-            content: '';
-            width: 10px; height: 10px;
-            border-radius: 50%;
-            background: var(--bio-teal);
-            box-shadow: 0 0 15px var(--bio-teal);
-        }
+        .social-link { display: flex; align-items: center; gap: 1rem; color: var(--fg); text-decoration: none; font-size: 1.1rem; transition: all 0.4s; padding: 0.8rem 0; }
+        .social-link:hover { color: var(--accent); transform: translateX(10px); }
 
-        /* --- Narrative & Connect --- */
-        .story-content {
-            font-size: 1.8rem;
-            max-width: 950px;
-            color: var(--fg);
-            font-family: 'Instrument Serif', serif;
-            font-style: italic;
-            line-height: 1.4;
-        }
-
-        .story-content p { margin-bottom: 3rem; }
-
-        .social-link {
-            display: flex;
-            align-items: center;
-            gap: 1.2rem;
-            color: var(--fg);
-            text-decoration: none;
-            font-size: 1.2rem;
-            transition: all 0.4s;
-            padding: 1rem 0;
-        }
-
-        .social-link:hover {
-            color: var(--accent);
-            transform: translateX(10px);
-        }
-
-        .closing-line {
-            margin-top: 8rem;
-            font-family: 'Instrument Serif', serif;
-            font-size: clamp(3rem, 10vw, 6rem);
-            font-style: italic;
-            color: var(--accent);
-            opacity: 0.3;
-            letter-spacing: -0.02em;
-        }
-
-        /* --- Footer --- */
-        footer {
-            padding: 10rem 2rem;
-            text-align: center;
-            border-top: 1px solid var(--border);
-            position: relative;
-        }
-
-        .footer-pattern {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 80px;
-            background-image: var(--huni-kuin-pattern);
-            opacity: 0.3;
-        }
-
-        /* --- Animations --- */
-        @keyframes breathe {
-            0%, 100% { transform: scale(1); opacity: 0.6; }
-            50% { transform: scale(1.05); opacity: 0.9; }
-        }
+        footer { padding: 8rem 2rem; text-align: center; border-top: 1px solid var(--border); position: relative; }
+        .footer-pattern { position: absolute; top: 0; left: 0; width: 100%; height: 60px; background-image: var(--huni-kuin-pattern); opacity: 0.2; }
 
         .bio-orb {
-            position: absolute;
-            width: 500px; height: 500px;
-            border-radius: 50%;
+            position: absolute; width: 450px; height: 450px; border-radius: 50%;
             background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-            z-index: -1;
-            filter: blur(80px);
-            animation: breathe 15s infinite ease-in-out;
+            z-index: -1; filter: blur(80px); animation: breathe 15s infinite ease-in-out;
         }
+        @keyframes breathe { 0%, 100% { transform: scale(1); opacity: 0.6; } 50% { transform: scale(1.05); opacity: 0.9; } }
 
         /* Mobile Menu */
-        .mobile-menu-btn { display: none; font-size: 1.8rem; }
+        .mobile-menu-btn { display: none; background: none; border: none; color: var(--fg); cursor: pointer; }
+        @media (max-width: 768px) { .mobile-menu-btn { display: block; } }
         .mobile-menu {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100vh;
-            background: var(--bg);
-            z-index: 150;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 2.5rem;
-            transition: 0.5s ease;
-            clip-path: circle(0% at 50% 50%);
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--bg);
+            z-index: 150; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 2.5rem;
+            transition: 0.5s ease; clip-path: circle(0% at 50% 50%);
         }
         .mobile-menu.open { clip-path: circle(150% at 50% 50%); }
 
@@ -567,9 +254,9 @@
 
     <nav>
         <div class="nav-links">
-            <a href="#work" class="nav-item" data-i18n="nav_work">Work</a>
-            <a href="#selected" class="nav-item" data-i18n="nav_selected">Selected</a>
-            <a href="./building.html" class="nav-item" data-i18n="nav_build">Build Log</a>
+            <a href="#ai" class="nav-item" data-i18n="nav_ai">Consulting</a>
+            <a href="#enable" class="nav-item" data-i18n="nav_enable">Enable</a>
+            <a href="#delivery" class="nav-item" data-i18n="nav_delivery">Delivery</a>
             <a href="#connect" class="nav-item" data-i18n="nav_connect">Connect</a>
         </div>
         
@@ -589,10 +276,10 @@
     </nav>
 
     <div class="mobile-menu" id="mobileMenu">
-        <a href="#work" class="nav-item" style="font-size: 2.5rem;" data-i18n="nav_work">Work</a>
-        <a href="#selected" class="nav-item" style="font-size: 2.5rem;" data-i18n="nav_selected">Selected</a>
-        <a href="./building.html" class="nav-item" style="font-size: 2.5rem;" data-i18n="nav_build">Build Log</a>
-        <a href="#connect" class="nav-item" style="font-size: 2.5rem;" data-i18n="nav_connect">Connect</a>
+        <a href="#ai" class="nav-item" style="font-size: 2rem;" data-i18n="nav_ai">Consulting</a>
+        <a href="#enable" class="nav-item" style="font-size: 2rem;" data-i18n="nav_enable">Enable</a>
+        <a href="#delivery" class="nav-item" style="font-size: 2rem;" data-i18n="nav_delivery">Delivery</a>
+        <a href="#connect" class="nav-item" style="font-size: 2rem;" data-i18n="nav_connect">Connect</a>
     </div>
 
     <main>
@@ -603,114 +290,116 @@
                     <img src="./Untitled%20design%20%288%29.png" alt="Luca Sumitra Isa Dewê Fischer" class="hero-headshot">
                 </div>
                 <div class="hero-text">
-                    <span class="signature-line" data-i18n="hero_name">luca sumitra isa dewê fischer</span>
-                    <h1 data-i18n="hero_headline">Turn meaning into regenerative growth.</h1>
-                    <p class="subheadline" data-i18n="hero_subheadline">I help purpose-led teams turn deep vision into clear offers and calm, scalable systems. AI where it helps. Web3 where coordination matters. Always grounded.</p>
+                    <span class="signature-line" data-i18n="hero_name">Luca Fischer • AI Growth & Practical Systems</span>
+                    <h1 data-i18n="hero_headline">Regenerative AI that actually ships.</h1>
+                    <p class="subheadline" data-i18n="hero_subheadline">I help mission-led teams use AI to automate complex processes and simplify internal workflows. 10+ years experience in Growth Marketing & Production.</p>
                     <div class="cta-group">
                         <a href="#connect" class="btn btn-primary" data-i18n="hero_primary_cta">Start a conversation</a>
-                        <a href="#selected" class="btn btn-secondary" data-i18n="hero_secondary_cta">See selected work</a>
+                        <a href="#ai" class="btn btn-secondary" data-i18n="hero_secondary_cta">The Approach</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Story Section -->
-        <section id="story" class="reveal">
-            <span class="section-title" data-i18n="story_title">My path (in 60 seconds)</span>
+        <!-- Filter Section -->
+        <section id="filter" class="reveal">
+            <span class="section-title" data-i18n="filter_title">The Filter</span>
             <div class="story-content">
-                <p data-i18n="story_p1">I move between worlds: forest and spreadsheets, ceremony and systems, community and conversion.</p>
-                <p data-i18n="story_p2">I’ve seen what happens when meaningful work stays invisible — and what happens when it’s translated with care.</p>
-                <p data-i18n="story_p3">That’s what I do: I turn living vision into language, structure, and traction — without flattening the soul of the project.</p>
+                <p data-i18n="filter_p1">Regenerative, or I’m not interested.</p>
+                <p data-i18n="filter_p2">I’m here for work that strengthens life: people, culture, ecosystems. If your “innovation” extracts, burns out teams, or blurs truth, I’m not your guy.</p>
+                <p data-i18n="filter_p3">If you’re building the future with integrity: <span style="color: var(--accent);">I’m in.</span></p>
             </div>
         </section>
 
-        <!-- Work Section -->
-        <section id="work" class="reveal">
-            <div class="bio-orb" style="top: -20%; right: -10%;"></div>
-            <span class="section-title" data-i18n="work_title">What I bring</span>
-            <h2 class="h2" style="font-size: 5rem; line-height: 0.9;" data-i18n="work_intro">I work best where things are real — but not yet clear.</h2>
+        <!-- Consulting Section -->
+        <section id="ai" class="reveal">
+            <div class="bio-orb" style="top: -10%; right: -5%;"></div>
+            <span class="section-title" data-i18n="ai_title">Consulting & Marketing</span>
+            <h2 class="h2" style="font-size: 4rem; line-height: 0.9;" data-i18n="ai_intro">Grounded Strategy. Systemic Growth.</h2>
+            <p style="margin-top: 2rem; max-width: 800px; font-size: 1.2rem; color: var(--fg-muted);" data-i18n="ai_copy">I bridge the gap between deep mission and digital performance. I rebuild your internal engine using AI to automate the heavy lifting of marketing ops, allowing your team to focus on what matters.</p>
             <ul class="work-list">
-                <li data-i18n="work_li1">Offer clarity (people instantly get it)</li>
-                <li data-i18n="work_li2">Funnels that feel good (and convert)</li>
-                <li data-i18n="work_li3">AI-assisted ops (less chaos, more output)</li>
-                <li data-i18n="work_li4">Web3-native community thinking</li>
-                <li data-i18n="work_li5">Clean tracking + calm iteration</li>
+                <li data-i18n="ai_li1">Funnel Architecture (Logical & Calm)</li>
+                <li data-i18n="ai_li2">Workflow Automation (Friction removal)</li>
+                <li data-i18n="ai_li3">Conversion Optimization (Data-driven)</li>
+                <li data-i18n="ai_li4">Internal Playbooks (Scalability)</li>
+                <li data-i18n="ai_li5">Growth Analytics & Tracking</li>
             </ul>
-            <p style="margin-top: 4rem; font-weight: 500; font-size: 1.5rem; color: var(--accent); font-family: 'Instrument Serif', serif; font-style: italic;" data-i18n="work_line">No pressure tactics. No noise. Just systems that hold.</p>
         </section>
 
-        <!-- Selected Work Section -->
-        <section id="selected" class="reveal">
-            <span class="section-title" data-i18n="selected_title">Selected work</span>
+        <!-- Enablement Section -->
+        <section id="enable" class="reveal">
+            <span class="section-title" data-i18n="enable_title">Team Enablement</span>
+            <h2 class="h2" style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 3rem;" data-i18n="enable_headline">Master the tools, don't be replaced by them.</h2>
             <div class="work-grid">
                 <div class="card hov">
-                    <h3 data-i18n="tile1_title">AMA.RUNA (Switzerland / Brazil)</h3>
-                    <p data-i18n="tile1_copy">Swiss non-profit partnering long-term with Indigenous communities in the Brazilian Amazon, especially the Huni Kuin people. I help translate Indigenous-led values into narratives and systems that engage schools, communities, and supporters — without extraction.</p>
+                    <h3 data-i18n="enable_card1_title">Impact Workshops</h3>
+                    <p data-i18n="enable_card1_copy">Hands-on sessions tailored to your team's specific roles. We move from AI-curiosity to AI-competence in hours. Focus on immediate time-savings and high-quality creative output.</p>
                 </div>
                 <div class="card hov">
-                    <h3 data-i18n="tile2_title">UTOPIA MAPS (Web3)</h3>
-                    <p data-i18n="tile2_copy">Decentralized mapping and coordination for communities. Connect locally, organize collaboratively, co-create real-world initiatives.</p>
+                    <h3 data-i18n="enable_card2_title">Enablement Sprints</h3>
+                    <p data-i18n="enable_card2_copy">We build your internal AI playbook. Together, we identify high-leverage workflows and codify them into repeatable systems that your team can maintain and evolve with confidence.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Delivery Section -->
+        <section id="delivery" class="reveal">
+            <div class="bio-orb" style="top: 20%; left: -10%; opacity: 0.1;"></div>
+            <span class="section-title" data-i18n="delivery_title">System Delivery</span>
+            <h2 class="h2" style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 3rem;" data-i18n="delivery_headline">The Collective Network.</h2>
+            <p style="margin-bottom: 4rem; max-width: 850px; font-size: 1.2rem; color: var(--fg-muted);" data-i18n="delivery_copy">When advice isn't enough, I orchestrate a hand-picked network of specialists across Tech, Ops, and Creative to turn strategy into reality at a premium standard.</p>
+            <div class="work-grid">
+                <div class="card hov">
+                    <h3 data-i18n="delivery_card1_title">Tech & AI Builds</h3>
+                    <p data-i18n="delivery_card1_copy">Custom AI content pipelines, automated dashboards, and internal tool integrations built by veteran engineers who understand mission-led logic.</p>
                 </div>
                 <div class="card hov">
-                    <h3 data-i18n="tile3_title">Tribal Yoga</h3>
-                    <p data-i18n="tile3_copy">A decentralized movement of embodied liberation. I support offer clarity, content systems, and community growth — without losing depth.</p>
-                </div>
-                <div class="card hov">
-                    <h3 data-i18n="tile4_title">Soul Craftery</h3>
-                    <p data-i18n="tile4_copy">A growth studio for clean digital revenue systems. One-pagers, conversion paths, ads + iteration — built to scale without burnout.</p>
+                    <h3 data-i18n="delivery_card2_title">Production & Storytelling</h3>
+                    <p data-i18n="delivery_card2_copy">Premium film production, branding, and content systems from a network of award-winning creative directors and artists.</p>
                 </div>
             </div>
         </section>
 
         <!-- Connect Section -->
         <section id="connect" class="reveal">
-            <div class="bio-orb" style="bottom: -20%; left: -10%; background: radial-gradient(circle, var(--bio-purple), transparent 70%); opacity: 0.1;"></div>
+            <div class="bio-orb" style="bottom: -15%; left: -5%; background: radial-gradient(circle, var(--bio-purple), transparent 70%); opacity: 0.1;"></div>
             <span class="section-title" data-i18n="connect_title">Start a conversation</span>
             <div class="story-content">
-                <p data-i18n="connect_copy">If you’re responsible for a project that needs clearer direction, send me:</p>
-                <p data-i18n="connect_list">1) what you’re building<br>2) what you want to grow<br>3) what feels stuck<br>4) your timeline</p>
+                <p data-i18n="connect_copy">If you need clear systems and automated growth workflows, send me:</p>
+                <p data-i18n="connect_list">1) what you’re building<br>2) what you want to improve<br>3) what feels stuck<br>4) your timeline</p>
             </div>
             <div class="connect-links">
-                <a href="https://x.com/luca_sumitra" class="social-link hov" target="_blank">
-                    <svg width="28" height="28" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                    <span data-i18n="btn_dm_x">DM on X</span>
-                </a>
                 <a href="https://www.linkedin.com/in/luca-fischer-87b2ba204/" class="social-link hov" target="_blank">
-                    <svg width="28" height="28" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                     <span data-i18n="btn_msg_li">Message on LinkedIn</span>
                 </a>
-                <a href="mailto:hello@lucafischer.com" class="social-link hov">
-                    <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                <a href="mailto:luca.fischer@sumitra.eu" class="social-link hov">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                     <span data-i18n="btn_email">Email me</span>
                 </a>
             </div>
-            <p style="margin-top: 5rem; font-size: 0.9rem; color: var(--fg-muted); letter-spacing: 0.2em; text-transform: uppercase;" data-i18n="connect_small">I reply personally.</p>
-            <p class="closing-line">Hari Om · Haux Haux</p>
+            <p style="margin-top: 4rem; font-size: 0.85rem; color: var(--fg-muted); letter-spacing: 0.2em; text-transform: uppercase;" data-i18n="connect_small">I reply personally.</p>
         </section>
     </main>
 
     <footer>
         <div class="footer-pattern"></div>
         <p data-i18n="footer_text">Built with care, clarity, and respect for living systems.</p>
-        <div style="margin-top: 4rem; display: flex; justify-content: center; gap: 4rem;">
+        <div style="margin-top: 3rem; display: flex; justify-content: center; gap: 3rem;">
             <a href="https://github.com/sumitrabliss" class="social-link hov" target="_blank" style="opacity: 0.3">GitHub</a>
-            <a href="https://www.instagram.com/" class="social-link hov" target="_blank" style="opacity: 0.3">Instagram</a>
+            <a href="https://www.instagram.com/luca_sumitra" class="social-link hov" target="_blank" style="opacity: 0.3">Instagram</a>
         </div>
     </footer>
 
     <script>
-        // --- Custom Cursor Logic ---
         const cursor = document.getElementById('cursor');
         const glow = document.getElementById('cursor-glow');
         const mousePos = { x: -100, y: -100 };
         
         document.addEventListener('mousemove', (e) => {
-            mousePos.x = e.clientX;
-            mousePos.y = e.clientY;
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-            glow.style.left = e.clientX + 'px';
-            glow.style.top = e.clientY + 'px';
+            mousePos.x = e.clientX; mousePos.y = e.clientY;
+            cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
+            glow.style.left = e.clientX + 'px'; glow.style.top = e.clientY + 'px';
         });
 
         document.querySelectorAll('a, button, .hov').forEach(el => {
@@ -718,167 +407,134 @@
             el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hover'));
         });
 
-        // --- Mycelium Particle System (Advanced Rhizome) ---
         const canvas = document.getElementById('sporeCanvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
-        const MAX_DISTANCE = 150; // Max connection distance
-        const CURSOR_RADIUS = 250; // Area affected by cursor
+        const MAX_DISTANCE = 150;
+        const CURSOR_RADIUS = 250;
 
         function initParticles() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
             particles = [];
-            // Adaptive count based on screen size
             const count = Math.min(window.innerWidth / 15, 100);
             for (let i = 0; i < count; i++) {
                 particles.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    size: Math.random() * 2 + 1,
-                    vx: (Math.random() - 0.5) * 0.2,
-                    vy: (Math.random() - 0.5) * 0.2,
-                    opacity: Math.random() * 0.3 + 0.1,
-                    pulse: Math.random() * 0.005 + 0.002
+                    x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+                    size: Math.random() * 2 + 1, vx: (Math.random() - 0.5) * 0.2,
+                    vy: (Math.random() - 0.5) * 0.2, opacity: Math.random() * 0.3 + 0.1
                 });
             }
         }
 
         function drawMycelium() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            // Move and draw nodes
             for (let i = 0; i < particles.length; i++) {
-                let p = particles[i];
-                p.x += p.vx;
-                p.y += p.vy;
+                let p = particles[i]; p.x += p.vx; p.y += p.vy;
+                if (p.x < 0) p.x = canvas.width; if (p.x > canvas.width) p.x = 0;
+                if (p.y < 0) p.y = canvas.height; if (p.y > canvas.height) p.y = 0;
 
-                // Slow boundary bounce with wrapping feel
-                if (p.x < 0) p.x = canvas.width;
-                if (p.x > canvas.width) p.x = 0;
-                if (p.y < 0) p.y = canvas.height;
-                if (p.y > canvas.height) p.y = 0;
-
-                // Cursor proximity interaction
-                const dx = mousePos.x - p.x;
-                const dy = mousePos.y - p.y;
+                const dx = mousePos.x - p.x; const dy = mousePos.y - p.y;
                 const distToMouse = Math.sqrt(dx * dx + dy * dy);
-                
                 let activeOpacity = p.opacity;
                 if (distToMouse < CURSOR_RADIUS) {
-                    // Attract slightly or react to mouse
-                    p.vx += dx * 0.00005;
-                    p.vy += dy * 0.00005;
-                    // Increase brightness near cursor
+                    p.vx += dx * 0.00005; p.vy += dy * 0.00005;
                     activeOpacity = Math.max(activeOpacity, (1 - distToMouse / CURSOR_RADIUS) * 0.6);
                 }
 
-                // Draw Hyphae (Connections)
                 for (let j = i + 1; j < particles.length; j++) {
                     let p2 = particles[j];
-                    const dHyphaX = p.x - p2.x;
-                    const dHyphaY = p.y - p2.y;
-                    const hyphaDist = Math.sqrt(dHyphaX * dHyphaX + dHyphaY * dHyphaY);
-
-                    if (hyphaDist < MAX_DISTANCE) {
-                        // Connections become visible only when close or near cursor
-                        let lineOpacity = (1 - hyphaDist / MAX_DISTANCE) * 0.15;
-                        
-                        // Boost line opacity if mouse is nearby either node
-                        if (distToMouse < CURSOR_RADIUS) {
-                            lineOpacity *= 2.5;
-                        }
-
-                        ctx.beginPath();
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(p2.x, p2.y);
-                        ctx.strokeStyle = `rgba(163, 217, 165, ${lineOpacity})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.stroke();
+                    const hDist = Math.sqrt((p.x - p2.x)**2 + (p.y - p2.y)**2);
+                    if (hDist < MAX_DISTANCE) {
+                        let lOpacity = (1 - hDist / MAX_DISTANCE) * 0.15;
+                        if (distToMouse < CURSOR_RADIUS) lOpacity *= 2.5;
+                        ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = `rgba(163, 217, 165, ${lOpacity})`;
+                        ctx.lineWidth = 0.5; ctx.stroke();
                     }
                 }
-
-                // Draw Node
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(163, 217, 165, ${activeOpacity})`;
-                ctx.fill();
+                ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(163, 217, 165, ${activeOpacity})`; ctx.fill();
             }
-            
             requestAnimationFrame(drawMycelium);
         }
 
         window.addEventListener('resize', initParticles);
-        initParticles();
-        drawMycelium();
+        initParticles(); drawMycelium();
 
-        // --- Translations ---
         const translations = {
             en: {
-                nav_work: "Work", nav_selected: "Selected", nav_build: "Build Log", nav_connect: "Connect",
-                hero_name: "luca sumitra isa dewê fischer",
-                hero_headline: "Turn meaning into regenerative growth.",
-                hero_subheadline: "I help purpose-led teams turn deep vision into clear offers and calm, scalable systems. AI where it helps. Web3 where coordination matters. Always grounded.",
-                hero_primary_cta: "Start a conversation", hero_secondary_cta: "See selected work",
-                story_title: "My path (in 60 seconds)",
-                story_p1: "I move between worlds: forest and spreadsheets, ceremony and systems, community and conversion.",
-                story_p2: "I’ve seen what happens when meaningful work stays invisible — and what happens when it’s translated with care.",
-                story_p3: "That’s what I do: I turn living vision into language, structure, and traction — without flattening the soul of the project.",
-                work_title: "What I bring",
-                work_intro: "I work best where things are real — but not yet clear.",
-                work_li1: "Offer clarity (people instantly get it)",
-                work_li2: "Funnels that feel good (and convert)",
-                work_li3: "AI-assisted ops (less chaos, more output)",
-                work_li4: "Web3-native community thinking",
-                work_li5: "Clean tracking + calm iteration",
-                work_line: "No pressure tactics. No noise. Just systems that hold.",
-                selected_title: "Selected work",
-                tile1_title: "AMA.RUNA (Switzerland / Brazil)",
-                tile1_copy: "Swiss non-profit partnering long-term with Indigenous communities in the Brazilian Amazon, especially the Huni Kuin people. I help translate Indigenous-led values into narratives and systems that engage schools, communities, and supporters — without extraction.",
-                tile2_title: "UTOPIA MAPS (Web3)",
-                tile2_copy: "Decentralized mapping and coordination for communities. Connect locally, organize collaboratively, co-create real-world initiatives.",
-                tile3_title: "Tribal Yoga",
-                tile3_copy: "A decentralized movement of embodied liberation. I support offer clarity, content systems, and community growth — without losing depth.",
-                tile4_title: "Soul Craftery",
-                tile4_copy: "A growth studio for clean digital revenue systems. One-pagers, conversion paths, ads + iteration — built to scale without burnout.",
+                nav_ai: "Consulting", nav_enable: "Enable", nav_delivery: "Delivery", nav_connect: "Connect",
+                hero_name: "Luca Fischer • AI Growth & Practical Systems",
+                hero_headline: "Regenerative AI that actually ships.",
+                hero_subheadline: "I help mission-led teams use AI to automate complex processes and simplify workflows. 10+ years experience in Growth Marketing & Production.",
+                hero_primary_cta: "Start a conversation", hero_secondary_cta: "The Approach",
+                filter_title: "The Filter",
+                filter_p1: "Regenerative, or I’m not interested.",
+                filter_p2: "I’m here for work that strengthens life: people, culture, ecosystems. If your “innovation” extracts, burns out teams, or blurs truth, I’m not your guy.",
+                filter_p3: "If you’re building the future with integrity: <span style='color: var(--accent);'>I’m in.</span>",
+                ai_title: "Consulting & Marketing",
+                ai_intro: "Grounded Strategy. Systemic Growth.",
+                ai_copy: "I bridge the gap between deep mission and digital performance. I rebuild your internal engine using AI to automate the heavy lifting of marketing ops, allowing your team to focus on what matters.",
+                ai_li1: "Funnel Architecture (Logical & Calm)",
+                ai_li2: "Workflow Automation (Friction removal)",
+                ai_li3: "Conversion Optimization (Data-driven)",
+                ai_li4: "Internal Playbooks (Scalability)",
+                ai_li5: "Growth Analytics & Tracking",
+                enable_title: "Team Enablement",
+                enable_headline: "Master the tools, don't be replaced by them.",
+                enable_card1_title: "Impact Workshops",
+                enable_card1_copy: "Hands-on sessions tailored to your team's specific roles. We move from AI-curiosity to AI-competence in hours. Focus on immediate time-savings and high-quality creative output.",
+                enable_card2_title: "Enablement Sprints",
+                enable_card2_copy: "We build your internal AI playbook. Together, we identify high-leverage workflows and codify them into repeatable systems that your team can maintain and evolve with confidence.",
+                delivery_title: "System Delivery",
+                delivery_headline: "The Collective Network.",
+                delivery_copy: "When advice isn't enough, I orchestrate a hand-picked network of specialists across Tech, Ops, and Creative to turn strategy into reality at a premium standard.",
+                delivery_card1_title: "Tech & AI Builds",
+                delivery_card1_copy: "Custom AI content pipelines, automated dashboards, and internal tool integrations built by veteran engineers who understand mission-led logic.",
+                delivery_card2_title: "Production & Storytelling",
+                delivery_card2_copy: "Premium film production, branding, and content systems from a network of award-winning creative directors and artists.",
                 connect_title: "Start a conversation",
-                connect_copy: "If you’re responsible for a project that needs clearer direction, send me:",
-                connect_list: "1) what you’re building<br>2) what you want to grow<br>3) what feels stuck<br>4) your timeline",
-                btn_dm_x: "DM on X", btn_msg_li: "Message on LinkedIn", btn_email: "Email me",
+                connect_copy: "If you need clear systems and automated growth workflows, send me:",
+                connect_list: "1) what you’re building<br>2) what you want to improve<br>3) what feels stuck<br>4) your timeline",
+                btn_msg_li: "Message on LinkedIn", btn_email: "Email me",
                 connect_small: "I reply personally.",
                 footer_text: "Built with care, clarity, and respect for living systems."
             },
             de: {
-                nav_work: "Fokus", nav_selected: "Projekte", nav_build: "Build Log", nav_connect: "Kontakt",
-                hero_name: "luca sumitra isa dewê fischer",
-                hero_headline: "Mach aus Bedeutung regenerative Wirkung.",
-                hero_subheadline: "Ich helfe purpose-led Teams, tiefe Vision in klare Angebote und ruhige, skalierbare Systeme zu übersetzen. AI wo sie hilft. Web3 wo Koordination zählt. Immer geerdet.",
-                hero_primary_cta: "Gespräch starten", hero_secondary_cta: "Ausgewählte Projekte",
-                story_title: "Mein Weg (in 60 Sekunden)",
-                story_p1: "Ich bewege mich zwischen Welten: Wald und Tabellen, Praxis und Systeme, Community und Conversion.",
-                story_p2: "Ich habe gesehen, was passiert, wenn sinnvolle Arbeit unsichtbar bleibt — und was passiert, wenn man sie mit Sorgfalt übersetzt.",
-                story_p3: "Genau das tue ich: Ich übersetze lebendige Vision in Sprache, Struktur und Traktion — ohne die Seele eines Projekts glattzubügeln.",
-                work_title: "Was ich mitbringe",
-                work_intro: "Ich arbeite am besten dort, wo es echt ist — aber noch nicht klar.",
-                work_li1: "Angebots-Klarheit (sofort verständlich)",
-                work_li2: "Funnels, die sich gut anfühlen (und konvertieren)",
-                work_li3: "AI-gestützte Ops (weniger Chaos, mehr Output)",
-                work_li4: "Web3-natives Community-Denken",
-                work_li5: "Sauberes Tracking + ruhige Iteration",
-                work_line: "Keine Drucktaktiken. Kein Lärm. Systeme, die tragen.",
-                selected_title: "Ausgewählte Projekte",
-                tile1_title: "AMA.RUNA (Schweiz / Brasilien)",
-                tile1_copy: "Schweizer Non-Profit mit langfristigen Partnerschaften mit indigenen Communities im brasilianischen Amazonas, besonders den Huni Kuin. Ich helfe, indigene Werte in Narrative und Systeme zu übersetzen, die Schulen, Communities und Unterstützer:innen verbinden — ohne Extraktion.",
-                tile2_title: "UTOPIA MAPS (Web3)",
-                tile2_copy: "Dezentrales Mapping und Koordination für Communities. Lokal verbinden, gemeinsam organisieren, reale Initiativen co-kreieren.",
-                tile3_title: "Tribal Yoga",
-                tile3_copy: "Eine dezentrale Bewegung verkörperter Befreiung. Ich unterstütze Angebots-Klarheit, Content-Systeme und Community-Wachstum — ohne Tiefe zu verlieren.",
-                tile4_title: "Soul Craftery",
-                tile4_copy: "Growth Studio für saubere digitale Revenue-Systeme. One-Pager, Conversion-Pfade, Ads + Iteration — skalierbar ohne Burnout.",
+                nav_ai: "Beratung", nav_enable: "Enablement", nav_delivery: "Umsetzung", nav_connect: "Kontakt",
+                hero_name: "Luca Fischer • KI-Wachstum & Praktische Systeme",
+                hero_headline: "Regenerative KI, die einfach funktioniert.",
+                hero_subheadline: "Ich helfe werteorientierten Teams, KI zu nutzen, um komplexe Prozesse zu automatisieren und Workflows zu stärken. 10+ Jahre Erfahrung in Growth & Produktion.",
+                hero_primary_cta: "Gespräch starten", hero_secondary_cta: "Mein Ansatz",
+                filter_title: "Der Filter",
+                filter_p1: "Regenerativ, oder ich bin raus.",
+                filter_p2: "Ich arbeite für Dinge, die das Leben stärken: Menschen, Kultur, Natur. Wenn deine 'Innovation' nur ausbeutet, Teams ausbrennt oder die Wahrheit dehnt, bin ich nicht dein Typ.",
+                filter_p3: "Wenn du mit Integrität die Zukunft baust: <span style='color: var(--accent);'>Ich bin dabei.</span>",
+                ai_title: "Beratung & Marketing",
+                ai_intro: "Gerdete Strategie. Systemisches Wachstum.",
+                ai_copy: "Ich schließe die Lücke zwischen tiefer Vision und digitaler Performance. Ich baue deine internen Prozesse neu und nutze KI dort, wo sie Marketing-Ops entlastet, damit dein Team sich auf das Wesentliche konzentrieren kann.",
+                ai_li1: "Funnel-Architektur (Logisch & Ruhig)",
+                ai_li2: "Workflow-Automatisierung (Reibung senken)",
+                ai_li3: "Conversion-Optimierung (Datengetrieben)",
+                ai_li4: "Interne Playbooks (Skalierbarkeit)",
+                ai_li5: "Growth Analytics & Tracking",
+                enable_title: "Team Enablement",
+                enable_headline: "Werkzeuge beherrschen, nicht ersetzt werden.",
+                enable_card1_title: "Impact-Workshops",
+                enable_card1_copy: "Rollenbasierte Sessions, die KI in Zeitersparnis übersetzen. Wir kommen in Stunden von Neugier zu echter Kompetenz und hohem kreativem Output.",
+                enable_card2_title: "Enablement-Sprints",
+                enable_card2_copy: "Wir bauen dein internes KI-Playbook. Gemeinsam identifizieren wir Hebel-Workflows und machen sie zu wiederholbaren Systemen, die dein Team selbstständig führen kann.",
+                delivery_title: "System Umsetzung",
+                delivery_headline: "Das Experten-Netzwerk.",
+                delivery_copy: "Wenn Beratung nicht reicht, leite ich ein handverlesenes Netzwerk von Spezialisten – von Tech bis Creative – um Strategien auf Premium-Niveau umzusetzen.",
+                delivery_card1_title: "Tech & KI Lösungen",
+                delivery_card1_copy: "KI-Content-Pipelines, automatisierte Dashboards und Integrationen, gebaut von erfahrenen Ingenieuren, die werteorientierte Logik verstehen.",
+                delivery_card2_title: "Produktion & Storytelling",
+                delivery_card2_copy: "High-End Filmproduktion, Branding und Content-Systeme von einem Netzwerk preisgekrönter Creative Directors und Künstler.",
                 connect_title: "Gespräch starten",
-                connect_copy: "Wenn du Verantwortung für ein Projekt trägst, das klarere Richtung braucht, schick mir:",
-                connect_list: "1) was du baust<br>2) was du wachsen lassen willst<br>3) was gerade hängt<br>4) deinen Zeitrahmen",
-                btn_dm_x: "DM auf X", btn_msg_li: "Nachricht auf LinkedIn", btn_email: "E-Mail",
+                connect_copy: "Wenn du klare Systeme und automatisierte Wachstums-Workflows brauchst, schick mir:",
+                connect_list: "1) was du baust<br>2) was du verbessern willst<br>3) was gerade hängt<br>4) deinen Zeitplan",
+                btn_msg_li: "Nachricht auf LinkedIn", btn_email: "E-Mail schreiben",
                 connect_small: "Ich antworte persönlich.",
                 footer_text: "Gebaut mit Sorgfalt, Klarheit und Respekt für lebendige Systeme."
             }
@@ -899,8 +555,7 @@
         });
 
         function setLang(lang) {
-            currentLang = lang;
-            localStorage.setItem('lang', lang);
+            currentLang = lang; localStorage.setItem('lang', lang);
             document.getElementById('btn-en').classList.toggle('active', lang === 'en');
             document.getElementById('btn-de').classList.toggle('active', lang === 'de');
             document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -911,23 +566,15 @@
         }
 
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
-            });
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
         }, { threshold: 0.1 });
+        document.querySelectorAll('section').forEach(s => observer.observe(s));
 
-        document.querySelectorAll('section').forEach(section => observer.observe(section));
-
-        const menuToggle = document.getElementById('menuToggle');
-        const mobileMenu = document.getElementById('mobileMenu');
-        menuToggle.addEventListener('click', () => {
-            mobileMenu.classList.toggle('open');
+        document.getElementById('menuToggle').addEventListener('click', () => {
+            document.getElementById('mobileMenu').classList.toggle('open');
         });
 
-        document.addEventListener('DOMContentLoaded', () => {
-            applyTheme(currentTheme);
-            setLang(currentLang);
-        });
+        document.addEventListener('DOMContentLoaded', () => { applyTheme(currentTheme); setLang(currentLang); });
     </script>
 </body>
 </html>
