@@ -17,25 +17,27 @@
             --fg: #f2faf4;
             --fg-muted: #94a398;
             --accent: #bcebc5;
-            --accent-glow: rgba(188, 235, 197, 0.12);
-            --bio-teal: #3baea0;
-            --nav-bg: rgba(1, 5, 2, 0.94);
-            --border: rgba(188, 235, 197, 0.08);
-            --card-hover: rgba(188, 235, 197, 0.04);
+            --accent-glow: rgba(188, 235, 197, 0.2);
+            --bio-teal: #42d3c1;
+            --bio-gradient: linear-gradient(90deg, #42d3c1 0%, #bcebc5 50%, #4caf50 100%);
+            --nav-bg: rgba(1, 5, 2, 0.96);
+            --border: rgba(188, 235, 197, 0.1);
+            --card-hover: rgba(188, 235, 197, 0.05);
             --noise: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3%3Cfilter id='noiseFilter'%3%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3%3C/filter%3%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3%3C/svg%3%3E");
-            --pattern: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3%3Cpath d='M40 0 L80 40 L40 80 L0 40 Z M40 10 L70 40 L40 70 L10 40 Z M40 25 L55 40 L40 55 L25 40 Z' fill='none' stroke='rgba(188, 235, 197, 0.06)' stroke-width='1'/%3%3C/svg%3%3E");
+            --pattern: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3%3Cpath d='M40 0 L80 40 L40 80 L0 40 Z M40 10 L70 40 L40 70 L10 40 Z M40 25 L55 40 L40 55 L25 40 Z' fill='none' stroke='rgba(188, 235, 197, 0.04)' stroke-width='1'/%3%3C/svg%3%3E");
         }
 
         [data-theme="light"] {
             --bg: #f5f8f6;
             --bg-secondary: #e6edeb;
             --fg: #0a170f;
-            --fg-muted: #536359;
+            --fg-muted: #4a5a50;
             --accent: #1e4d30;
-            --accent-glow: rgba(30, 77, 48, 0.06);
-            --nav-bg: rgba(245, 248, 246, 0.94);
-            --border: rgba(30, 77, 48, 0.12);
-            --card-hover: rgba(30, 77, 48, 0.03);
+            --accent-glow: rgba(30, 77, 48, 0.1);
+            --bio-gradient: linear-gradient(90deg, #1e4d30 0%, #3baea0 50%, #2e7d32 100%);
+            --nav-bg: rgba(245, 248, 246, 0.96);
+            --border: rgba(30, 77, 48, 0.15);
+            --card-hover: rgba(30, 77, 48, 0.04);
         }
 
         * {
@@ -57,8 +59,7 @@
             font-family: 'Instrument Serif', serif;
             font-style: italic;
             font-weight: 400;
-            line-height: 1.35;
-            letter-spacing: 0.01em;
+            line-height: 1.4;
             transition: background-color 0.8s ease;
             cursor: none;
         }
@@ -70,114 +71,111 @@
             font-family: 'Instrument Serif', serif; 
             font-weight: 400; 
             font-style: italic; 
-            letter-spacing: -0.015em;
-            line-height: 0.82;
+            letter-spacing: -0.02em;
+            line-height: 0.85;
+            text-shadow: 0 0 30px rgba(188, 235, 197, 0.15);
         }
 
         p, .body-text {
             font-family: 'Instrument Serif', serif;
             font-style: italic;
-            font-size: clamp(1.5rem, 3vw, 2.3rem);
+            font-size: clamp(1.4rem, 2.8vw, 2.2rem);
             line-height: 1.3;
             margin-bottom: 2.5rem;
         }
 
-        /* Modern font used rarely for specific technical anchors */
         .modern-label {
             font-family: 'Inter', sans-serif;
             font-weight: 800;
-            font-size: 0.65rem;
+            font-size: 0.62rem;
             text-transform: uppercase;
             letter-spacing: 0.45em;
             font-style: normal;
         }
 
-        /* --- Custom Cursor --- */
-        #cursor {
-            position: fixed; width: 12px; height: 12px; background: var(--accent);
-            border-radius: 50%; pointer-events: none; z-index: 10000;
-            transition: transform 0.1s ease; box-shadow: 0 0 20px var(--accent);
+        .gradient-text {
+            background: var(--bio-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            filter: drop-shadow(0 0 8px rgba(66, 211, 193, 0.2));
         }
 
-        /* --- Background Layers --- */
+        /* --- Custom Cursor --- */
+        #cursor {
+            position: fixed; width: 10px; height: 10px; background: var(--accent);
+            border-radius: 50%; pointer-events: none; z-index: 10000;
+            transition: transform 0.1s ease; box-shadow: 0 0 25px var(--accent);
+        }
+
+        /* --- Background --- */
         .layer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; }
         .noise-overlay { opacity: 0.04; background-image: var(--noise); z-index: 1000; }
         .pattern-bg { background-image: var(--pattern); background-size: 240px 240px; opacity: 1; z-index: -2; }
         .radiant-glow {
-            background: radial-gradient(circle at 10% 10%, rgba(59, 174, 160, 0.15) 0%, transparent 50%),
-                        radial-gradient(circle at 90% 90%, rgba(188, 235, 197, 0.12) 0%, transparent 50%);
-            filter: blur(120px);
-            opacity: 0.8;
+            background: radial-gradient(circle at 15% 15%, rgba(66, 211, 193, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 85% 85%, rgba(188, 235, 197, 0.12) 0%, transparent 50%);
+            filter: blur(140px);
+            opacity: 0.9;
         }
-        #sporeCanvas { z-index: 0; opacity: 0.4; }
+        #sporeCanvas { z-index: 0; opacity: 0.5; }
 
-        /* --- Navigation Optimized --- */
+        /* --- Navigation --- */
         nav {
             position: fixed; top: 1.5rem; left: 50%; transform: translateX(-50%);
-            width: 92%; max-width: 1300px; height: 3.8rem;
-            background: var(--nav-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
+            width: 92%; max-width: 1400px; height: 3.8rem;
+            background: var(--nav-bg); backdrop-filter: blur(45px); -webkit-backdrop-filter: blur(45px);
             border: 1px solid var(--border); border-radius: 100px;
             display: flex; align-items: center; justify-content: space-between;
-            padding: 0 2.5rem; z-index: 1000; box-shadow: 0 15px 45px rgba(0,0,0,0.4);
+            padding: 0 2.5rem; z-index: 1000; box-shadow: 0 20px 60px rgba(0,0,0,0.5);
         }
-        .nav-links { display: flex; gap: 2.5rem; align-items: center; }
+        .nav-links { display: flex; gap: 2.2rem; align-items: center; }
         @media (max-width: 900px) { 
             .nav-links { display: none; } 
             nav { width: 94%; padding: 0 1.25rem; height: 3.4rem; top: 1rem; }
         }
         .nav-item {
-            text-decoration: none; color: var(--fg); font-size: 0.68rem; font-weight: 800;
+            text-decoration: none; color: var(--fg); font-size: 0.65rem; font-weight: 800;
             letter-spacing: 0.3em; text-transform: uppercase; transition: color 0.4s;
             font-family: 'Inter', sans-serif; font-style: normal;
         }
-        .nav-item:hover { color: var(--accent); }
+        .nav-item:hover { color: var(--accent); text-shadow: 0 0 15px var(--accent-glow); }
 
         .nav-controls { display: flex; align-items: center; gap: 1rem; }
         .theme-toggle { background: none; border: none; color: var(--fg); font-size: 1.15rem; cursor: pointer; display: flex; align-items: center; padding: 5px; }
         .lang-switch { background: var(--border); border-radius: 50px; padding: 4px; display: flex; gap: 3px; }
         .lang-btn {
-            background: none; border: none; padding: 6px 14px; font-size: 0.6rem;
+            background: none; border: none; padding: 6px 14px; font-size: 0.58rem;
             font-weight: 900; color: var(--fg-muted); border-radius: 50px; cursor: pointer; transition: all 0.2s;
             font-family: 'Inter', sans-serif; font-style: normal;
         }
-        .lang-btn.active { background: var(--bg); color: var(--fg); }
+        .lang-btn.active { background: var(--bg); color: var(--fg); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
 
-        /* --- Main Layout --- */
-        main { width: 100%; max-width: 1600px; margin: 0 auto; padding: 0 7vw; position: relative; z-index: 10; }
-        section { 
-            padding: clamp(6rem, 15vh, 12rem) 0; opacity: 0; transform: translateY(30px); 
-            transition: opacity 1.3s cubic-bezier(0.16, 1, 0.3, 1), transform 1.3s cubic-bezier(0.16, 1, 0.3, 1); 
-            width: 100%;
-        }
-        section.visible { opacity: 1; transform: translateY(0); }
-
-        /* --- Hero Optimized --- */
+        /* --- Hero --- */
         .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding-top: 6rem; }
-        .hero-header { margin-bottom: 4rem; max-width: 1200px; }
+        .hero-header { margin-bottom: 3.5rem; max-width: 1200px; }
         .hero-name { 
-            font-size: clamp(3.2rem, 9vw, 6.5rem); 
+            font-size: clamp(1.8rem, 5vw, 2.8rem); 
             font-family: 'Instrument Serif', serif; 
             font-style: italic; 
-            color: var(--fg); 
-            margin-bottom: 0.8rem; 
+            margin-bottom: 0.6rem; 
             display: block; 
-            line-height: 0.85;
+            line-height: 1;
             letter-spacing: -0.02em;
         }
         .hero-title { 
-            font-size: 0.72rem; 
+            font-size: 0.68rem; 
             text-transform: uppercase; 
             letter-spacing: 0.55em; 
-            color: var(--accent); 
             font-weight: 800; 
             line-height: 2; 
             display: block; 
-            opacity: 0.85;
+            opacity: 1;
             font-family: 'Inter', sans-serif;
             font-style: normal;
         }
 
-        .hero h1 { font-size: clamp(3.2rem, 12vw, 10.5rem); margin-bottom: 4.5rem; max-width: 1500px; word-break: keep-all; }
+        .hero h1 { font-size: clamp(3.2rem, 12vw, 10.5rem); margin-bottom: 4.5rem; max-width: 1500px; text-shadow: 0 0 40px rgba(188, 235, 197, 0.1); }
         
         .hero-footer { display: flex; flex-direction: column; gap: 4rem; align-items: flex-start; }
         @media (min-width: 1024px) { 
@@ -185,121 +183,132 @@
         }
 
         .hero-intro { 
-            font-size: clamp(1.5rem, 3.8vw, 2.4rem); 
+            font-size: clamp(1.4rem, 3.5vw, 2.2rem); 
             color: var(--fg-muted); 
-            max-width: 900px; 
+            max-width: 880px; 
             margin-bottom: 0;
-            line-height: 1.25;
+            line-height: 1.3;
         }
         .hero-cta { display: flex; flex-direction: column; gap: 1rem; width: 100%; max-width: 480px; }
         @media (min-width: 600px) { .hero-cta { flex-direction: row; max-width: none; } }
 
+        /* --- About Section Optimized --- */
+        .about-split {
+            display: flex;
+            flex-direction: column;
+            gap: 4rem;
+            margin-top: 4rem;
+        }
+        @media (min-width: 1024px) {
+            .about-split {
+                flex-direction: row;
+                align-items: flex-start;
+                gap: 6rem;
+            }
+            .about-split .editorial-image-block {
+                flex: 0 0 460px;
+                margin: 0;
+            }
+            .about-split .about-editorial-text {
+                flex: 1;
+                padding-top: 1rem;
+            }
+        }
+        
+        .editorial-image-block { 
+            position: relative; width: 100%; max-width: 520px; border-radius: 50px; overflow: hidden;
+            box-shadow: 0 60px 150px rgba(0,0,0,0.6); transform: rotate(-1.5deg); margin: 6rem auto;
+            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .editorial-image-block:hover { transform: rotate(1deg) scale(1.03); }
+        .headshot { width: 100%; height: auto; display: block; filter: saturate(0.75) contrast(1.1); }
+
+        .editorial-text { font-size: clamp(1.8rem, 5.5vw, 3rem); line-height: 1.2; color: var(--fg); }
+        .editorial-text .highlight { color: var(--accent); text-shadow: 0 0 15px var(--accent-glow); }
+
         /* --- Buttons --- */
         .btn { 
             padding: 1.25rem 3.5rem; border-radius: 100px; text-decoration: none; 
-            font-weight: 800; font-size: 0.88rem; letter-spacing: 0.18em; text-transform: uppercase;
+            font-weight: 800; font-size: 0.85rem; letter-spacing: 0.18em; text-transform: uppercase;
             transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); text-align: center;
             display: inline-flex; align-items: center; justify-content: center;
             font-family: 'Inter', sans-serif; font-style: normal;
         }
-        .btn-primary { background: var(--accent); color: var(--bg); }
+        .btn-primary { background: var(--accent); color: var(--bg); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
         .btn-primary:hover { transform: translateY(-6px); box-shadow: 0 20px 50px var(--accent-glow); }
         .btn-secondary { border: 1.5px solid var(--border); color: var(--fg); }
         .btn-secondary:hover { background: var(--card-hover); border-color: var(--accent); transform: translateY(-4px); }
 
-        /* --- Visual Blocks --- */
-        .section-tag { margin-bottom: 4rem; display: block; opacity: 0.75; }
-        
-        .editorial-image-block { 
-            position: relative; width: 100%; max-width: 580px; border-radius: 60px; overflow: hidden;
-            box-shadow: 0 50px 140px rgba(0,0,0,0.55); transform: rotate(-1.5deg); margin: 7rem 0;
-            transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .editorial-image-block:hover { transform: rotate(1deg) scale(1.04); }
-        .headshot { width: 100%; height: auto; display: block; filter: saturate(0.65) contrast(1.15); }
-
-        .editorial-text { font-size: clamp(2rem, 6vw, 3.2rem); line-height: 1.2; color: var(--fg); }
-        .editorial-text p { margin-bottom: 4rem; }
-        .editorial-text .highlight { color: var(--accent); }
-
-        /* --- Capabilities & Lists --- */
-        .work-list { list-style: none; margin: 4.5rem 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 1.5rem 6rem; }
+        /* --- Grids --- */
+        .work-list { list-style: none; margin: 4.5rem 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1rem 6rem; }
         .work-list li { 
-            padding: 2.5rem 0; 
+            padding: 2rem 0; 
             border-bottom: 1.5px solid var(--border); 
             display: flex; 
             align-items: flex-start; 
-            gap: 2rem; 
-            font-size: clamp(1.8rem, 3.2vw, 2.8rem); 
-            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-            line-height: 1;
+            gap: 1.8rem; 
+            font-size: clamp(1.6rem, 3vw, 2.5rem); 
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            line-height: 1.1;
         }
-        .work-list li:hover { padding-left: 2rem; color: var(--accent); border-color: var(--accent); }
-        .work-list li::before { content: '◈'; color: var(--bio-teal); font-size: 1.4rem; margin-top: 0.15rem; }
+        .work-list li:hover { padding-left: 1.5rem; color: var(--accent); border-color: var(--accent); text-shadow: 0 0 15px var(--accent-glow); }
+        .work-list li::before { content: '◈'; color: var(--bio-teal); font-size: 1.2rem; margin-top: 0.2rem; }
 
-        /* --- Ecosystem --- */
-        .ecosystem-wrap { margin-top: 12rem; border-top: 2px solid var(--border); padding-top: 7rem; }
-        .network-intro { margin-bottom: 6rem; max-width: 1050px; font-size: clamp(1.6rem, 3.2vw, 2.4rem); }
-        .network-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 6rem; }
-        .network-item h4 { font-size: clamp(2.2rem, 4vw, 3.2rem); color: var(--bio-teal); margin-bottom: 1.5rem; line-height: 0.9; }
-        .network-item p { font-size: clamp(1.2rem, 2.2vw, 1.6rem); color: var(--fg-muted); line-height: 1.35; margin-bottom: 0; }
+        .ecosystem-wrap { margin-top: 10rem; border-top: 2px solid var(--border); padding-top: 7rem; }
+        .network-intro { margin-bottom: 5rem; max-width: 1000px; font-size: clamp(1.5rem, 3vw, 2.2rem); color: var(--fg-muted); }
+        .network-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 5rem; }
+        .network-item h4 { font-size: clamp(2.2rem, 4vw, 3rem); color: var(--bio-teal); margin-bottom: 1.2rem; text-shadow: 0 0 20px rgba(66, 211, 193, 0.2); }
+        .network-item p { font-size: clamp(1.1rem, 2vw, 1.5rem); color: var(--fg-muted); margin-bottom: 0; }
 
-        /* --- Cards Optimized --- */
-        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 4rem; margin-top: 6rem; }
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 3.5rem; margin-top: 5rem; }
         .card { 
             background: linear-gradient(165deg, var(--bg-secondary) 0%, rgba(5,15,10,0.5) 100%);
-            border: 2px solid var(--border); border-radius: 60px; padding: 5rem; 
+            border: 2px solid var(--border); border-radius: 50px; padding: 4.5rem; 
             transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); position: relative; overflow: hidden;
         }
-        .card:hover { transform: translateY(-25px); border-color: var(--accent); }
-        .card .tag { margin-bottom: 2.5rem; display: block; color: var(--fg-muted); opacity: 0.75; }
-        .card h3 { font-size: clamp(2.4rem, 5vw, 3.8rem); margin-bottom: 1.8rem; color: var(--accent); line-height: 0.85; }
-        .card p { font-size: clamp(1.3rem, 2.2vw, 1.7rem); color: var(--fg-muted); margin-bottom: 0; line-height: 1.3; }
+        .card:hover { transform: translateY(-20px); border-color: var(--accent); box-shadow: 0 30px 80px rgba(0,0,0,0.6); }
+        .card .tag { margin-bottom: 2rem; display: block; opacity: 0.8; }
+        .card h3 { font-size: clamp(2.4rem, 5vw, 3.4rem); margin-bottom: 1.5rem; color: var(--accent); text-shadow: 0 0 20px var(--accent-glow); }
+        .card p { font-size: clamp(1.2rem, 2vw, 1.6rem); color: var(--fg-muted); line-height: 1.35; }
 
-        /* --- Social Links --- */
-        .social-row { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 7rem; }
+        .social-row { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 6rem; }
         .social-link {
-            display: flex; align-items: center; gap: 1.25rem; padding: 1.3rem 3.5rem; border-radius: 100px;
+            display: flex; align-items: center; gap: 1.2rem; padding: 1.2rem 3rem; border-radius: 100px;
             background: rgba(188, 235, 197, 0.05); border: 1.5px solid var(--border); text-decoration: none; color: var(--fg);
-            font-weight: 900; font-size: 0.95rem; transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); 
+            font-weight: 900; font-size: 0.9rem; transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); 
             text-transform: uppercase; letter-spacing: 0.2em; font-family: 'Inter', sans-serif; font-style: normal;
         }
-        .social-link:hover { border-color: var(--accent); background: rgba(188, 235, 197, 0.12); transform: translateY(-12px); color: var(--accent); }
-        .social-link svg { width: 22px; height: 22px; }
+        .social-link:hover { border-color: var(--accent); background: rgba(188, 235, 197, 0.15); transform: translateY(-10px); color: var(--accent); box-shadow: 0 15px 40px var(--accent-glow); }
 
-        /* --- Mobile Responsiveness Excellence --- */
+        /* --- Mobile Optimization --- */
         @media (max-width: 600px) {
-            main { padding: 0 6.5vw; }
-            h1 { font-size: 3.4rem; }
-            .hero-header { margin-bottom: 2.8rem; }
-            .hero-name { font-size: 3.4rem; }
-            .btn { width: 100%; padding: 1.2rem 2rem; font-size: 0.82rem; }
-            .editorial-image-block { margin: 5rem auto; border-radius: 45px; }
-            .card { padding: 3rem 2.5rem; border-radius: 45px; }
-            .card-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-            .network-grid { grid-template-columns: 1fr; gap: 4rem; }
-            .work-list { grid-template-columns: 1fr; gap: 0; }
-            section { padding: 6.5rem 0; }
-            p, .hero-intro { font-size: 1.6rem; }
-            .editorial-text { font-size: 2.1rem; }
-            .social-link { width: 100%; padding: 1.2rem 2rem; justify-content: center; }
-            .nav-item { font-size: 0.62rem; letter-spacing: 0.2em; }
+            main { padding: 0 7vw; }
+            h1 { font-size: 3.2rem; }
+            .hero-name { font-size: 2.2rem; }
+            .hero-title { font-size: 0.6rem; letter-spacing: 0.4em; }
+            .btn { width: 100%; padding: 1.2rem; font-size: 0.8rem; }
+            .editorial-image-block { margin: 4rem auto; border-radius: 40px; }
+            .card { padding: 3rem 2rem; border-radius: 40px; }
+            section { padding: 5rem 0; }
+            p, .hero-intro { font-size: 1.5rem; }
+            .editorial-text { font-size: 2rem; }
+            .social-link { width: 100%; justify-content: center; font-size: 0.8rem; }
+            nav { width: 94%; padding: 0 1rem; }
         }
 
-        @media (min-width: 601px) and (max-width: 1024px) {
-            .card-grid { grid-template-columns: 1fr 1fr; }
-            .network-grid { grid-template-columns: 1fr 1fr; }
+        main { width: 100%; max-width: 1600px; margin: 0 auto; padding: 0 7vw; position: relative; z-index: 10; }
+        section { 
+            padding: clamp(5rem, 12vh, 10rem) 0; opacity: 0; transform: translateY(25px); 
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); 
         }
-
-        footer { padding: 10rem 7vw; text-align: center; border-top: 2px solid var(--border); }
-        footer p { font-size: 0.85rem; margin: 0; opacity: 0.8; }
+        section.visible { opacity: 1; transform: translateY(0); }
+        footer { padding: 8rem 7vw; text-align: center; border-top: 2px solid var(--border); }
 
     </style>
 </head>
 <body data-theme="dark">
     <div id="cursor"></div>
 
-    <!-- Background Architecture -->
     <div class="layer noise-overlay"></div>
     <div class="layer pattern-bg"></div>
     <div class="layer radiant-glow"></div>
@@ -308,7 +317,7 @@
     <nav>
         <div class="nav-links">
             <a href="#about" class="nav-item" data-i18n="nav_about">About</a>
-            <a href="#work" class="nav-item" data-i18n="nav_work">How I Work</a>
+            <a href="#work" class="nav-item" data-i18n="nav_work">Capabilities</a>
             <a href="#offers" class="nav-item" data-i18n="nav_offers">Offers</a>
             <a href="#connect" class="nav-item" data-i18n="nav_connect">Connect</a>
         </div>
@@ -328,8 +337,8 @@
         <!-- Hero Section -->
         <section class="hero reveal">
             <div class="hero-header">
-                <span class="hero-name">Luca Fischer</span>
-                <span class="hero-title modern-label" data-i18n="hero_title">Regenerative Growth Marketing & AI Vibe Architect</span>
+                <span class="hero-name gradient-text">Luca Fischer</span>
+                <span class="hero-title modern-label gradient-text" data-i18n="hero_title">Regenerative Growth Marketing & AI Vibe Architect</span>
             </div>
             
             <h1 data-i18n="hero_headline">Structure for Visionaries. Systems for Life.</h1>
@@ -343,28 +352,30 @@
             </div>
         </section>
 
-        <!-- About Section -->
+        <!-- About Section with headshot on the left for desktop -->
         <section id="about" class="reveal">
             <span class="section-tag modern-label" data-i18n="tag_context">The Filter</span>
-            <div class="editorial-text">
+            
+            <div class="editorial-text" style="margin-bottom: 5rem;">
                 <p data-i18n="about_p1">If your work is strong but leads slip and delivery eats the team alive, <span class="highlight">you do not lack will. You lack structure.</span></p>
-                
                 <p data-i18n="about_p2">I work at the intersection of technology, culture, and regeneration. With over 10 years of experience in Growth Marketing and Creative Direction, I bring high level strategy into clean, values led systems.</p>
+            </div>
 
-                <!-- Editorial Portrait -->
+            <div class="about-split">
                 <div class="editorial-image-block">
                     <img src="./Untitled%20design%20%288%29.png" alt="Luca Fischer" class="headshot">
                 </div>
-
-                <p data-i18n="about_p3">Dank 15 Jahren Yoga und Ashram Erfahrung ist mein Stil ruhig und konsequent. Regeneration ist für mich kein Wort: es ist die Messlatte. Und der Weg.</p>
-                <p data-i18n="about_p4">My work often leads me into biodiversity contexts and collaborations with indigenous partners. There, you feel what is wrong with extractive systems. We build to strengthen life.</p>
+                <div class="editorial-text about-editorial-text">
+                    <p data-i18n="about_p3">With 15 years of Yoga and Ashram experience, my style is calm and consistent. Regeneration is not just a word for me: it is the bar. And the path.</p>
+                    <p data-i18n="about_p4">My work often leads me into biodiversity contexts and collaborations with indigenous partners. There, you feel what is wrong with extractive systems. We build to strengthen life.</p>
+                </div>
             </div>
         </section>
 
         <!-- Capabilities Section -->
         <section id="work" class="reveal">
             <span class="section-tag modern-label" data-i18n="tag_capabilities">Execution Spectrum</span>
-            <p data-i18n="capabilities_intro" style="margin-bottom: 5rem;">My approach ranges from strategic consulting to deep, hands on implementation of every system we design.</p>
+            <p data-i18n="capabilities_intro" style="margin-bottom: 4rem;">My approach ranges from strategic consulting to deep, hands on implementation of every system we design.</p>
             
             <ul class="work-list">
                 <li data-i18n="sk1">Positioning & Offer Design</li>
@@ -375,22 +386,21 @@
                 <li data-i18n="sk6">Community & Distribution Strategy</li>
             </ul>
 
-            <!-- The Ecosystem -->
             <div class="ecosystem-wrap">
                 <span class="section-tag modern-label" data-i18n="tag_network">The Ecosystem</span>
-                <p class="network-intro" data-i18n="network_intro">I architect the core strategy and lead the systems design. For specialized execution at scale, I activate a trusted network of high level specialists who speak the same language of quality and impact. This collective allows us to move fast with precision, ensuring every layer of your growth engine is built by an expert.</p>
+                <p class="network-intro" data-i18n="network_intro">I architect the core strategy and lead the systems design. For specialized execution at scale, I activate a trusted network of high level specialists who speak the same language of quality and impact. This collective allows us to move fast with precision.</p>
                 <div class="network-grid">
                     <div class="network-item">
                         <h4 data-i18n="net1_title">Senior Devs</h4>
-                        <p data-i18n="net1_copy">Custom software architectures and deep API integrations for unique business needs and scalable backend solutions that endure.</p>
+                        <p data-i18n="net1_copy">Custom architectures and deep API integrations for unique business needs and scalable backend solutions.</p>
                     </div>
                     <div class="network-item">
                         <h4 data-i18n="net2_title">AI Specialists</h4>
-                        <p data-i18n="net2_copy">Experts in prompt engineering, custom model training, and ethical automation workflows that respect your brand DNA and tone.</p>
+                        <p data-i18n="net2_copy">Experts in prompt engineering and ethical automation workflows that respect your brand DNA and tone.</p>
                     </div>
                     <div class="network-item">
                         <h4 data-i18n="net3_title">Video Production</h4>
-                        <p data-i18n="net3_copy">Creative teams to translate your story into high quality visual narratives that build trust and drive deep emotional resonance.</p>
+                        <p data-i18n="net3_copy">Creative teams to translate your story into visual narratives that build trust and drive resonance.</p>
                     </div>
                 </div>
             </div>
@@ -423,19 +433,19 @@
             <span class="section-tag modern-label" data-i18n="tag_connect">Reach Out</span>
             <div class="editorial-text">
                 <p data-i18n="connect_copy">If you hold a regenerative vision but lack structure, write me. Send three sentences:</p>
-                <p style="color: var(--fg-muted);" data-i18n="connect_list">1. What you are building & why now<br>2. Who it's for & the connection to strengthen<br>3. What should feel different in 90 days</p>
+                <p style="color: var(--fg-muted); font-size: 1.6rem;" data-i18n="connect_list">1. What you are building & why now<br>2. Who it's for & the connection to strengthen<br>3. What should feel different in 90 days</p>
             </div>
             <div class="social-row">
                 <a href="https://www.linkedin.com/in/luca-fischer-87b2ba204/" class="social-link" target="_blank">
-                    <svg fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                    <span>LinkedIn Profile</span>
+                    <svg fill="currentColor" width="20" height="20" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    <span>LinkedIn</span>
                 </a>
                 <a href="mailto:luca.fischer@sumitra.eu" class="social-link">
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    <svg fill="none" stroke="currentColor" stroke-width="2" width="20" height="20" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                     <span>Email Luca</span>
                 </a>
             </div>
-            <p class="modern-label" style="margin-top: 7rem; color: var(--fg-muted); letter-spacing: 0.4em;" data-i18n="connect_small">Personal replies only. Write START for fast moves.</p>
+            <p class="modern-label" style="margin-top: 6rem; color: var(--fg-muted); letter-spacing: 0.4em;" data-i18n="connect_small">Personal replies only. Write START for fast moves.</p>
         </section>
     </main>
 
@@ -460,10 +470,10 @@
                 capabilities_intro: "My approach ranges from strategic consulting to deep, hands on implementation of every system we design.",
                 sk1: "Positioning & Offer Design", sk2: "Copy & Narratives (Trust & Resonance)", sk3: "CRM Architecture & Pipeline Design", sk4: "Automations & AI Workflows", sk5: "Growth Ops & Clean KPI Systems", sk6: "Community & Distribution Strategy",
                 tag_network: "The Ecosystem",
-                network_intro: "I architect the core strategy and lead the systems design. For specialized execution at scale, I activate a trusted network of high level specialists who speak the same language of quality and impact. This collective allows us to move fast with precision, ensuring every layer of your growth engine is built by an expert.",
-                net1_title: "Senior Devs", net1_copy: "Custom architectures and deep API integrations for unique business needs and scalable backend solutions that endure.",
-                net2_title: "AI Specialists", net2_copy: "Experts in prompt engineering, custom model training, and ethical automation workflows that respect your brand DNA and tone.",
-                net3_title: "Video Production", net3_copy: "Creative teams to translate your story into high quality visual narratives that build trust and drive deep emotional resonance.",
+                network_intro: "I architect the core strategy and lead the systems design. For specialized execution at scale, I activate a trusted network of high level specialists who speak the same language of quality and impact. This collective allows us to move fast with precision.",
+                net1_title: "Senior Devs", net1_copy: "Custom architectures and deep API integrations for unique business needs and scalable backend solutions.",
+                net2_title: "AI Specialists", net2_copy: "Experts in prompt engineering and ethical automation workflows that respect your brand DNA and tone.",
+                net3_title: "Video Production", net3_copy: "Creative teams to translate your story into visual narratives that build trust and drive resonance.",
                 tag_engagement: "Engagement",
                 off1_tag: "60 to 120 Minutes", off1_title: "Workshop", off1_copy: "Clarifying bottlenecks and decision points. Ideal for strategic consulting, offer refinement, or CRM AI untangling.",
                 off2_tag: "2 to 4 Weeks", off2_title: "Sprint", off2_copy: "End to end hands on building. Offer messaging, landing pages, CRM automation, or outreach engines built for launch.",
@@ -489,8 +499,8 @@
                 capabilities_intro: "Mein Ansatz reicht von strategischem Consulting auf höchster Ebene bis hin zu tiefem, praktischem Aufbau jedes von uns entworfenen Systems.",
                 sk1: "Positionierung & Angebotsdesign", sk2: "Copy & Narrative (Vertrauen & Resonanz)", sk3: "CRM Architektur & Pipeline Design", sk4: "Automationen & AI Workflows", sk5: "Growth Ops & klare KPI Systeme", sk6: "Community & Distributions Strategie",
                 tag_network: "Das Ökosystem",
-                network_intro: "Ich entwerfe die Kernstrategie und leite das Systemdesign. Für die spezialisierte Umsetzung aktiviere ich ein vertrautes Netzwerk von Experten, die dieselbe Sprache von Qualität und Wirkung sprechen. Dieses Kollektiv ermöglicht es uns, schnell und mit Präzision zu agieren, damit jeder Layer von Experten gebaut wird.",
-                net1_title: "Senior Devs", net1_copy: "Individuelle Architekturen und tiefe API Integrationen für komplexe Business Anforderungen und skalierbare Backend Lösungen, die Bestand haben.",
+                network_intro: "Ich entwerfe die Kernstrategie und leite das Systemdesign. Für die spezialisierte Umsetzung aktiviere ich ein vertrautes Netzwerk von Experten, die dieselbe Sprache von Qualität und Wirkung sprechen. Dieses Kollektiv ermöglicht es uns, schnell und mit Präzision zu agieren.",
+                net1_title: "Senior Devs", net1_copy: "Individuelle Architekturen und tiefe API Integrationen für komplexe Business Anforderungen und skalierbare Backend Lösungen.",
                 net2_title: "AI Spezialisten", net2_copy: "Experten für Prompt Engineering, individuelles Model Training und ethische Automations Workflows, die eure Marken DNA und Tonalität respektieren.",
                 net3_title: "Video Produktion", net3_copy: "Kreative Teams, die eure Story in hochwertige visuelle Narrative übersetzen, die Vertrauen aufbauen und tiefe emotionale Resonanz erzeugen.",
                 tag_engagement: "Zusammenarbeit",
@@ -552,15 +562,16 @@
             canvas.width = window.innerWidth; 
             canvas.height = window.innerHeight;
             particles = [];
-            const count = Math.min(window.innerWidth / 10, 120);
+            // Reduced particle count by ~20% for better balance
+            const count = Math.min(window.innerWidth / 10, 110);
             for (let i = 0; i < count; i++) {
                 particles.push({
                     x: Math.random() * canvas.width, 
                     y: Math.random() * canvas.height,
-                    size: Math.random() * 2 + 0.5, 
+                    size: Math.random() * 2 + 1, 
                     vx: (Math.random() - 0.5) * 0.08,
                     vy: (Math.random() - 0.5) * 0.08, 
-                    opacity: Math.random() * 0.2 + 0.05
+                    opacity: Math.random() * 0.25 + 0.1
                 });
             }
         }
@@ -580,18 +591,18 @@
                 let activeOpacity = p.opacity;
                 if (distToMouse < CURSOR_RADIUS) {
                     p.vx += dx * 0.000008; p.vy += dy * 0.000008;
-                    activeOpacity = Math.max(activeOpacity, (1 - distToMouse / CURSOR_RADIUS) * 0.5);
+                    activeOpacity = Math.max(activeOpacity, (1 - distToMouse / CURSOR_RADIUS) * 0.7);
                 }
 
                 for (let j = i + 1; j < particles.length; j++) {
                     let p2 = particles[j];
                     const hDist = Math.sqrt((p.x - p2.x)**2 + (p.y - p2.y)**2);
                     if (hDist < MAX_DISTANCE) {
-                        let lOpacity = (1 - hDist / MAX_DISTANCE) * 0.08;
-                        if (distToMouse < CURSOR_RADIUS) lOpacity *= 2.2;
+                        let lOpacity = (1 - hDist / MAX_DISTANCE) * 0.1;
+                        if (distToMouse < CURSOR_RADIUS) lOpacity *= 2.5;
                         ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y);
                         ctx.strokeStyle = `rgba(188, 235, 197, ${lOpacity})`;
-                        ctx.lineWidth = 0.45; ctx.stroke();
+                        ctx.lineWidth = 0.5; ctx.stroke();
                     }
                 }
                 ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
